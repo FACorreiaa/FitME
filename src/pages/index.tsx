@@ -1,12 +1,13 @@
-import { type NextPage } from "next";
+import { GetServerSidePropsContext, type NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import { signIn, signOut, useSession } from "next-auth/react";
 
 import { trpc } from "../utils/trpc";
+import { getServerAuthSession } from "../server/common/get-server-auth-session";
 
 const Home: NextPage = () => {
-  const hello = trpc.example.hello.useQuery({ text: "from tRPC" });
+  //const hello = trpc.example.hello.useQuery({ text: "from tRPC" });
 
   return (
     <>
@@ -43,9 +44,10 @@ const Home: NextPage = () => {
             </Link>
           </div>
           <div className="flex flex-col items-center gap-2">
-            <p className="text-2xl text-white">
+            {/* <p className="text-2xl text-white">
               {hello.data ? hello.data.greeting : "Loading tRPC query..."}
-            </p>
+            </p> */}
+            <p className="text-2xl text-white">hi</p>
             <AuthShowcase />
           </div>
         </div>
@@ -61,7 +63,7 @@ const AuthShowcase: React.FC = () => {
 
   const { data: secretMessage } = trpc.auth.getSecretMessage.useQuery(
     undefined, // no input
-    { enabled: sessionData?.user !== undefined },
+    { enabled: sessionData?.user !== undefined }
   );
 
   return (
@@ -78,4 +80,19 @@ const AuthShowcase: React.FC = () => {
       </button>
     </div>
   );
+};
+
+export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
+  const session = await getServerAuthSession(ctx);
+
+  if (!session) {
+    return {
+      redirect: { destination: "/login", permanent: false },
+    };
+  }
+  return {
+    props: {
+      session,
+    },
+  };
 };

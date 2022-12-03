@@ -34,11 +34,21 @@ datasource db {
   shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
+enum Role {
+  USER
+  ADMIN
+}
+
+enum Gender {
+  MALE
+  FEMALE
+}
+
 model User {
   id                Int                 @id @default(autoincrement())
   first_name        String?
   last_name         String?
-  gender            String
+  gender            Gender
   email             String              @unique
   nickname          String              @unique
   password          String
@@ -52,6 +62,7 @@ model User {
   sessions          Session[]
   createdAt         DateTime            @default(now())
   updatedAt         DateTime            @default(now())
+  role              Role                @default(USER)
 }
 
 // Necessary for Next auth
