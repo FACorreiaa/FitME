@@ -1,15 +1,23 @@
-import { z } from "zod";
-import { UserModel } from "../../../../prisma/zod/user";
-import { router, publicProcedure, protectedProcedure } from "../trpc";
+import { UserModel } from "../../../../../prisma/zod/user";
+import { router, publicProcedure, protectedProcedure } from "../../trpc";
 
 export const userLoginRouter = router({
-  hello: publicProcedure
-    .input(z.object({ text: z.string().nullish() }).nullish())
-    .query(({ input }) => {
-      return {
-        greeting: `Hello ${input?.text ?? "world"}`,
-      };
-    }),
+  // hello: publicProcedure
+  //   .input(z.object({ text: z.string().nullish() }).nullish())
+  //   .query(({ input }) => {
+  //     return {
+  //       greeting: `Hello ${input?.text ?? "world"}`,
+  //     };
+  //   }),
+  me: protectedProcedure.query(async ({ctx}) => {
+    const userResponse = await ctx.prisma.user.findFirst({
+      where: {id: ctx.session.user.id},
+      select: {role: true}
+    })
+
+    return userResponse?.role
+
+  }),
   getUsers: protectedProcedure.query(async ({ ctx }) => {
     try {
       return await ctx.prisma.user.findMany({

@@ -3,11 +3,11 @@ import * as imports from "../null"
 import { CompleteUser, RelatedUserModel } from "./index"
 
 export const ProfileModel = z.object({
-  id: z.number().int(),
+  id: z.string(),
   bio: z.string().nullish(),
   profession: z.string().nullish(),
   image: z.string().nullish(),
-  userId: z.number().int(),
+  userId: z.string(),
 })
 
 export interface CompleteProfile extends z.infer<typeof ProfileModel> {

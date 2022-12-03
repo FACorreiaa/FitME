@@ -3,9 +3,9 @@ import * as imports from "../null"
 import { CompleteExercisesPeriod, RelatedExercisesPeriodModel, CompleteExerciseComposition, RelatedExerciseCompositionModel } from "./index"
 
 export const ExercisesModel = z.object({
-  id: z.number().int(),
+  id: z.string(),
   exercise_name: z.string(),
-  exerciseCompositionId: z.number().int().nullish(),
+  exerciseCompositionId: z.string(),
 })
 
 export interface CompleteExercises extends z.infer<typeof ExercisesModel> {

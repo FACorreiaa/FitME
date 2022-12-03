@@ -1,6 +1,6 @@
 import { router } from "../trpc";
 import { authRouter } from "./auth";
-import { userLoginRouter } from "./user-login";
+import { userLoginRouter } from "./subroutes/user-login";
 
 export const appRouter = router({
   userLogin: userLoginRouter,

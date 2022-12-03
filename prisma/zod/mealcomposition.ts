@@ -3,8 +3,8 @@ import * as imports from "../null"
 import { CompleteMealList, RelatedMealListModel, CompleteIngredients, RelatedIngredientsModel } from "./index"
 
 export const MealCompositionModel = z.object({
-  id: z.number().int(),
-  mealListId: z.number().int().nullish(),
+  id: z.string(),
+  mealListId: z.string().nullish(),
 })
 
 export interface CompleteMealComposition extends z.infer<typeof MealCompositionModel> {

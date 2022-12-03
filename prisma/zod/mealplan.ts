@@ -3,14 +3,14 @@ import * as imports from "../null"
 import { CompleteMealList, RelatedMealListModel, CompleteUser, RelatedUserModel, CompleteUserSuggestedPlan, RelatedUserSuggestedPlanModel } from "./index"
 
 export const MealplanModel = z.object({
-  id: z.number().int(),
+  id: z.string(),
   name: z.string(),
   type: z.string(),
   created_at: z.date(),
   updated_at: z.date(),
   active: z.boolean(),
-  authorId: z.number().int(),
-  mealListId: z.number().int(),
+  authorId: z.string(),
+  mealListId: z.string(),
 })
 
 export interface CompleteMealplan extends z.infer<typeof MealplanModel> {

@@ -3,14 +3,14 @@ import * as imports from "../null"
 import { CompleteIngredients, RelatedIngredientsModel } from "./index"
 
 export const MacrosModel = z.object({
-  id: z.number().int(),
+  id: z.string(),
   name: z.string(),
   quantity: z.number().int(),
   calories: z.number().int(),
   protein: z.number().int(),
   carbs: z.number().int(),
   fats: z.number().int(),
-  ingredientsId: z.number().int().nullish(),
+  ingredientsId: z.string().nullish(),
 })
 
 export interface CompleteMacros extends z.infer<typeof MacrosModel> {

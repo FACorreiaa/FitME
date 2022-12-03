@@ -1,9 +1,10 @@
 import * as z from "zod"
+import * as imports from "../null"
 import { Gender, Role } from "@prisma/client"
 import { CompleteProfile, RelatedProfileModel, CompleteMealplan, RelatedMealplanModel, CompleteExercisePlan, RelatedExercisePlanModel, CompleteUserBioData, RelatedUserBioDataModel, CompleteUserSuggestedPlan, RelatedUserSuggestedPlanModel, CompleteAccount, RelatedAccountModel, CompleteSession, RelatedSessionModel } from "./index"
 
 export const UserModel = z.object({
-  id: z.number().int(),
+  id: z.string(),
   first_name: z.string().nullish(),
   last_name: z.string().nullish(),
   gender: z.nativeEnum(Gender),

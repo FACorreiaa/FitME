@@ -3,10 +3,10 @@ import * as imports from "../null"
 import { CompleteUser, RelatedUserModel, CompleteMealplan, RelatedMealplanModel, CompleteExercisePlan, RelatedExercisePlanModel } from "./index"
 
 export const UserSuggestedPlanModel = z.object({
-  id: z.number().int(),
-  userId: z.number().int().nullish(),
-  mealplanId: z.number().int(),
-  exercisePlanId: z.number().int(),
+  id: z.string(),
+  userId: z.string(),
+  mealplanId: z.string(),
+  exercisePlanId: z.string(),
 })
 
 export interface CompleteUserSuggestedPlan extends z.infer<typeof UserSuggestedPlanModel> {

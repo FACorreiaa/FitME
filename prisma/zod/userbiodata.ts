@@ -3,12 +3,12 @@ import * as imports from "../null"
 import { CompleteUser, RelatedUserModel } from "./index"
 
 export const UserBioDataModel = z.object({
-  id: z.number().int(),
+  id: z.string(),
   weight: z.number().int().nullish(),
   waist_width: z.number().int().nullish(),
   leg_width: z.number().int().nullish(),
   chest_wdith: z.number().int().nullish(),
-  userId: z.number().int(),
+  userId: z.string(),
 })
 
 export interface CompleteUserBioData extends z.infer<typeof UserBioDataModel> {

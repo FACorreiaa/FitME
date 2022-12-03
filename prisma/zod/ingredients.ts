@@ -3,9 +3,9 @@ import * as imports from "../null"
 import { CompleteMacros, RelatedMacrosModel, CompleteMealComposition, RelatedMealCompositionModel } from "./index"
 
 export const IngredientsModel = z.object({
-  id: z.number().int(),
+  id: z.string(),
   ingredients_name: z.string(),
-  mealCompositionId: z.number().int().nullish(),
+  mealCompositionId: z.string().nullish(),
 })
 
 export interface CompleteIngredients extends z.infer<typeof IngredientsModel> {

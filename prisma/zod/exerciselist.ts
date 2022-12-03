@@ -3,7 +3,7 @@ import * as imports from "../null"
 import { CompleteExercisePlan, RelatedExercisePlanModel, CompleteExerciseComposition, RelatedExerciseCompositionModel } from "./index"
 
 export const ExerciseListModel = z.object({
-  id: z.number().int(),
+  id: z.string(),
   quantity: z.number().int(),
 })
 

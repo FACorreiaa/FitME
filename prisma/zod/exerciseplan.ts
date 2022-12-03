@@ -3,14 +3,14 @@ import * as imports from "../null"
 import { CompleteExerciseList, RelatedExerciseListModel, CompleteUser, RelatedUserModel, CompleteUserSuggestedPlan, RelatedUserSuggestedPlanModel } from "./index"
 
 export const ExercisePlanModel = z.object({
-  id: z.number().int(),
+  id: z.string(),
   name: z.string(),
   type: z.string(),
   created_at: z.date(),
   updated: z.date(),
   active: z.boolean(),
-  authorId: z.number().int(),
-  exerciseListId: z.number().int(),
+  authorId: z.string(),
+  exerciseListId: z.string(),
 })
 
 export interface CompleteExercisePlan extends z.infer<typeof ExercisePlanModel> {

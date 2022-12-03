@@ -45,7 +45,7 @@ enum Gender {
 }
 
 model User {
-  id                Int                 @id @default(autoincrement())
+  id                String              @id @default(cuid())
   first_name        String?
   last_name         String?
   gender            Gender
@@ -68,7 +68,7 @@ model User {
 // Necessary for Next auth
 model Account {
   id                String  @id @default(cuid())
-  userId            Int
+  userId            String
   type              String
   provider          String
   providerAccountId String
@@ -87,7 +87,7 @@ model Account {
 model Session {
   id           String   @id @default(cuid())
   sessionToken String   @unique
-  userId       Int
+  userId       String
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
@@ -101,36 +101,36 @@ model VerificationToken {
 }
 
 model UserSuggestedPlan {
-  id             Int          @id @default(autoincrement())
+  id             String       @id @default(cuid())
   User           User?        @relation(fields: [userId], references: [id])
-  userId         Int?
+  userId         String
   mealPlan       Mealplan     @relation(fields: [mealplanId], references: [id])
-  mealplanId     Int
+  mealplanId     String
   exercisePlan   ExercisePlan @relation(fields: [exercisePlanId], references: [id])
-  exercisePlanId Int
+  exercisePlanId String
 }
 
 model Profile {
-  id         Int     @id @default(autoincrement())
+  id         String  @id @default(cuid())
   bio        String?
   profession String?
   image      String?
   user       User    @relation(fields: [userId], references: [id])
-  userId     Int     @unique
+  userId     String  @unique
 }
 
 model UserBioData {
-  id          Int  @id @default(autoincrement())
+  id          String @id @default(cuid())
   weight      Int?
   waist_width Int?
   leg_width   Int?
   chest_wdith Int?
-  user        User @relation(fields: [userId], references: [id])
-  userId      Int  @unique
+  user        User   @relation(fields: [userId], references: [id])
+  userId      String @unique
 }
 
 model Mealplan {
-  id                Int                 @id @default(autoincrement())
+  id                String              @id @default(cuid())
   name              String
   type              String
   meal_list         MealList            @relation(fields: [mealListId], references: [id])
@@ -138,36 +138,36 @@ model Mealplan {
   updated_at        DateTime            @updatedAt
   active            Boolean             @default(false)
   author            User                @relation(fields: [authorId], references: [id])
-  authorId          Int
-  mealListId        Int
+  authorId          String
+  mealListId        String
   UserSuggestedPlan UserSuggestedPlan[]
 }
 
 model MealList {
-  id        Int               @id @default(autoincrement())
+  id        String            @id @default(cuid())
   meal_plan Mealplan[]
   quantity  Int
   meals     MealComposition[]
 }
 
 model MealComposition {
-  id Int @id @default(autoincrement())
+  id String @id @default(cuid())
 
   MealList    MealList?     @relation(fields: [mealListId], references: [id])
-  mealListId  Int?
+  mealListId  String?
   ingredients Ingredients[]
 }
 
 model Ingredients {
-  id                Int              @id @default(autoincrement())
+  id                String           @id @default(cuid())
   ingredients_name  String
   macros            Macros[]
   MealComposition   MealComposition? @relation(fields: [mealCompositionId], references: [id])
-  mealCompositionId Int?
+  mealCompositionId String?
 }
 
 model Macros {
-  id            Int          @id @default(autoincrement())
+  id            String       @id @default(cuid())
   name          String
   quantity      Int
   calories      Int
@@ -175,11 +175,11 @@ model Macros {
   carbs         Int
   fats          Int
   Ingredients   Ingredients? @relation(fields: [ingredientsId], references: [id])
-  ingredientsId Int?
+  ingredientsId String?
 }
 
 model ExercisePlan {
-  id                Int                 @id @default(autoincrement())
+  id                String              @id @default(cuid())
   name              String
   type              String
   exercise_list     ExerciseList        @relation(fields: [exerciseListId], references: [id])
@@ -187,38 +187,38 @@ model ExercisePlan {
   updated           DateTime            @updatedAt
   active            Boolean             @default(false)
   author            User                @relation(fields: [authorId], references: [id])
-  authorId          Int
-  exerciseListId    Int
+  authorId          String
+  exerciseListId    String
   UserSuggestedPlan UserSuggestedPlan[]
 }
 
 model ExerciseList {
-  id           Int                   @id @default(autoincrement())
+  id           String                @id @default(cuid())
   ExercisePlan ExercisePlan[]
   quantity     Int
   exercises    ExerciseComposition[]
 }
 
 model ExerciseComposition {
-  id             Int           @id @default(autoincrement())
+  id             String        @id @default(cuid())
   Exercises      Exercises[]
   ExerciseList   ExerciseList? @relation(fields: [exerciseListId], references: [id])
-  exerciseListId Int?
+  exerciseListId String
 }
 
 model Exercises {
-  id                    Int                  @id @default(autoincrement())
+  id                    String               @id @default(cuid())
   exercise_name         String
   exercises_period      ExercisesPeriod[]
   ExerciseComposition   ExerciseComposition? @relation(fields: [exerciseCompositionId], references: [id])
-  exerciseCompositionId Int?
+  exerciseCompositionId String
 }
 
 model ExercisesPeriod {
-  id          Int        @id @default(autoincrement())
+  id          String     @id @default(cuid())
   name        String
   series      Int
   reps        Int
   Exercises   Exercises? @relation(fields: [exercisesId], references: [id])
-  exercisesId Int?
+  exercisesId String
 }
