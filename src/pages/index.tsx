@@ -9,6 +9,9 @@ import { getServerAuthSession } from "../server/common/get-server-auth-session";
 const Home: NextPage = () => {
   //const hello = trpc.example.hello.useQuery({ text: "from tRPC" });
 
+  const { data: session } = useSession();
+  console.log("session", session);
+
   return (
     <>
       <Head>
@@ -21,6 +24,7 @@ const Home: NextPage = () => {
           <h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]">
             Create <span className="text-[hsl(280,100%,70%)]">T3</span> App
           </h1>
+          {session ? <button>Log out</button> : <button>Sign in</button>}
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8">
             <Link
               className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20"
@@ -87,7 +91,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 
   if (!session) {
     return {
-      redirect: { destination: "/login", permanent: false },
+      redirect: { destination: "/signin", permanent: false },
     };
   }
   return {

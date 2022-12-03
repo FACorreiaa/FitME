@@ -9,15 +9,14 @@ export const userLoginRouter = router({
   //       greeting: `Hello ${input?.text ?? "world"}`,
   //     };
   //   }),
-  me: protectedProcedure.query(async ({ctx}) => {
-    const userResponse = await ctx.prisma.user.findFirst({
-      where: {id: ctx.session.user.id},
-      select: {role: true}
-    })
+  // me: protectedProcedure.query(async ({ ctx }) => {
+  //   const userResponse = await ctx.prisma.user.findFirst({
+  //     where: { id: ctx.session.user.id },
+  //     select: { role: true },
+  //   });
 
-    return userResponse?.role
-
-  }),
+  //   return userResponse?.role;
+  // }),
   getUsers: protectedProcedure.query(async ({ ctx }) => {
     try {
       return await ctx.prisma.user.findMany({
