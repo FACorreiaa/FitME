@@ -1,13 +1,15 @@
 import { useState } from "react";
-import styles from "../styles/Index.module.css";
-import { GetServerSidePropsContext, type NextPage } from "next";
+import type {GetServerSidePropsContext } from "next";
+import { type NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
-import { signIn, signOut, useSession } from "next-auth/react";
 import { type Session } from "next-auth";
+import { signIn, signOut, useSession } from "next-auth/react";
 
-import { trpc } from "../utils/trpc";
 import { getServerAuthSession } from "../server/common/get-server-auth-session";
+import { trpc } from "../utils/trpc";
+
+import styles from "../styles/Index.module.css";
 
 const Home: NextPage = () => {
   //const hello = trpc.example.hello.useQuery({ text: "from tRPC" });

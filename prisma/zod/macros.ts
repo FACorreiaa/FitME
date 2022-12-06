@@ -1,5 +1,6 @@
-import * as z from "zod";
-import { CompleteIngredients, RelatedIngredientsModel } from "./index";
+import * as z from "zod"
+import * as imports from "../null"
+import { CompleteIngredients, RelatedIngredientsModel } from "./index"
 
 export const MacrosModel = z.object({
   id: z.string(),
@@ -10,10 +11,10 @@ export const MacrosModel = z.object({
   carbs: z.number().int(),
   fats: z.number().int(),
   ingredientsId: z.string().nullish(),
-});
+})
 
 export interface CompleteMacros extends z.infer<typeof MacrosModel> {
-  Ingredients?: CompleteIngredients | null;
+  Ingredients?: CompleteIngredients | null
 }
 
 /**
@@ -21,8 +22,6 @@ export interface CompleteMacros extends z.infer<typeof MacrosModel> {
  *
  * NOTE: Lazy required in case of potential circular dependencies within schema
  */
-export const RelatedMacrosModel: z.ZodSchema<CompleteMacros> = z.lazy(() =>
-  MacrosModel.extend({
-    Ingredients: RelatedIngredientsModel.nullish(),
-  })
-);
+export const RelatedMacrosModel: z.ZodSchema<CompleteMacros> = z.lazy(() => MacrosModel.extend({
+  Ingredients: RelatedIngredientsModel.nullish(),
+}))

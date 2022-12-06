@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { HiAtSymbol, HiFingerPrint, HiOutlineUser } from "react-icons/hi2";
-import Layout from "../layout/layout";
 import Head from "next/head";
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
+
+import Layout from "../layout/layout";
+
 import styles from "../styles/Form.module.css";
 
 function RegisterPage() {

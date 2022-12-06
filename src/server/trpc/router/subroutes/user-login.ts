@@ -1,5 +1,5 @@
 import { UserModel } from "../../../../../prisma/zod/user";
-import { router, publicProcedure, protectedProcedure } from "../../trpc";
+import { protectedProcedure, publicProcedure, router } from "../../trpc";
 
 export const userLoginRouter = router({
   // hello: publicProcedure
