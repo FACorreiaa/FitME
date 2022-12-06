@@ -5,16 +5,12 @@ import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
-
+import loginValidate from "../lib/validate";
 import Layout from "../layout/layout";
 import { trpc } from "../utils/trpc";
 
 import styles from "../styles/Form.module.css";
 
-type LoginFormProps = {
-  email: string;
-  password: string;
-};
 export const LoginPage = () => {
   // const { data, isLoading } = trpc.userLogin.me.useQuery();
   // console.log("data", data);
@@ -29,6 +25,7 @@ export const LoginPage = () => {
       email: "",
       password: "",
     },
+    validate: loginValidate,
     onSubmit: onSubmitLoginValues,
   });
 
@@ -78,6 +75,11 @@ export const LoginPage = () => {
             <span className="icon flex items-center px-4">
               <HiAtSymbol size={25} />
             </span>
+            {formik.errors?.email && formik.touched?.email ? (
+              <span className="text-rose-400">{formik.errors.email}</span>
+            ) : (
+              <></>
+            )}
           </div>
           <div className={styles.input_group}>
             <input
@@ -92,6 +94,11 @@ export const LoginPage = () => {
             >
               <HiFingerPrint size={25} />
             </span>
+            {formik.errors?.email && formik.touched?.email ? (
+              <span className="text-rose-400">{formik.errors.password}</span>
+            ) : (
+              <></>
+            )}
           </div>
           <div className={styles.input_button}>
             <button className={styles.button} type="submit">
