@@ -112,7 +112,7 @@ function RegisterPage() {
         </form>
         <p className="text-grey-400 text-centere">
           Have an account yet?{" "}
-          <Link className="text-blue-700" href={"/login"}>
+          <Link className="text-blue-700" href={"/signin"}>
             Sign In!
           </Link>
         </p>

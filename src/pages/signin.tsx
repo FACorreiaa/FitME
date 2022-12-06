@@ -26,6 +26,12 @@ export const LoginPage = () => {
       callbackUrl: "http://localhost:3000",
     });
   }
+
+  async function handleGithubSignin() {
+    signIn("github", {
+      callbackUrl: "http://localhost:3000",
+    });
+  }
   return (
     <Layout>
       <Head>
@@ -89,7 +95,11 @@ export const LoginPage = () => {
             </button>
           </div>
           <div className={styles.input_button}>
-            <button className={styles.button_custom} type="button">
+            <button
+              onClick={handleGithubSignin}
+              className={styles.button_custom}
+              type="button"
+            >
               Sign in with Github{" "}
               <Image
                 alt="github"
