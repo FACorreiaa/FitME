@@ -1,15 +1,20 @@
-import * as z from "zod"
-import * as imports from "../null"
-import { CompleteMealList, RelatedMealListModel, CompleteIngredients, RelatedIngredientsModel } from "./index"
+import * as z from "zod";
+import {
+  CompleteMealList,
+  RelatedMealListModel,
+  CompleteIngredients,
+  RelatedIngredientsModel,
+} from "./index";
 
 export const MealCompositionModel = z.object({
   id: z.string(),
   mealListId: z.string().nullish(),
-})
+});
 
-export interface CompleteMealComposition extends z.infer<typeof MealCompositionModel> {
-  MealList?: CompleteMealList | null
-  ingredients: CompleteIngredients[]
+export interface CompleteMealComposition
+  extends z.infer<typeof MealCompositionModel> {
+  MealList?: CompleteMealList | null;
+  ingredients: CompleteIngredients[];
 }
 
 /**
@@ -17,7 +22,10 @@ export interface CompleteMealComposition extends z.infer<typeof MealCompositionM
  *
  * NOTE: Lazy required in case of potential circular dependencies within schema
  */
-export const RelatedMealCompositionModel: z.ZodSchema<CompleteMealComposition> = z.lazy(() => MealCompositionModel.extend({
-  MealList: RelatedMealListModel.nullish(),
-  ingredients: RelatedIngredientsModel.array(),
-}))
+export const RelatedMealCompositionModel: z.ZodSchema<CompleteMealComposition> =
+  z.lazy(() =>
+    MealCompositionModel.extend({
+      MealList: RelatedMealListModel.nullish(),
+      ingredients: RelatedIngredientsModel.array(),
+    })
+  );

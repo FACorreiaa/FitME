@@ -1,4 +1,5 @@
 import { trpc } from "../utils/trpc";
+import { signIn } from "next-auth/react";
 import Layout from "../layout/layout";
 import Head from "next/head";
 import Link from "next/link";
@@ -19,6 +20,12 @@ export const LoginPage = () => {
   const onPasswordIconClick = () => {
     setShow(!show);
   };
+
+  async function handleGoogleSignin() {
+    signIn("google", {
+      callbackUrl: "http://localhost:3000",
+    });
+  }
   return (
     <Layout>
       <Head>
@@ -67,7 +74,11 @@ export const LoginPage = () => {
             </button>
           </div>
           <div className={styles.input_button}>
-            <button className={styles.button_custom} type="button">
+            <button
+              onClick={handleGoogleSignin}
+              className={styles.button_custom}
+              type="button"
+            >
               Sign in with Google{" "}
               <Image
                 alt="google"
