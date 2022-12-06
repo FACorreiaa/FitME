@@ -5,7 +5,7 @@ import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
-import loginValidate from "../lib/validate";
+import loginValidate from "../lib/login-validate";
 import Layout from "../layout/layout";
 import { trpc } from "../utils/trpc";
 
@@ -94,7 +94,7 @@ export const LoginPage = () => {
             >
               <HiFingerPrint size={25} />
             </span>
-            {formik.errors?.email && formik.touched?.email ? (
+            {formik.errors?.password && formik.touched?.password ? (
               <span className="text-rose-400">{formik.errors.password}</span>
             ) : (
               <></>
