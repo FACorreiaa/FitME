@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { HiAtSymbol, HiFingerPrint, HiOutlineUser } from "react-icons/hi2";
+import { useFormik } from "formik";
 import Head from "next/head";
-import Image from "next/image";
 import Link from "next/link";
 
 import Layout from "../layout/layout";
@@ -11,6 +11,19 @@ import styles from "../styles/Form.module.css";
 function RegisterPage() {
   const [show, setShow] = useState({ password: false, cpassword: false });
 
+  async function onSumitRegisterValues(values: any) {
+    console.log(values);
+  }
+
+  const formik = useFormik({
+    initialValues: {
+      username: "",
+      email: "",
+      password: "",
+      cpassword: "",
+    },
+    onSubmit: onSumitRegisterValues,
+  });
   const onPasswordIconClick = () => {
     setShow({ ...show, password: !show.password });
   };
@@ -21,9 +34,6 @@ function RegisterPage() {
 
   return (
     <Layout>
-      <Head>
-        <h1>Register</h1>
-      </Head>
       <section className="mx-auto flex w-3/4 flex-col gap-1">
         <div className="title">
           <h1 className="font-body py-4 text-4xl text-gray-800">Register</h1>
@@ -33,13 +43,13 @@ function RegisterPage() {
           </p>
         </div>
 
-        <form className="flex flex-col gap-5">
+        <form className="flex flex-col gap-5" onSubmit={formik.handleSubmit}>
           <div className={styles.input_group}>
             <input
               className={styles.input_text}
               type="username"
-              name="username"
               placeholder="Username"
+              {...formik.getFieldProps("username")}
             />
             <span className="icon flex items-center px-4">
               <HiOutlineUser size={25} />
@@ -49,8 +59,8 @@ function RegisterPage() {
             <input
               className={styles.input_text}
               type="email"
-              name="email"
               placeholder="Email"
+              {...formik.getFieldProps("email")}
             />
             <span className="icon flex items-center px-4">
               <HiAtSymbol size={25} />
@@ -60,8 +70,8 @@ function RegisterPage() {
             <input
               className={styles.input_text}
               type={show.password ? "text" : "password"}
-              name="password"
               placeholder="Password"
+              {...formik.getFieldProps("password")}
             />
             <span
               onClick={onPasswordIconClick}
@@ -74,8 +84,8 @@ function RegisterPage() {
             <input
               className={styles.input_text}
               type={show.cpassword ? "text" : "password"}
-              name="cpassword"
               placeholder="Confirm Password"
+              {...formik.getFieldProps("cpassword")}
             />
             <span
               onClick={onPasswordConfirmIconClick}

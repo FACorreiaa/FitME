@@ -29,14 +29,14 @@ export const LoginPage = () => {
       email: "",
       password: "",
     },
-    onSubmit: onSubmitFormikValues,
+    onSubmit: onSubmitLoginValues,
   });
 
   const onPasswordIconClick = () => {
     setShow(!show);
   };
 
-  async function onSubmitFormikValues(values: any) {
+  async function onSubmitLoginValues(values: any) {
     console.log(values);
   }
 
