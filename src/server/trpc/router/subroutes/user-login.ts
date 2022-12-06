@@ -21,8 +21,7 @@ export const userLoginRouter = router({
     try {
       return await ctx.prisma.user.findMany({
         select: {
-          first_name: true,
-          last_name: true,
+          id: true,
           nickname: true,
           email: true,
         },
@@ -52,17 +51,13 @@ export const userLoginRouter = router({
     .input(UserModel)
     .mutation(async ({ ctx, input }) => {
       try {
-        const { first_name, last_name, nickname, email, password, gender } =
-          input;
+        const { nickname, email, password } = input;
 
         return await ctx.prisma.user.create({
           data: {
-            first_name,
-            last_name,
             nickname,
             email,
             password,
-            gender,
           },
         });
       } catch (error: any) {

@@ -5,8 +5,9 @@ import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
-import loginValidate from "../lib/login-validate";
+
 import Layout from "../layout/layout";
+import loginValidate from "../lib/login-validate";
 import { trpc } from "../utils/trpc";
 
 import styles from "../styles/Form.module.css";
@@ -65,7 +66,13 @@ export const LoginPage = () => {
         </div>
 
         <form className="flex flex-col gap-5" onSubmit={formik.handleSubmit}>
-          <div className={styles.input_group}>
+          <div
+            className={`${styles.input_group} ${
+              formik.errors?.email && formik.touched?.email
+                ? "border-rose-600"
+                : ""
+            }`}
+          >
             <input
               className={styles.input_text}
               type="email"
@@ -75,13 +82,19 @@ export const LoginPage = () => {
             <span className="icon flex items-center px-4">
               <HiAtSymbol size={25} />
             </span>
-            {formik.errors?.email && formik.touched?.email ? (
-              <span className="text-rose-400">{formik.errors.email}</span>
-            ) : (
-              <></>
-            )}
           </div>
-          <div className={styles.input_group}>
+          {formik.errors?.email && formik.touched?.email ? (
+            <span className="text-rose-400">{formik.errors.email}</span>
+          ) : (
+            <></>
+          )}
+          <div
+            className={`${styles.input_group} ${
+              formik.errors?.password && formik.touched?.password
+                ? "border-rose-600"
+                : ""
+            }`}
+          >
             <input
               className={styles.input_text}
               type={show ? "text" : "password"}
@@ -94,12 +107,12 @@ export const LoginPage = () => {
             >
               <HiFingerPrint size={25} />
             </span>
-            {formik.errors?.password && formik.touched?.password ? (
-              <span className="text-rose-400">{formik.errors.password}</span>
-            ) : (
-              <></>
-            )}
           </div>
+          {formik.errors?.password && formik.touched?.password ? (
+            <span className="text-rose-400">{formik.errors.password}</span>
+          ) : (
+            <></>
+          )}
           <div className={styles.input_button}>
             <button className={styles.button} type="submit">
               Login

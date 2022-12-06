@@ -1,4 +1,4 @@
-.input-group {
+.input_group {
   @apply flex rounded-xl border;
   position: relative;
 }

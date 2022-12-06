@@ -1,5 +1,6 @@
 import * as z from "zod"
 import * as imports from "../null"
+import { Gender } from "@prisma/client"
 import { CompleteUser, RelatedUserModel } from "./index"
 
 export const ProfileModel = z.object({
@@ -8,6 +9,9 @@ export const ProfileModel = z.object({
   profession: z.string().nullish(),
   image: z.string().nullish(),
   userId: z.string(),
+  first_name: z.string().nullish(),
+  last_name: z.string().nullish(),
+  gender: z.nativeEnum(Gender),
 })
 
 export interface CompleteProfile extends z.infer<typeof ProfileModel> {

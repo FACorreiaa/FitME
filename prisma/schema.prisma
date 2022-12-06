@@ -46,9 +46,6 @@ enum Gender {
 
 model User {
   id                String              @id @default(cuid())
-  first_name        String?
-  last_name         String?
-  gender            Gender
   email             String              @unique
   nickname          String              @unique
   password          String
@@ -117,6 +114,9 @@ model Profile {
   image      String?
   user       User    @relation(fields: [userId], references: [id])
   userId     String  @unique
+  first_name String?
+  last_name  String?
+  gender     Gender
 }
 
 model UserBioData {
