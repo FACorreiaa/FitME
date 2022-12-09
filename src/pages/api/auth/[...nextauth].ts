@@ -5,9 +5,8 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import DiscordProvider from "next-auth/providers/discord";
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
-
 import { env } from "../../../env/server.mjs";
-import { prisma } from "../../../server/db/client";
+import { UserModel } from "../../../../prisma/zod/user";
 
 export const authOptions: NextAuthOptions = {
   // Include user.id on session
@@ -37,6 +36,9 @@ export const authOptions: NextAuthOptions = {
   // jwt: {
   //   secret: process.env.SECRET,
   // },
+  session: {
+    strategy: "jwt",
+  },
   providers: [
     DiscordProvider({
       clientId: env.DISCORD_CLIENT_ID,
@@ -49,6 +51,42 @@ export const authOptions: NextAuthOptions = {
     GithubProvider({
       clientId: env.GITHUB_CLIENT_ID,
       clientSecret: env.GITHUB_CLIENT_SECRET,
+    }),
+    CredentialsProvider({
+      type: "credentials",
+      // credentials: {
+      //   email: {
+      //     label: "Email",
+      //     type: "email",
+      //     placeholder: "Insert valid email address",
+      //   },
+      //   password: {
+      //     label: "Password",
+      //     type: "password",
+      //     placeholder: "Insert valid password",
+      //   },
+      // },
+      credentials: {},
+      authorize(credentials, req) {
+        const { email, password } = credentials as {
+          email: string;
+          password: string;
+        };
+        if (
+          email !== "fernandocorreia316@gmail.com" ||
+          password !== "Kats0unam1"
+        ) {
+          return null;
+        }
+
+        //change for db logic later
+        return {
+          id: "3sj1sj19sj19",
+          name: "lol",
+          email: "fernandocorreia316@gmail.com",
+        };
+      },
+      //change logig for db
     }),
     // CredentialsProvider({
     //   name: "credentials",
@@ -81,11 +119,12 @@ export const authOptions: NextAuthOptions = {
     //   },
     // }),
   ],
-  // pages: {
-  //   signIn: "/signin",
-  //   signOut: "/signout",
-  //   newUser: "/register",
-  // },
+  pages: {
+    signIn: "/signin",
+    // signOut: "/signout",
+    // newUser: "/index",
+    // error: '/error'
+  },
 };
 
 export default NextAuth(authOptions);

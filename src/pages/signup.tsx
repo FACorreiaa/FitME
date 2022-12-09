@@ -142,7 +142,7 @@ function RegisterPage() {
           )}
           <div className={styles.input_button}>
             <button className={styles.button} type="submit">
-              Login
+              Register
             </button>
           </div>
           {/* <div className={styles.input_button}>

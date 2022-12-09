@@ -34,8 +34,15 @@ export const LoginPage = () => {
     setShow(!show);
   };
 
-  async function onSubmitLoginValues(values: any) {
-    console.log(values);
+  async function onSubmitLoginValues(event: any): Promise<any> {
+    event.preventDefault();
+    const result = signIn("credentials", {
+      email: formik.getFieldProps("email"),
+      password: formik.getFieldProps("password"),
+      redirect: false,
+    });
+
+    return result;
   }
 
   async function handleGoogleSignin() {

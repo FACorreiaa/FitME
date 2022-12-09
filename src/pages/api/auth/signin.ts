@@ -1,7 +1,7 @@
 import { UserModel } from "../../../../prisma/zod/user";
 import { publicProcedure, router } from "../../../server/trpc/trpc";
 
-export const userLoginRouter = router({
+export const signInRouter = router({
   getUser: publicProcedure.input(UserModel).query(async ({ ctx, input }) => {
     try {
       const { id } = input;
