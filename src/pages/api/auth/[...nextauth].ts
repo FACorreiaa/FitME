@@ -7,7 +7,9 @@ import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 import { env } from "../../../env/server.mjs";
 import { UserModel } from "../../../../prisma/zod/user";
+import { PrismaClient } from "@prisma/client";
 
+const prisma = new PrismaClient();
 export const authOptions: NextAuthOptions = {
   // Include user.id on session
   // callbacks: {
@@ -52,72 +54,59 @@ export const authOptions: NextAuthOptions = {
       clientId: env.GITHUB_CLIENT_ID,
       clientSecret: env.GITHUB_CLIENT_SECRET,
     }),
-    CredentialsProvider({
-      type: "credentials",
-      // credentials: {
-      //   email: {
-      //     label: "Email",
-      //     type: "email",
-      //     placeholder: "Insert valid email address",
-      //   },
-      //   password: {
-      //     label: "Password",
-      //     type: "password",
-      //     placeholder: "Insert valid password",
-      //   },
-      // },
-      credentials: {},
-      authorize(credentials, req) {
-        const { email, password } = credentials as {
-          email: string;
-          password: string;
-        };
-        if (
-          email !== "fernandocorreia316@gmail.com" ||
-          password !== "Kats0unam1"
-        ) {
-          return null;
-        }
-
-        //change for db logic later
-        return {
-          id: "3sj1sj19sj19",
-          name: "lol",
-          email: "fernandocorreia316@gmail.com",
-        };
-      },
-      //change logig for db
-    }),
     // CredentialsProvider({
-    //   name: "credentials",
-    //   credentials: {
-    //     email: {
-    //       label: "email",
-    //       type: "text",
-    //       placeholder: "test@test.io",
-    //     },
-    //     password: {
-    //       label: "password",
-    //       type: "password",
-    //     },
-    //   },
-    //   authorize: async (credentials: any) => {
-    //     const user = await prisma.user.findFirst({
-    //       where: {
-    //         email: credentials.email,
-    //         password: credentials.password,
-    //       },
-    //     });
-
-    //     if (user !== null) {
-    //       return user;
-    //     } else {
-    //       throw new Error(
-    //         "User does not exists. Please make sure you insert the correct email & password."
-    //       );
+    //   type: "credentials",
+    //   credentials: {},
+    //   authorize(credentials, req) {
+    //     const { email, password } = credentials as {
+    //       email: string;
+    //       password: string;
+    //     };
+    //     if (
+    //       email !== "fernandocorreia316@gmail.com" ||
+    //       password !== "Kats0unam1"
+    //     ) {
+    //       return null;
     //     }
+
+    //     return {
+    //       id: "3sj1sj19sj19",
+    //       name: "lol",
+    //       email: "fernandocorreia316@gmail.com",
+    //     };
     //   },
     // }),
+    CredentialsProvider({
+      name: "credentials",
+      credentials: {
+        email: {
+          label: "email",
+          type: "text",
+          placeholder: "test@test.io",
+        },
+        password: {
+          label: "password",
+          type: "password",
+        },
+      },
+      authorize: async (credentials: any) => {
+        const user = await prisma.user.findFirst({
+          where: {
+            email: credentials.email,
+            password: credentials.password,
+          },
+        });
+
+        console.log("user", user);
+        if (user !== null) {
+          return user;
+        } else {
+          throw new Error(
+            "User does not exists. Please make sure you insert the correct email & password."
+          );
+        }
+      },
+    }),
   ],
   pages: {
     signIn: "/signin",
