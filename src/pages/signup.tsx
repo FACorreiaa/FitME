@@ -6,14 +6,26 @@ import Link from "next/link";
 
 import Layout from "../layout/layout";
 import registerValidate from "../lib/register-validate";
-
+import { useRouter } from "next/router";
 import styles from "../styles/Form.module.css";
 
 function RegisterPage() {
   const [show, setShow] = useState({ password: false, cpassword: false });
-
+  const router = useRouter();
   async function onSumitRegisterValues(values: any) {
-    console.log(values);
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(values),
+    };
+
+    await fetch("http://localhost:3000/api/auth/signup", options)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data?.ok) router.push("http://localhost:3000");
+      });
   }
 
   const formik = useFormik({

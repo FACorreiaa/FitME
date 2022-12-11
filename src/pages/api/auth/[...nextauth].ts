@@ -7,9 +7,9 @@ import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 import { env } from "../../../env/server.mjs";
 import { UserModel } from "../../../../prisma/zod/user";
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "../../../server/db/client";
+import { compare } from "bcryptjs";
 
-const prisma = new PrismaClient();
 export const authOptions: NextAuthOptions = {
   // Include user.id on session
   // callbacks: {
@@ -90,24 +90,35 @@ export const authOptions: NextAuthOptions = {
         },
       },
       authorize: async (credentials: any) => {
-        const user = await prisma.user.findFirst({
+        const user: any = await prisma.user.findFirst({
           where: {
             email: credentials.email,
             password: credentials.password,
           },
         });
 
-        console.log("user", user);
-        if (user !== null) {
-          return user;
-        } else {
-          throw new Error(
-            "User does not exists. Please make sure you insert the correct email & password."
-          );
+        console.log("user credentials", user);
+        const checkPassword = await compare(
+          credentials.password,
+          user?.password
+        );
+
+        if (!checkPassword || user?.email !== credentials.email) {
+          throw new Error("Username or Password doesnt match");
         }
+
+        return user;
+        // if (user !== null) {
+        //   return user;
+        // } else {
+        //   throw new Error(
+        //     "User does not exists. Please make sure you insert the correct email & password."
+        //   );
+        // }
       },
     }),
   ],
+  secret: env.NEXTAUTH_SECRET,
   pages: {
     signIn: "/signin",
     // signOut: "/signout",

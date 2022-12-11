@@ -2,11 +2,7 @@ import { UserModel } from "../../../../prisma/zod/user";
 import { publicProcedure, router } from "../../../server/trpc/trpc";
 import { type NextApiRequest, type NextApiResponse } from "next";
 import { hash } from "bcryptjs";
-type SignupProps = {
-  ctx: any;
-  input: any;
-  res: NextApiRequest;
-};
+import { Context } from "../../../server/trpc/context";
 export const signUpRouter = router({
   signup: publicProcedure.input(UserModel).mutation(async ({ ctx, input }) => {
     try {
@@ -24,7 +20,6 @@ export const signUpRouter = router({
       }
 
       //hash password
-
       return await ctx.prisma.user.create({
         data: {
           nickname,

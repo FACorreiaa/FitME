@@ -5,13 +5,17 @@ import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
-
+import { useRouter } from "next/router";
 import Layout from "../layout/layout";
 import loginValidate from "../lib/login-validate";
 import { trpc } from "../utils/trpc";
 
 import styles from "../styles/Form.module.css";
 
+type LoginValuesProps = {
+  email: string;
+  password: string;
+};
 export const LoginPage = () => {
   // const { data, isLoading } = trpc.userLogin.me.useQuery();
   // console.log("data", data);
@@ -21,6 +25,7 @@ export const LoginPage = () => {
   // if (data !== "ADMIN") return null;
 
   const [show, setShow] = useState(false);
+  const router = useRouter();
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -34,14 +39,16 @@ export const LoginPage = () => {
     setShow(!show);
   };
 
-  async function onSubmitLoginValues(event: any): Promise<any> {
+  async function onSubmitLoginValues(event: any, values: any): Promise<any> {
     event.preventDefault();
-    const result = signIn("credentials", {
-      email: formik.getFieldProps("email"),
-      password: formik.getFieldProps("password"),
+    const result = await signIn("credentials", {
+      email: values?.email,
+      password: values?.password,
       redirect: false,
+      callbackUrl: "/",
     });
-
+    console.log("result", result);
+    if (result?.ok) router.push("/");
     return result;
   }
 
@@ -158,7 +165,7 @@ export const LoginPage = () => {
         </form>
         <p className="text-grey-400 text-centere">
           Dont have an account yet?{" "}
-          <Link className="text-blue-700" href={"/register"}>
+          <Link className="text-blue-700" href={"/signup"}>
             Sign up!
           </Link>
         </p>
