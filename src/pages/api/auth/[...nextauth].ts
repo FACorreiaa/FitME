@@ -1,14 +1,13 @@
 // Prisma adapter for NextAuth, optional and can be removed
-import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import { compare } from "bcryptjs";
 import NextAuth, { type NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import DiscordProvider from "next-auth/providers/discord";
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
+
 import { env } from "../../../env/server.mjs";
-import { UserModel } from "../../../../prisma/zod/user";
 import { prisma } from "../../../server/db/client";
-import { compare } from "bcryptjs";
 
 export const authOptions: NextAuthOptions = {
   // Include user.id on session
@@ -38,6 +37,15 @@ export const authOptions: NextAuthOptions = {
   // jwt: {
   //   secret: process.env.SECRET,
   // },
+  // Include user.id on session
+  callbacks: {
+    session({ session, user }) {
+      if (session.user) {
+        session.user.id = user.id;
+      }
+      return session;
+    },
+  },
   session: {
     strategy: "jwt",
   },

@@ -1,5 +1,5 @@
-import * as z from "zod";
 import { Gender } from "@prisma/client";
+import * as z from "zod";
 import { CompleteUser, RelatedUserModel } from "./index";
 
 export const ProfileModel = z.object({

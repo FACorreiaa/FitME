@@ -1,31 +1,47 @@
 import { useState } from "react";
 import { HiAtSymbol, HiFingerPrint, HiOutlineUser } from "react-icons/hi2";
 import { useFormik } from "formik";
-import Head from "next/head";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 import Layout from "../layout/layout";
 import registerValidate from "../lib/register-validate";
-import { useRouter } from "next/router";
+import { trpc } from "../utils/trpc";
+
 import styles from "../styles/Form.module.css";
 
+type RegisterPageProps {
+  username: string;
+  email: string;
+  password: string;
+  cpassword: string;
+}
 function RegisterPage() {
+  const mutation = trpc.auth.signUp.useMutation();
+  //console.log("data", data);
+
+  //if (isLoading) return null;
+
   const [show, setShow] = useState({ password: false, cpassword: false });
   const router = useRouter();
-  async function onSumitRegisterValues(values: any) {
-    const options = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(values),
-    };
+  async function onSumitRegisterValues(values: RegisterPageProps) {
+    const { username, email, password, cpassword } = values;
+    console.log("values", values);
+    // const options = {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify(values),
+    // };
 
-    await fetch("http://localhost:3000/api/auth/signup", options)
-      .then((res) => res.json())
-      .then((data) => {
-        if (data?.ok) router.push("http://localhost:3000");
-      });
+    // await fetch("http://localhost:3000/api/signup", options)
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     if (data?.ok) router.push("http://localhost:3000");
+    //   });
+    mutation.mutate({ username, email, password, cpassword });
+    mutation.isSuccess && router.push("http://localhost:3000");
   }
 
   const formik = useFormik({

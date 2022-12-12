@@ -1,3 +1,4 @@
+import { TRPCError } from "@trpc/server";
 import { UserModel } from "../../../../../prisma/zod/user";
 import { protectedProcedure, publicProcedure, router } from "../../trpc";
 
@@ -22,16 +23,18 @@ export const userLoginRouter = router({
       return await ctx.prisma.user.findMany({
         select: {
           id: true,
-          nickname: true,
+          username: true,
           email: true,
         },
         orderBy: {
           createdAt: "desc",
         },
       });
-    } catch (error: any) {
-      console.log(error);
-      throw new Error(error);
+    } catch (error) {
+      throw new TRPCError({
+        code: "INTERNAL_SERVER_ERROR",
+        cause: error,
+      });
     }
   }),
   getUser: publicProcedure.input(UserModel).query(async ({ ctx, input }) => {
@@ -42,27 +45,31 @@ export const userLoginRouter = router({
           id,
         },
       });
-    } catch (error: any) {
-      console.log(error);
-      throw new Error(error);
+    } catch (error) {
+      throw new TRPCError({
+        code: "INTERNAL_SERVER_ERROR",
+        cause: error,
+      });
     }
   }),
   createUser: publicProcedure
     .input(UserModel)
     .mutation(async ({ ctx, input }) => {
       try {
-        const { nickname, email, password } = input;
+        const { username, email, password } = input;
 
         return await ctx.prisma.user.create({
           data: {
-            nickname,
+            username,
             email,
             password,
           },
         });
-      } catch (error: any) {
-        console.log(error);
-        throw new Error(error);
+      } catch (error) {
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          cause: error,
+        });
       }
     }),
   deleteUser: publicProcedure
@@ -76,9 +83,11 @@ export const userLoginRouter = router({
             id: id,
           },
         });
-      } catch (error: any) {
-        console.log(error);
-        throw new Error(error);
+      } catch (error) {
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          cause: error,
+        });
       }
     }),
 });

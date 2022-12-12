@@ -4,7 +4,11 @@
     "project": "./tsconfig.json"
   },
   "plugins": ["@typescript-eslint", "simple-import-sort"],
-  "extends": ["next/core-web-vitals", "plugin:@typescript-eslint/recommended"],
+  "extends": [
+    "next/core-web-vitals",
+    "plugin:@typescript-eslint/recommended",
+    "prettier"
+  ],
   "rules": {
     "@typescript-eslint/consistent-type-imports": "error",
     "simple-import-sort/imports": [

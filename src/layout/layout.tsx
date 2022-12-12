@@ -1,7 +1,11 @@
 import React from "react";
-
 import styles from "../styles/Layout.module.css";
-function Layout({ children }: any) {
+
+type LayoutProps = {
+  children: React.ReactNode;
+};
+
+function Layout({ children }: LayoutProps) {
   return (
     <div className="flex h-screen bg-blue-200">
       <div className="m-auto grid h-3/4 w-3/5 rounded-md bg-slate-50 lg:grid-cols-2">

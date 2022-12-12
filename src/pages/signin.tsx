@@ -1,14 +1,14 @@
-import { useState } from "react";
-import { HiAtSymbol, HiFingerPrint } from "react-icons/hi2";
 import { useFormik } from "formik";
+import { signIn } from "next-auth/react";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
-import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";
+import { useState } from "react";
+import { HiAtSymbol, HiFingerPrint } from "react-icons/hi2";
+
 import Layout from "../layout/layout";
 import loginValidate from "../lib/login-validate";
-import { trpc } from "../utils/trpc";
 
 import styles from "../styles/Form.module.css";
 
@@ -16,6 +16,7 @@ type LoginValuesProps = {
   email: string;
   password: string;
 };
+
 export const LoginPage = () => {
   // const { data, isLoading } = trpc.userLogin.me.useQuery();
   // console.log("data", data);

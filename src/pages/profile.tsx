@@ -1,6 +1,6 @@
-import { GetServerSidePropsContext } from "next";
+import type { GetServerSidePropsContext } from "next";
 import Link from "next/link";
-import React from "react";
+
 import { getServerAuthSession } from "../server/common/get-server-auth-session";
 
 const Profile = () => {
