@@ -1,8 +1,8 @@
-import { useState } from "react";
-import { HiAtSymbol, HiFingerPrint, HiOutlineUser } from "react-icons/hi2";
 import { useFormik } from "formik";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useState } from "react";
+import { HiAtSymbol, HiFingerPrint, HiOutlineUser } from "react-icons/hi2";
 
 import Layout from "../layout/layout";
 import registerValidate from "../lib/register-validate";
@@ -10,12 +10,12 @@ import { trpc } from "../utils/trpc";
 
 import styles from "../styles/Form.module.css";
 
-type RegisterPageProps {
+type RegisterPageProps = {
   username: string;
   email: string;
   password: string;
   cpassword: string;
-}
+};
 function RegisterPage() {
   const mutation = trpc.auth.signUp.useMutation();
   //console.log("data", data);
@@ -41,6 +41,7 @@ function RegisterPage() {
     //     if (data?.ok) router.push("http://localhost:3000");
     //   });
     mutation.mutate({ username, email, password, cpassword });
+    console.log("mutation.isSuccess", mutation.isSuccess);
     mutation.isSuccess && router.push("http://localhost:3000");
   }
 
@@ -51,6 +52,8 @@ function RegisterPage() {
       password: "",
       cpassword: "",
     },
+    validateOnChange: false,
+    validateOnBlur: false,
     validate: registerValidate,
     onSubmit: onSumitRegisterValues,
   });

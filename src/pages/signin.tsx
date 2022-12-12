@@ -40,8 +40,7 @@ export const LoginPage = () => {
     setShow(!show);
   };
 
-  async function onSubmitLoginValues(event: any, values: any): Promise<any> {
-    event.preventDefault();
+  async function onSubmitLoginValues(values: LoginValuesProps): Promise<any> {
     const result = await signIn("credentials", {
       email: values?.email,
       password: values?.password,
