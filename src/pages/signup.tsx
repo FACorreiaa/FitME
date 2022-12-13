@@ -27,19 +27,7 @@ function RegisterPage() {
   async function onSumitRegisterValues(values: RegisterPageProps) {
     const { username, email, password, cpassword } = values;
     console.log("values", values);
-    // const options = {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify(values),
-    // };
 
-    // await fetch("http://localhost:3000/api/signup", options)
-    //   .then((res) => res.json())
-    //   .then((data) => {
-    //     if (data?.ok) router.push("http://localhost:3000");
-    //   });
     mutation.mutate({ username, email, password, cpassword });
     console.log("mutation.isSuccess", mutation.isSuccess);
     mutation.isSuccess && router.push("http://localhost:3000");

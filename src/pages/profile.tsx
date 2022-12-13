@@ -1,7 +1,4 @@
-import type { GetServerSidePropsContext } from "next";
 import Link from "next/link";
-
-import { getServerAuthSession } from "../server/common/get-server-auth-session";
 
 const Profile = () => {
   return (
@@ -14,18 +11,3 @@ const Profile = () => {
 };
 
 export default Profile;
-
-export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
-  const session = await getServerAuthSession(ctx);
-
-  if (!session) {
-    return {
-      redirect: { destination: "/signin", permanent: false },
-    };
-  }
-  return {
-    props: {
-      session,
-    },
-  };
-};

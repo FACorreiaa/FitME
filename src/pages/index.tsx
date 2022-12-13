@@ -4,7 +4,6 @@ import { type Session } from "next-auth";
 import { signOut, useSession } from "next-auth/react";
 import Head from "next/head";
 import Link from "next/link";
-
 import { getServerAuthSession } from "../server/common/get-server-auth-session";
 
 import styles from "../styles/Index.module.css";
@@ -110,9 +109,10 @@ const AuthorizedUser = ({ session }: AuthorizedUserProps) => {
 //   );
 // };
 
-export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
+export async function getServerSideProps(ctx: GetServerSidePropsContext) {
+  debugger;
   const session = await getServerAuthSession(ctx);
-
+  console.log("sessionsessionsession", session);
   if (!session) {
     return {
       redirect: { destination: "/signin", permanent: false },
@@ -120,7 +120,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   }
   return {
     props: {
-      session,
+      session: JSON.stringify(session),
     },
   };
-};
+}
