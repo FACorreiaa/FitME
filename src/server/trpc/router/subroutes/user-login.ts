@@ -2,6 +2,39 @@ import { TRPCError } from "@trpc/server";
 import { UserModel } from "../../../../../prisma/zod/user";
 import { protectedProcedure, publicProcedure, router } from "../../trpc";
 
+// prisma.$use(async (params, next) => {
+//   const before = Date.now();
+
+//   const result = await next(params);
+
+//   const after = Date.now();
+
+//   console.log(
+//     `Query ${params.model}.${params.action} took ${after - before}ms`
+//   );
+
+//   return result;
+// });
+
+// prisma.$use(async (params, next) => {
+//   if(params.model === "User" && params.action === "delete") {
+//     return prisma.post.update({
+//       where: ( id: Number(params.args.where.id)),
+//       data: (published: false, deletedAt: new Date()),
+//     })
+//   }
+//   return next(params)
+// })
+
+// const main = async () => {
+//   //delete a post
+//   const deletedUser = await prisma.user.delete({
+//     where: {id: 1}
+//   })
+
+//   console.log('Deleted User', deletedUser.id)
+// }
+
 export const userLoginRouter = router({
   // hello: publicProcedure
   //   .input(z.object({ text: z.string().nullish() }).nullish())

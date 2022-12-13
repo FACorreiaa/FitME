@@ -110,7 +110,6 @@ const AuthorizedUser = ({ session }: AuthorizedUserProps) => {
 // };
 
 export async function getServerSideProps(ctx: GetServerSidePropsContext) {
-  debugger;
   const session = await getServerAuthSession(ctx);
   console.log("sessionsessionsession", session);
   if (!session) {

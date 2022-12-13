@@ -1,7 +1,7 @@
 import { TRPCError } from "@trpc/server";
 import { hash } from "bcryptjs";
 
-import { createUserSchema } from "../../schema/user.schema";
+import { createUserSchema, loginUserSchema } from "../../schema/user.schema";
 import { protectedProcedure, publicProcedure, router } from "../trpc";
 
 export const authRouter = router({
@@ -34,7 +34,6 @@ export const authRouter = router({
   signUp: publicProcedure
     .input(createUserSchema)
     .mutation(async ({ ctx, input }) => {
-      debugger;
       try {
         const { username, email, password } = input;
 
@@ -55,6 +54,40 @@ export const authRouter = router({
             username,
             email,
             password: await hash(password, 12),
+            createdAt: new Date(),
+          },
+        });
+      } catch (error) {
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          cause: error,
+        });
+      }
+    }),
+  changePassword: publicProcedure
+    .input(loginUserSchema)
+    .mutation(async ({ ctx, input }) => {
+      try {
+        const { email, password } = input;
+
+        //check if email exists
+        const checkingUsers = await ctx.prisma.user.findFirst({
+          where: {
+            email,
+          },
+        });
+
+        if (!checkingUsers) {
+          return { message: "Email not found" };
+        }
+
+        return await ctx.prisma.user.update({
+          where: {
+            email,
+          },
+          data: {
+            password: await hash(password, 12),
+            updatedAt: new Date(),
           },
         });
       } catch (error) {
