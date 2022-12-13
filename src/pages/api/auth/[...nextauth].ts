@@ -2,11 +2,11 @@
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { compare } from "bcryptjs";
 import NextAuth, { type NextAuthOptions } from "next-auth";
+import AppleProvider from "next-auth/providers/apple";
 import CredentialsProvider from "next-auth/providers/credentials";
 import DiscordProvider from "next-auth/providers/discord";
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
-import AppleProvider from "next-auth/providers/apple";
 
 import { env } from "../../../env/server.mjs";
 import { prisma } from "../../../server/db/client";
@@ -75,6 +75,14 @@ export const authOptions: NextAuthOptions = {
   session: {
     strategy: JWT,
   },
+  // callbacks: {
+  //   jwt(params) {
+  //     if (params.user?.role) {
+  //       params.token.role = params.user.role;
+  //     }
+  //     return params.token;
+  //   },
+  // },
   pages: {
     signIn: "/signin",
     newUser: "/",

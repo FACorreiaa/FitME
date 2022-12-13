@@ -4,10 +4,10 @@
   "private": true,
   "scripts": {
     "build": "next build",
-    "dev": "next dev",
+    "dev": "next dev -p 5005",
     "postinstall": "prisma generate",
     "lint": "next lint",
-    "start": "next start",
+    "start": "next start -p 5005",
     "db-reset": "yarn prisma migrate reset",
     "db-migrate": "npx prisma migrate dev --name user-entity --create-only && yarn prisma generate",
     "db-push": "npx prisma db push",

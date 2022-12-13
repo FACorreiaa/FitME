@@ -55,13 +55,13 @@ export const LoginPage = () => {
 
   async function handleGoogleSignin() {
     signIn("google", {
-      callbackUrl: "http://localhost:3001",
+      callbackUrl: process.env.NEXTAUTH_URL,
     });
   }
 
   async function handleGithubSignin() {
     signIn("github", {
-      callbackUrl: "http://localhost:3001",
+      callbackUrl: process.env.NEXTAUTH_URL,
     });
   }
   return (

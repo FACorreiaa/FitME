@@ -30,7 +30,7 @@ function RegisterPage() {
 
     mutation.mutate({ username, email, password, cpassword });
     console.log("mutation.isSuccess", mutation.isSuccess);
-    mutation.isSuccess && router.push("http://localhost:3000");
+    mutation.isSuccess && router.push("http://localhost:5005");
   }
 
   const formik = useFormik({
