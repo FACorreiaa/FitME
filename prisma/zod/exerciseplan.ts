@@ -1,6 +1,12 @@
-import * as z from "zod"
-import * as imports from "../null"
-import { CompleteExerciseList, RelatedExerciseListModel, CompleteUser, RelatedUserModel, CompleteUserSuggestedPlan, RelatedUserSuggestedPlanModel } from "./index"
+import * as z from "zod";
+import {
+  CompleteExerciseList,
+  CompleteUser,
+  CompleteUserSuggestedPlan,
+  RelatedExerciseListModel,
+  RelatedUserModel,
+  RelatedUserSuggestedPlanModel,
+} from "./index";
 
 export const ExercisePlanModel = z.object({
   id: z.string(),
@@ -11,12 +17,13 @@ export const ExercisePlanModel = z.object({
   active: z.boolean(),
   authorId: z.string(),
   exerciseListId: z.string(),
-})
+});
 
-export interface CompleteExercisePlan extends z.infer<typeof ExercisePlanModel> {
-  exercise_list: CompleteExerciseList
-  author: CompleteUser
-  UserSuggestedPlan: CompleteUserSuggestedPlan[]
+export interface CompleteExercisePlan
+  extends z.infer<typeof ExercisePlanModel> {
+  exercise_list: CompleteExerciseList;
+  author: CompleteUser;
+  UserSuggestedPlan: CompleteUserSuggestedPlan[];
 }
 
 /**
@@ -24,8 +31,11 @@ export interface CompleteExercisePlan extends z.infer<typeof ExercisePlanModel> 
  *
  * NOTE: Lazy required in case of potential circular dependencies within schema
  */
-export const RelatedExercisePlanModel: z.ZodSchema<CompleteExercisePlan> = z.lazy(() => ExercisePlanModel.extend({
-  exercise_list: RelatedExerciseListModel,
-  author: RelatedUserModel,
-  UserSuggestedPlan: RelatedUserSuggestedPlanModel.array(),
-}))
+export const RelatedExercisePlanModel: z.ZodSchema<CompleteExercisePlan> =
+  z.lazy(() =>
+    ExercisePlanModel.extend({
+      exercise_list: RelatedExerciseListModel,
+      author: RelatedUserModel,
+      UserSuggestedPlan: RelatedUserSuggestedPlanModel.array(),
+    })
+  );

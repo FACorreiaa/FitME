@@ -1,15 +1,19 @@
-import * as z from "zod"
-import * as imports from "../null"
-import { CompleteMealplan, RelatedMealplanModel, CompleteMealComposition, RelatedMealCompositionModel } from "./index"
+import * as z from "zod";
+import {
+  CompleteMealplan,
+  RelatedMealplanModel,
+  CompleteMealComposition,
+  RelatedMealCompositionModel,
+} from "./index";
 
 export const MealListModel = z.object({
   id: z.string(),
   quantity: z.number().int(),
-})
+});
 
 export interface CompleteMealList extends z.infer<typeof MealListModel> {
-  meal_plan: CompleteMealplan[]
-  meals: CompleteMealComposition[]
+  meal_plan: CompleteMealplan[];
+  meals: CompleteMealComposition[];
 }
 
 /**
@@ -17,7 +21,9 @@ export interface CompleteMealList extends z.infer<typeof MealListModel> {
  *
  * NOTE: Lazy required in case of potential circular dependencies within schema
  */
-export const RelatedMealListModel: z.ZodSchema<CompleteMealList> = z.lazy(() => MealListModel.extend({
-  meal_plan: RelatedMealplanModel.array(),
-  meals: RelatedMealCompositionModel.array(),
-}))
+export const RelatedMealListModel: z.ZodSchema<CompleteMealList> = z.lazy(() =>
+  MealListModel.extend({
+    meal_plan: RelatedMealplanModel.array(),
+    meals: RelatedMealCompositionModel.array(),
+  })
+);

@@ -6,32 +6,15 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import DiscordProvider from "next-auth/providers/discord";
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
+import AppleProvider from "next-auth/providers/apple";
 
 import { env } from "../../../env/server.mjs";
 import { prisma } from "../../../server/db/client";
 
+const JWT = "jwt";
 export const authOptions: NextAuthOptions = {
   //Configure one or more authentication providers
   adapter: PrismaAdapter(prisma),
-  //secret: process.env.SECRET,
-  // session: {
-  //   maxAge: 30 * 24 * 60 * 60, // 30 days
-  // },
-  // jwt: {
-  //   secret: process.env.SECRET,
-  // },
-  // Include user.id on session
-  // callbacks: {
-  //   session({ session, user }) {
-  //     if (session.user) {
-  //       session.user.id = user.id;
-  //     }
-  //     return session;
-  //   },
-  // },
-  // session: {
-  //   strategy: "jwt",
-  // },
   providers: [
     DiscordProvider({
       clientId: env.DISCORD_CLIENT_ID,
@@ -41,32 +24,14 @@ export const authOptions: NextAuthOptions = {
       clientId: env.GOOGLE_CLIENT_ID,
       clientSecret: env.GOOGLE_CLIENT_SECRET,
     }),
+    AppleProvider({
+      clientId: env.APPLE_CLIENT_ID,
+      clientSecret: env.APPLE_CLIENT_SECRET,
+    }),
     GithubProvider({
       clientId: env.GITHUB_CLIENT_ID,
       clientSecret: env.GITHUB_CLIENT_SECRET,
     }),
-    // CredentialsProvider({
-    //   type: "credentials",
-    //   credentials: {},
-    //   authorize(credentials, req) {
-    //     const { email, password } = credentials as {
-    //       email: string;
-    //       password: string;
-    //     };
-    //     if (
-    //       email !== "fernandocorreia316@gmail.com" ||
-    //       password !== "Kats0unam1"
-    //     ) {
-    //       return null;
-    //     }
-
-    //     return {
-    //       id: "3sj1sj19sj19",
-    //       name: "lol",
-    //       email: "fernandocorreia316@gmail.com",
-    //     };
-    //   },
-    // }),
     CredentialsProvider({
       name: "Credentials",
       credentials: {
@@ -103,49 +68,19 @@ export const authOptions: NextAuthOptions = {
         }
 
         return user;
-
-        // const response = await fetch("http://localhost:3000/auth/signin", {
-        //   method: "POST",
-        //   headers: {
-        //     Accept: "application/json",
-        //     "Content-Type": "application/json",
-        //   },
-        //   body: JSON.stringify({
-        //     email: credentials.email,
-        //     password: credentials.password,
-        //   }),
-        // });
-        // console.log("response", response);
-        // if (response !== null) {
-        //   return await response?.json();
-        // } else {
-        //   throw new Error(
-        //     "User does not exists. Please make sure you insert the correct email & password."
-        //   );
-        // }
       },
     }),
   ],
-  // Include user.id on session
-  // callbacks: {
-  //   session({ session, user }) {
-  //     if (session.user) {
-  //       session.user.id = user.id;
-  //     }
-  //     return session;
-  //   },
-  // },
   secret: env.NEXTAUTH_SECRET,
   session: {
-    strategy: "jwt",
+    strategy: JWT,
   },
-  // pages: {
-  // signIn: "/signin",
-  // newUser: "/",
-
-  //   signOut: "/signout",
-  //   error: '/error'
-  // },
+  pages: {
+    signIn: "/signin",
+    newUser: "/",
+    signOut: "/signout",
+    error: "/error",
+  },
 };
 
 export default NextAuth(authOptions);

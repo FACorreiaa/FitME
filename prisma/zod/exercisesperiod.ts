@@ -1,6 +1,5 @@
-import * as z from "zod"
-import * as imports from "../null"
-import { CompleteExercises, RelatedExercisesModel } from "./index"
+import * as z from "zod";
+import { CompleteExercises, RelatedExercisesModel } from "./index";
 
 export const ExercisesPeriodModel = z.object({
   id: z.string(),
@@ -8,10 +7,11 @@ export const ExercisesPeriodModel = z.object({
   series: z.number().int(),
   reps: z.number().int(),
   exercisesId: z.string(),
-})
+});
 
-export interface CompleteExercisesPeriod extends z.infer<typeof ExercisesPeriodModel> {
-  Exercises?: CompleteExercises | null
+export interface CompleteExercisesPeriod
+  extends z.infer<typeof ExercisesPeriodModel> {
+  Exercises?: CompleteExercises | null;
 }
 
 /**
@@ -19,6 +19,9 @@ export interface CompleteExercisesPeriod extends z.infer<typeof ExercisesPeriodM
  *
  * NOTE: Lazy required in case of potential circular dependencies within schema
  */
-export const RelatedExercisesPeriodModel: z.ZodSchema<CompleteExercisesPeriod> = z.lazy(() => ExercisesPeriodModel.extend({
-  Exercises: RelatedExercisesModel.nullish(),
-}))
+export const RelatedExercisesPeriodModel: z.ZodSchema<CompleteExercisesPeriod> =
+  z.lazy(() =>
+    ExercisesPeriodModel.extend({
+      Exercises: RelatedExercisesModel.nullish(),
+    })
+  );
