@@ -1,8 +1,8 @@
+import { useState } from "react";
+import { HiAtSymbol, HiFingerPrint, HiOutlineUser } from "react-icons/hi2";
 import { useFormik } from "formik";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useState } from "react";
-import { HiAtSymbol, HiFingerPrint, HiOutlineUser } from "react-icons/hi2";
 
 import Layout from "../layout/layout";
 import registerValidate from "../lib/register-validate";

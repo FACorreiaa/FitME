@@ -1,21 +1,13 @@
-import { useFormik } from "formik";
-import { signIn, useSession } from "next-auth/react";
+import { useState } from "react";
+import { HiDevicePhoneMobile, HiEnvelope } from "react-icons/hi2";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/router";
-import { useState } from "react";
-import { HiAtSymbol, HiFingerPrint } from "react-icons/hi2";
+import { signIn, useSession } from "next-auth/react";
 
 import Layout from "../layout/layout";
-import loginValidate from "../lib/login-validate";
 
 import styles from "../styles/Form.module.css";
-
-type LoginValuesProps = {
-  email: string;
-  password: string;
-};
 
 export const LoginPage = () => {
   // const { data, isLoading } = trpc.userLogin.me.useQuery();
@@ -24,34 +16,9 @@ export const LoginPage = () => {
   // if (isLoading) return null;
 
   // if (data !== "ADMIN") return null;
+  const [showMoreButtons, setShowMoreButtons] = useState(false);
   const { data: session } = useSession();
   console.log("session", session);
-  const [show, setShow] = useState(false);
-  const router = useRouter();
-  const formik = useFormik({
-    initialValues: {
-      email: "",
-      password: "",
-    },
-    validate: loginValidate,
-    onSubmit: onSubmitLoginValues,
-  });
-
-  const onPasswordIconClick = () => {
-    setShow(!show);
-  };
-
-  async function onSubmitLoginValues(values: LoginValuesProps): Promise<any> {
-    const result = await signIn("credentials", {
-      email: values?.email,
-      password: values?.password,
-      redirect: false,
-      callbackUrl: "/",
-    });
-    console.log("result", result);
-    if (result?.ok) router.push("/");
-    return result;
-  }
 
   async function handleGoogleSignin() {
     signIn("google", {
@@ -80,58 +47,16 @@ export const LoginPage = () => {
           </p>
         </div>
 
-        <form className="flex flex-col gap-5" onSubmit={formik.handleSubmit}>
-          <div
-            className={`${styles.input_group} ${
-              formik.errors?.email && formik.touched?.email
-                ? "border-rose-600"
-                : ""
-            }`}
-          >
-            <input
-              className={styles.input_text}
-              type="email"
-              placeholder="Email"
-              {...formik.getFieldProps("email")}
-            />
-            <span className="icon flex items-center px-4">
-              <HiAtSymbol size={25} />
-            </span>
-          </div>
-          {formik.errors?.email && formik.touched?.email ? (
-            <span className="text-rose-400">{formik.errors.email}</span>
-          ) : (
-            <></>
-          )}
-          <div
-            className={`${styles.input_group} ${
-              formik.errors?.password && formik.touched?.password
-                ? "border-rose-600"
-                : ""
-            }`}
-          >
-            <input
-              className={styles.input_text}
-              type={show ? "text" : "password"}
-              placeholder="Password"
-              {...formik.getFieldProps("password")}
-            />
-            <span
-              onClick={onPasswordIconClick}
-              className="icon flex items-center px-4"
-            >
-              <HiFingerPrint size={25} />
-            </span>
-          </div>
-          {formik.errors?.password && formik.touched?.password ? (
-            <span className="text-rose-400">{formik.errors.password}</span>
-          ) : (
-            <></>
-          )}
+        <div className="flex flex-col gap-5">
           <div className={styles.input_button}>
-            <button className={styles.button} type="submit">
-              Login
-            </button>
+            <Link href={"/signin-email"} className={styles.button_custom}>
+              Sign in with SMS <HiDevicePhoneMobile size={25} />
+            </Link>
+          </div>
+          <div className={styles.input_button}>
+            <Link href={"/phone"} className={styles.button_custom}>
+              Sign in with Email <HiEnvelope size={25} />
+            </Link>
           </div>
           <div className={styles.input_button}>
             <button
@@ -154,6 +79,55 @@ export const LoginPage = () => {
               className={styles.button_custom}
               type="button"
             >
+              Sign in with Apple{" "}
+              <Image
+                alt="github"
+                src={"/assets/apple.svg"}
+                width="20"
+                height="20"
+              />
+            </button>
+          </div>
+          <div
+            className="pb-10 text-base font-medium"
+            onClick={() => setShowMoreButtons(!showMoreButtons)}
+          >
+            <p className="pb-5">Show more options</p>
+            {showMoreButtons && (
+              <div className={styles.input_button}>
+                <div className="flex flex-row justify-center">
+                  <Image
+                    alt="github"
+                    src={"/assets/github.svg"}
+                    width="20"
+                    height="20"
+                    className="mx-5"
+                  />
+                  <Image
+                    alt="github"
+                    src={"/assets/twitter.svg"}
+                    width="20"
+                    height="20"
+                    className="mx-5"
+                  />
+                  <Image
+                    alt="github"
+                    src={"/assets/discord.svg"}
+                    width="20"
+                    height="20"
+                    className="mx-5"
+                  />
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/*<div className={styles.input_button}>
+            <button
+              onClick={handleGithubSignin}
+              className={styles.button_custom}
+              type="button"
+            >
               Sign in with Github{" "}
               <Image
                 alt="github"
@@ -163,7 +137,38 @@ export const LoginPage = () => {
               />
             </button>
           </div>
-        </form>
+
+           <div className={styles.input_button}>
+            <button
+              onClick={handleGithubSignin}
+              className={styles.button_custom}
+              type="button"
+            >
+              Sign in with Twitter{" "}
+              <Image
+                alt="github"
+                src={"/assets/twitter.svg"}
+                width="20"
+                height="20"
+              />
+            </button>
+          </div>
+          <div className={styles.input_button}>
+            <button
+              onClick={handleGithubSignin}
+              className={styles.button_custom}
+              type="button"
+            >
+              Sign in with Discord{" "}
+              <Image
+                alt="github"
+                src={"/assets/discord.svg"}
+                width="20"
+                height="20"
+              />
+            </button>
+          </div> */}
+        </div>
         <p className="text-grey-400 text-centere">
           Dont have an account yet?{" "}
           <Link className="text-blue-700" href={"/signup"}>

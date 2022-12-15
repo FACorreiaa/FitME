@@ -7,6 +7,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import DiscordProvider from "next-auth/providers/discord";
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
+import TwitterProvider from "next-auth/providers/twitter";
 
 import { env } from "../../../env/server.mjs";
 import { prisma } from "../../../server/db/client";
@@ -32,6 +33,10 @@ export const authOptions: NextAuthOptions = {
       clientId: env.GITHUB_CLIENT_ID,
       clientSecret: env.GITHUB_CLIENT_SECRET,
     }),
+    TwitterProvider({
+      clientId: env.GITHUB_CLIENT_ID,
+      clientSecret: env.GITHUB_CLIENT_SECRET,
+    }),
     CredentialsProvider({
       name: "Credentials",
       credentials: {
@@ -47,7 +52,7 @@ export const authOptions: NextAuthOptions = {
       },
       async authorize(credentials: any) {
         //check user
-        const user: any = await prisma.user.findUnique({
+        const user = await prisma.user.findUnique({
           where: {
             email: credentials.email,
           },
@@ -61,7 +66,6 @@ export const authOptions: NextAuthOptions = {
           credentials.password,
           user?.password
         );
-        console.log("user?.password", user?.password);
 
         if (!checkPassword || user.email !== credentials.email) {
           throw new Error("Password or Email dont match");
