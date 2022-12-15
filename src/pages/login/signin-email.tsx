@@ -2,14 +2,14 @@ import { useState } from "react";
 import { HiAtSymbol, HiFingerPrint } from "react-icons/hi2";
 import { useFormik } from "formik";
 import Head from "next/head";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { signIn, useSession } from "next-auth/react";
 
-import Layout from "../layout/layout";
-import loginValidate from "../lib/login-validate";
+import FormFooterProps from "../../components/register_form/form-footer";
+import Layout from "../../layout/layout";
+import loginValidate from "../../lib/login-validate";
 
-import styles from "../styles/Form.module.css";
+import styles from "../../styles/Form.module.css";
 
 type LoginValuesProps = {
   email: string;
@@ -45,7 +45,7 @@ export const EmailLoginPage = () => {
       email: values?.email,
       password: values?.password,
       redirect: false,
-      callbackUrl: "/",
+      callbackUrl: "/login",
     });
     console.log("result", result);
     if (result?.ok) router.push("/");
@@ -122,12 +122,11 @@ export const EmailLoginPage = () => {
             </button>
           </div>
         </form>
-        <p className="text-grey-400 text-centere">
-          Dont have an account yet?{" "}
-          <Link className="text-blue-700" href={"/signup"}>
-            Sign up!
-          </Link>
-        </p>
+        <FormFooterProps
+          message="Dont have an account yet?"
+          link="/login/signup"
+          linkMessage="Sign un!"
+        />
       </section>
     </Layout>
   );

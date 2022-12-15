@@ -1,9 +1,10 @@
 import type { GetServerSidePropsContext } from "next";
 import { type NextPage } from "next";
-import { type Session } from "next-auth";
-import { signOut, useSession } from "next-auth/react";
 import Head from "next/head";
 import Link from "next/link";
+import { type Session } from "next-auth";
+import { signOut, useSession } from "next-auth/react";
+
 import { getServerAuthSession } from "../server/common/get-server-auth-session";
 
 import styles from "../styles/Index.module.css";

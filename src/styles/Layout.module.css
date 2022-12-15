@@ -1,7 +1,12 @@
 .imgStyle {
-  @apply bg-gradient-to-t from-sky-300 to-sky-900;
-  position: relative;
+  @apply bg-gradient-to-t from-sky-300 via-sky-600 to-sky-900;
+  /* position: relative; */
   overflow: hidden;
+  flex: 1;
+  flex-direction: column;
+  justify-content: space-around;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 .cartoon {

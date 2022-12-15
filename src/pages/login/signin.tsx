@@ -5,9 +5,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { signIn, useSession } from "next-auth/react";
 
-import Layout from "../layout/layout";
+import FormFooterProps from "../../components/register_form/form-footer";
+import FormHeader from "../../components/register_form/form-header";
+import Layout from "../../layout/layout";
 
-import styles from "../styles/Form.module.css";
+import styles from "../../styles/Form.module.css";
 
 export const LoginPage = () => {
   // const { data, isLoading } = trpc.userLogin.me.useQuery();
@@ -36,28 +38,23 @@ export const LoginPage = () => {
       <Head>
         <title>Login</title>
       </Head>
-      <section className="mx-auto flex w-3/4 flex-col gap-1">
-        <div className="title">
-          <h1 className="font-body py-4 text-4xl text-gray-800">
-            Fitness Tracker App!
-          </h1>
-          <p className="mx-auto w-3/4 text-gray-400">
-            Manage your mean plans, plan your workouts and conquer your
-            objectives!
-          </p>
-        </div>
-
+      <section className="mx-auto flex w-3/4 flex-col gap-5">
+        <FormHeader
+          title="Fitness Tracker App!"
+          description="Manage your mean plans, plan your workouts and conquer your
+            objectives!"
+        />
         <div className="flex flex-col gap-5">
-          <div className={styles.input_button}>
-            <Link href={"/signin-email"} className={styles.button_custom}>
+          <button className={styles.input_button}>
+            <Link href={"/phone"} className={styles.button_custom}>
               Sign in with SMS <HiDevicePhoneMobile size={25} />
             </Link>
-          </div>
-          <div className={styles.input_button}>
-            <Link href={"/phone"} className={styles.button_custom}>
+          </button>
+          <button className={styles.input_button}>
+            <Link href={"/login/signin-email"} className={styles.button_custom}>
               Sign in with Email <HiEnvelope size={25} />
             </Link>
-          </div>
+          </button>
           <div className={styles.input_button}>
             <button
               onClick={handleGoogleSignin}
@@ -88,11 +85,13 @@ export const LoginPage = () => {
               />
             </button>
           </div>
-          <div
-            className="pb-10 text-base font-medium"
-            onClick={() => setShowMoreButtons(!showMoreButtons)}
-          >
-            <p className="pb-5">Show more options</p>
+          <div className="pb-10 text-base font-medium">
+            <p
+              onClick={() => setShowMoreButtons(!showMoreButtons)}
+              className="pb-5"
+            >
+              Show more options
+            </p>
             {showMoreButtons && (
               <div className={styles.input_button}>
                 <div className="flex flex-row justify-center">
@@ -169,12 +168,12 @@ export const LoginPage = () => {
             </button>
           </div> */}
         </div>
-        <p className="text-grey-400 text-centere">
-          Dont have an account yet?{" "}
-          <Link className="text-blue-700" href={"/signup"}>
-            Sign up!
-          </Link>
-        </p>
+
+        <FormFooterProps
+          message="Dont have an account yet?"
+          link="/login/signup"
+          linkMessage="Sign up!"
+        />
       </section>
     </Layout>
   );
