@@ -5,7 +5,7 @@
 
 .input_text {
   @apply w-full rounded-xl border bg-slate-50 py-4 px-6;
-  @apply border-none focus:outline-none;
+  @apply border-none shadow-md focus:outline-none;
 }
 
 .button {

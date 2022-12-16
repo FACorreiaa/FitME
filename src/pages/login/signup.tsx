@@ -3,6 +3,8 @@ import { HiAtSymbol, HiFingerPrint, HiOutlineUser } from "react-icons/hi2";
 import { useFormik } from "formik";
 import { useRouter } from "next/router";
 
+import CustomInput from "../../components/inputs/input";
+import FormContainer from "../../components/register_form/form-container";
 import FormFooterProps from "../../components/register_form/form-footer";
 import FormHeader from "../../components/register_form/form-header";
 import Layout from "../../layout/layout";
@@ -31,7 +33,7 @@ function RegisterPage() {
 
     mutation.mutate({ username, email, password, cpassword });
     console.log("mutation.isSuccess", mutation.isSuccess);
-    mutation.isSuccess && router.push("http://localhost:5005/login");
+    mutation.isSuccess && router.push("http://localhost:5005/login/signin");
   }
 
   const formik = useFormik({
@@ -50,10 +52,24 @@ function RegisterPage() {
     setShow({ ...show, password: !show.password });
   };
 
-  const onPasswordConfirmIconClick = () => {
+  const onConfirmPasswordIconClick = () => {
     setShow({ ...show, cpassword: !show.cpassword });
   };
-
+  {
+    /* <div>
+            <div className="relative">
+              <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                <HiOutlineUser size={25} />
+              </div>
+              <input
+                type="username"
+                placeholder="Username"
+                {...formik.getFieldProps("username")}
+                className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-4 pl-10 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+                required
+              />
+            </div> */
+  }
   return (
     <Layout>
       <section className="mx-auto flex w-3/4 flex-col gap-1">
@@ -63,107 +79,67 @@ function RegisterPage() {
             objectives!"
         />
 
-        <form className="flex flex-col gap-5" onSubmit={formik.handleSubmit}>
-          <div
-            className={`${styles.input_group} ${
-              formik.errors?.username && formik.touched?.username
-                ? "border-rose-600"
-                : ""
-            }`}
-          >
-            <input
-              className={styles.input_text}
-              type="username"
-              placeholder="Username"
-              {...formik.getFieldProps("username")}
-            />
-            <span className="icon flex items-center px-4">
-              <HiOutlineUser size={25} />
-            </span>
-          </div>
-          {formik.errors?.username && formik.touched?.username ? (
-            <span className="text-rose-400">{formik.errors.username}</span>
-          ) : (
-            <></>
-          )}
-          <div
-            className={`${styles.input_group} ${
-              formik.errors?.email && formik.touched?.email
-                ? "border-rose-600"
-                : ""
-            }`}
-          >
-            <input
-              className={styles.input_text}
-              type="email"
-              placeholder="Email"
-              {...formik.getFieldProps("email")}
-            />
-            <span className="icon flex items-center px-4">
-              <HiAtSymbol size={25} />
-            </span>
-          </div>
-          {formik.errors?.email && formik.touched?.email ? (
-            <span className="text-rose-400">{formik.errors.email}</span>
-          ) : (
-            <></>
-          )}
-          <div
-            className={`${styles.input_group} ${
-              formik.errors?.password && formik.touched?.password
-                ? "border-rose-600"
-                : " "
-            }`}
-          >
-            <input
-              className={styles.input_text}
-              type={show.password ? "text" : "password"}
-              placeholder="Password"
-              {...formik.getFieldProps("password")}
-            />
-            <span
-              onClick={onPasswordIconClick}
-              className="icon flex items-center px-4"
-            >
-              <HiFingerPrint size={25} />
-            </span>
-          </div>
-          {formik.errors?.password && formik.touched?.password ? (
-            <span className="text-rose-400">{formik.errors.password}</span>
-          ) : (
-            <></>
-          )}
-          <div
-            className={`${styles.input_group} ${
-              formik.errors?.cpassword && formik.touched?.cpassword
-                ? "border-rose-600"
-                : " "
-            }`}
-          >
-            <input
-              className={styles.input_text}
-              type={show.cpassword ? "text" : "password"}
-              placeholder="Confirm Password"
-              {...formik.getFieldProps("cpassword")}
-            />
-            <span
-              onClick={onPasswordConfirmIconClick}
-              className="icon flex items-center px-4"
-            >
-              <HiFingerPrint size={25} />
-            </span>
-          </div>
-          {formik.errors?.cpassword && formik.touched?.cpassword ? (
-            <span className="text-rose-400">{formik.errors.cpassword}</span>
-          ) : (
-            <></>
-          )}
+        <FormContainer onSubmit={formik.handleSubmit}>
+          <CustomInput
+            customStyle={styles.input_group}
+            inputLabel="Enter username"
+            inputType="username"
+            inputPlaceholder="Username"
+            getFieldProps={formik.getFieldProps("username")}
+            required
+            hasError={formik.errors?.username && formik.touched?.username}
+            errorMessage={formik.errors.username}
+            hasLeftIcon
+            LeftIcon={<HiOutlineUser size={25} />}
+          />
+
+          <CustomInput
+            customStyle={styles.input_group}
+            inputLabel="Enter email"
+            inputType="email"
+            inputPlaceholder="email@email.com"
+            getFieldProps={formik.getFieldProps("email")}
+            required
+            hasError={formik.errors?.email && formik.touched?.email}
+            errorMessage={formik.errors.email}
+            hasLeftIcon
+            LeftIcon={<HiAtSymbol size={25} />}
+          />
+
+          <CustomInput
+            customStyle={styles.input_group}
+            inputLabel="Enter password"
+            inputType={show.password ? "text" : "password"}
+            inputPlaceholder="Insert a secure password"
+            getFieldProps={formik.getFieldProps("password")}
+            required
+            hasError={formik.errors?.password && formik.touched?.password}
+            errorMessage={formik.errors.password}
+            hasLeftIcon
+            LeftIcon={<HiFingerPrint size={25} />}
+            onPasswordIconClick={onPasswordIconClick}
+          />
+
+          <CustomInput
+            customStyle={styles.input_group}
+            inputLabel="Confirm password"
+            inputType={show.cpassword ? "text" : "password"}
+            inputPlaceholder="Confirm your password"
+            getFieldProps={formik.getFieldProps("cpassword")}
+            required
+            hasError={formik.errors?.cpassword && formik.touched?.cpassword}
+            errorMessage={formik.errors.cpassword}
+            hasLeftIcon
+            LeftIcon={<HiFingerPrint size={25} />}
+            onPasswordIconClick={onConfirmPasswordIconClick}
+          />
+
           <div className={styles.input_button}>
             <button className={styles.button} type="submit">
               Register
             </button>
           </div>
-        </form>
+        </FormContainer>
 
         <FormFooterProps
           message="Dont have an account yet?"

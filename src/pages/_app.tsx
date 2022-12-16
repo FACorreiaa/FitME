@@ -4,7 +4,7 @@ import Router from "next/router";
 import { type Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 
-import Loader from "../components/loader";
+import Loader from "../components/common/loader";
 import { trpc } from "../utils/trpc";
 
 import "../styles/globals.css";

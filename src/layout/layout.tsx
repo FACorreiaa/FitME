@@ -3,7 +3,7 @@ import React from "react";
 import styles from "../styles/Layout.module.css";
 
 type LayoutProps = {
-  children: React.ReactNode;
+  children: JSX.Element | JSX.Element[];
 };
 
 function Layout({ children }: LayoutProps) {

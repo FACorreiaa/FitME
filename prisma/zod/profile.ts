@@ -1,6 +1,7 @@
-import { Gender } from "@prisma/client";
-import * as z from "zod";
-import { CompleteUser, RelatedUserModel } from "./index";
+import * as z from "zod"
+import * as imports from "../null"
+import { Gender } from "@prisma/client"
+import { CompleteUser, RelatedUserModel } from "./index"
 
 export const ProfileModel = z.object({
   id: z.string(),
@@ -11,10 +12,10 @@ export const ProfileModel = z.object({
   first_name: z.string().nullish(),
   last_name: z.string().nullish(),
   gender: z.nativeEnum(Gender),
-});
+})
 
 export interface CompleteProfile extends z.infer<typeof ProfileModel> {
-  user: CompleteUser;
+  user: CompleteUser
 }
 
 /**
@@ -22,8 +23,6 @@ export interface CompleteProfile extends z.infer<typeof ProfileModel> {
  *
  * NOTE: Lazy required in case of potential circular dependencies within schema
  */
-export const RelatedProfileModel: z.ZodSchema<CompleteProfile> = z.lazy(() =>
-  ProfileModel.extend({
-    user: RelatedUserModel,
-  })
-);
+export const RelatedProfileModel: z.ZodSchema<CompleteProfile> = z.lazy(() => ProfileModel.extend({
+  user: RelatedUserModel,
+}))

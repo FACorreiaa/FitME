@@ -1,5 +1,6 @@
-import * as z from "zod";
-import { CompleteUser, RelatedUserModel } from "./index";
+import * as z from "zod"
+import * as imports from "../null"
+import { CompleteUser, RelatedUserModel } from "./index"
 
 export const UserBioDataModel = z.object({
   id: z.string(),
@@ -8,10 +9,10 @@ export const UserBioDataModel = z.object({
   leg_width: z.number().int().nullish(),
   chest_wdith: z.number().int().nullish(),
   userId: z.string(),
-});
+})
 
 export interface CompleteUserBioData extends z.infer<typeof UserBioDataModel> {
-  user: CompleteUser;
+  user: CompleteUser
 }
 
 /**
@@ -19,9 +20,6 @@ export interface CompleteUserBioData extends z.infer<typeof UserBioDataModel> {
  *
  * NOTE: Lazy required in case of potential circular dependencies within schema
  */
-export const RelatedUserBioDataModel: z.ZodSchema<CompleteUserBioData> = z.lazy(
-  () =>
-    UserBioDataModel.extend({
-      user: RelatedUserModel,
-    })
-);
+export const RelatedUserBioDataModel: z.ZodSchema<CompleteUserBioData> = z.lazy(() => UserBioDataModel.extend({
+  user: RelatedUserModel,
+}))

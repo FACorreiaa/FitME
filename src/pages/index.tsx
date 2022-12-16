@@ -5,6 +5,7 @@ import Link from "next/link";
 import { type Session } from "next-auth";
 import { signOut, useSession } from "next-auth/react";
 
+import HeaderComponent from "../components/common/header";
 import { getServerAuthSession } from "../server/common/get-server-auth-session";
 
 import styles from "../styles/Index.module.css";
@@ -58,31 +59,35 @@ const AuthorizedUser = ({ session }: AuthorizedUserProps) => {
   };
 
   return (
-    <main className="container mx-auto py-20 text-center">
-      <h3 className="text-4xl font-bold">User Home Page</h3>
+    <div>
+      <HeaderComponent />
 
-      <div className="details">
-        <h5>{session.user?.name}</h5>
-        <h5>{session.user?.email}</h5>
-      </div>
+      <main className="container mx-auto py-20 text-center">
+        <h3 className="text-4xl font-bold">User Home Page</h3>
 
-      <div className="flex justify-center">
-        <button
-          onClick={handleSignOut}
-          className="mt-5 rounded-sm bg-indigo-200 px-10 py-1"
-        >
-          Sign out
-        </button>
-      </div>
-      <div className="flex justify-center">
-        <Link
-          href={"/profile"}
-          className="text-gray mt-5 rounded-sm bg-indigo-500 px-10 py-1"
-        >
-          Profile
-        </Link>
-      </div>
-    </main>
+        <div className="details">
+          <h5>{session.user?.name}</h5>
+          <h5>{session.user?.email}</h5>
+        </div>
+
+        <div className="flex justify-center">
+          <button
+            onClick={handleSignOut}
+            className="mt-5 rounded-sm bg-indigo-200 px-10 py-1"
+          >
+            Sign out
+          </button>
+        </div>
+        <div className="flex justify-center">
+          <Link
+            href={"/profile"}
+            className="text-gray mt-5 rounded-sm bg-indigo-500 px-10 py-1"
+          >
+            Profile
+          </Link>
+        </div>
+      </main>
+    </div>
   );
 };
 
@@ -115,7 +120,7 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   console.log("sessionsessionsession", session);
   if (!session) {
     return {
-      redirect: { destination: "/signin", permanent: false },
+      redirect: { destination: "/login/signin", permanent: false },
     };
   }
   return {
