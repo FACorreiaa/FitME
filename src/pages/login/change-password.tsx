@@ -47,9 +47,8 @@ export const ChangePasswordPage = () => {
       email: values?.email,
       password: values?.password,
       redirect: false,
-      callbackUrl: "/login",
+      callbackUrl: "/login/",
     });
-    console.log("result", result);
     if (result?.ok) router.push("/");
     return result;
   }

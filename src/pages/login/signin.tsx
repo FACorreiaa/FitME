@@ -19,8 +19,6 @@ export const LoginPage = () => {
 
   // if (data !== "ADMIN") return null;
   const [showMoreButtons, setShowMoreButtons] = useState(false);
-  const { data: session } = useSession();
-  console.log("session", session);
 
   async function handleGoogleSignin() {
     signIn("google", {

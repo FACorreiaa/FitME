@@ -14,7 +14,6 @@ const Home: NextPage = () => {
   //const hello = trpc.example.hello.useQuery({ text: "from tRPC" });
 
   const { data: session } = useSession();
-  console.log("session", session);
 
   return (
     <div className={styles.container}>
@@ -117,7 +116,6 @@ const AuthorizedUser = ({ session }: AuthorizedUserProps) => {
 
 export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   const session = await getServerAuthSession(ctx);
-  console.log("sessionsessionsession", session);
   if (!session) {
     return {
       redirect: { destination: "/login/signin", permanent: false },

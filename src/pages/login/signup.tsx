@@ -29,10 +29,7 @@ function RegisterPage() {
   const router = useRouter();
   async function onSumitRegisterValues(values: RegisterPageProps) {
     const { username, email, password, cpassword } = values;
-    console.log("values", values);
-
     mutation.mutate({ username, email, password, cpassword });
-    console.log("mutation.isSuccess", mutation.isSuccess);
     mutation.isSuccess && router.push("http://localhost:5005/login/signin");
   }
 
@@ -72,7 +69,7 @@ function RegisterPage() {
   }
   return (
     <Layout>
-      <section className="mx-auto flex w-3/4 flex-col gap-1">
+      <section className="mx-auto flex w-3/4 flex-col gap-1 ">
         <FormHeader
           title="Register"
           description="Manage your mean plans, plan your workouts and conquer your

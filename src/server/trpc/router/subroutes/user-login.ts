@@ -1,4 +1,5 @@
 import { TRPCError } from "@trpc/server";
+
 import { UserModel } from "../../../../../prisma/zod/user";
 import { protectedProcedure, publicProcedure, router } from "../../trpc";
 

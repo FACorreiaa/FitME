@@ -33,7 +33,7 @@ function CustomInput({
 }: CustomInputProps) {
   return (
     <div className="mb-4">
-      <label className="mb-2 block text-left text-sm font-bold text-gray-700">
+      <label className="mb-1 block text-left text-sm font-bold text-gray-700">
         {inputLabel}
       </label>
 

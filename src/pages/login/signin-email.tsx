@@ -23,8 +23,6 @@ export const EmailLoginPage = () => {
   // if (isLoading) return null;
 
   // if (data !== "ADMIN") return null;
-  const { data: session } = useSession();
-  console.log("session", session);
   const [show, setShow] = useState(false);
   const router = useRouter();
   const formik = useFormik({
@@ -47,7 +45,6 @@ export const EmailLoginPage = () => {
       redirect: false,
       callbackUrl: "/login",
     });
-    console.log("result", result);
     if (result?.ok) router.push("/");
     return result;
   }
