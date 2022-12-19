@@ -1,16 +1,14 @@
-import { useState } from "react";
-import { HiDevicePhoneMobile, HiEnvelope } from "react-icons/hi2";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
-import { signIn, useSession } from "next-auth/react";
+import { signIn } from "next-auth/react";
 
-import FormFooterProps from "../../components/register_form/form-footer";
-import FormHeader from "../../components/register_form/form-header";
+import FormFooterProps from "../../components/login-form/form-footer";
+import FormHeader from "../../components/login-form/form-header";
+import SocialMediaButton from "../../components/login-form/social-media-button";
 import Layout from "../../layout/layout";
 
 import styles from "../../styles/Form.module.css";
-
 export const LoginPage = () => {
   // const { data, isLoading } = trpc.userLogin.me.useQuery();
   // console.log("data", data);
@@ -18,7 +16,6 @@ export const LoginPage = () => {
   // if (isLoading) return null;
 
   // if (data !== "ADMIN") return null;
-  const [showMoreButtons, setShowMoreButtons] = useState(false);
 
   async function handleGoogleSignin() {
     signIn("google", {
@@ -45,12 +42,24 @@ export const LoginPage = () => {
         <div className="flex flex-col gap-5">
           <button className={styles.input_button}>
             <Link href={"/phone"} className={styles.button_custom}>
-              Sign in with SMS <HiDevicePhoneMobile size={25} />
+              Sign in with SMS{" "}
+              <Image
+                alt="email"
+                src={"/assets/comment-sms-solid.svg"}
+                width="15"
+                height="15"
+              />
             </Link>
           </button>
           <button className={styles.input_button}>
             <Link href={"/login/signin-email"} className={styles.button_custom}>
-              Sign in with Email <HiEnvelope size={25} />
+              Sign in with Email{" "}
+              <Image
+                alt="email"
+                src={"/assets/envelope-solid.svg"}
+                width="15"
+                height="15"
+              />
             </Link>
           </button>
           <div className={styles.input_button}>
@@ -63,8 +72,8 @@ export const LoginPage = () => {
               <Image
                 alt="google"
                 src={"/assets/google.svg"}
-                width="20"
-                height="20"
+                width="15"
+                height="15"
               />
             </button>
           </div>
@@ -78,45 +87,49 @@ export const LoginPage = () => {
               <Image
                 alt="github"
                 src={"/assets/apple.svg"}
-                width="20"
-                height="20"
+                width="15"
+                height="15"
               />
             </button>
           </div>
-          <div className="pb-10 text-base font-medium">
-            <p
-              onClick={() => setShowMoreButtons(!showMoreButtons)}
-              className="pb-5"
-            >
-              Show more options
-            </p>
-            {showMoreButtons && (
-              <div className={styles.input_button}>
-                <div className="flex flex-row justify-center">
-                  <Image
-                    alt="github"
-                    src={"/assets/github.svg"}
-                    width="20"
-                    height="20"
-                    className="mx-5"
-                  />
-                  <Image
-                    alt="github"
-                    src={"/assets/twitter.svg"}
-                    width="20"
-                    height="20"
-                    className="mx-5"
-                  />
-                  <Image
-                    alt="github"
-                    src={"/assets/discord.svg"}
-                    width="20"
-                    height="20"
-                    className="mx-5"
-                  />
-                </div>
-              </div>
-            )}
+          <div className="my-4 flex items-center before:mt-0.5 before:flex-1 before:border-t before:border-gray-300 after:mt-0.5 after:flex-1 after:border-t after:border-gray-300">
+            <p className="mx-4 mb-0 text-center font-semibold">Or</p>
+          </div>
+          <div className={styles.input_button}>
+            <div className="flex flex-row justify-center">
+              <SocialMediaButton>
+                <Image
+                  alt="instagram"
+                  src={"/assets/instagram.svg"}
+                  width="20"
+                  height="20"
+                />
+              </SocialMediaButton>
+              <SocialMediaButton>
+                <Image
+                  alt="github"
+                  src={"/assets/twitter.svg"}
+                  width="20"
+                  height="20"
+                />
+              </SocialMediaButton>
+              <SocialMediaButton>
+                <Image
+                  alt="github"
+                  src={"/assets/discord.svg"}
+                  width="20"
+                  height="20"
+                />
+              </SocialMediaButton>
+              <SocialMediaButton>
+                <Image
+                  src={"/assets/facebook.svg"}
+                  alt="Facebook Icon"
+                  width="20"
+                  height="20"
+                />
+              </SocialMediaButton>
+            </div>
           </div>
 
           {/*<div className={styles.input_button}>

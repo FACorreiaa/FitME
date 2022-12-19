@@ -9,7 +9,7 @@
   padding-bottom: 10px;
 }
 
-.cartoon {
+/* .cartoon {
   background: url("/assets/fitlogo.png") no-repeat;
   position: absolue;
   bottom: 0%;
@@ -21,7 +21,7 @@
   background-size: cover;
   background-position: 65% 100px;
   z-index: 1;
-}
+} */
 
 .cloud_one {
   background: url("/assets/cloud.png") no-repeat;

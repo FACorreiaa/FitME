@@ -3,11 +3,18 @@ import { HiAtSymbol, HiFingerPrint } from "react-icons/hi2";
 import { useFormik } from "formik";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { signIn, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 
-import FormFooterProps from "../../components/register_form/form-footer";
+import CustomInput from "../../components/inputs/input";
+import FormContainer from "../../components/login-form/form-container";
+import FormFooterProps from "../../components/login-form/form-footer";
+import FormHeader from "../../components/login-form/form-header";
+import FormErrorMessage from "../../components/login-form/status/form-error-message";
+import FormSuccessMessage from "../../components/login-form/status/form-success-message";
+import FormWarningMessage from "../../components/login-form/status/form-warning-message";
 import Layout from "../../layout/layout";
 import loginValidate from "../../lib/login-validate";
+import { trpc } from "../../utils/trpc";
 
 import styles from "../../styles/Form.module.css";
 
@@ -17,6 +24,8 @@ type ChangePasswordProps = {
 };
 
 export const ChangePasswordPage = () => {
+  const mutation = trpc.auth.changePassword.useMutation();
+
   // const { data, isLoading } = trpc.userLogin.me.useQuery();
   // console.log("data", data);
   //
@@ -25,7 +34,7 @@ export const ChangePasswordPage = () => {
   // if (data !== "ADMIN") return null;
   const { data: session } = useSession();
   console.log("session", session);
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState({ password: false });
   const router = useRouter();
   const formik = useFormik({
     initialValues: {
@@ -33,24 +42,40 @@ export const ChangePasswordPage = () => {
       password: "",
     },
     validate: loginValidate,
-    onSubmit: onSubmitLoginValues,
+    onSubmit: onSubmitChangePassword,
   });
 
   const onPasswordIconClick = () => {
-    setShow(!show);
+    setShow({ password: !show.password });
   };
 
-  async function onSubmitLoginValues(
-    values: ChangePasswordProps
-  ): Promise<any> {
-    const result = await signIn("credentials", {
-      email: values?.email,
-      password: values?.password,
-      redirect: false,
-      callbackUrl: "/login/",
-    });
-    if (result?.ok) router.push("/");
-    return result;
+  async function onSubmitChangePassword(values: ChangePasswordProps) {
+    debugger;
+    const { email, password } = values;
+    try {
+      mutation.mutate(
+        { email, password },
+        {
+          onError: (error) => {
+            console.log(error);
+          },
+          onSuccess: (data) => {
+            console.log(data);
+          },
+        }
+      );
+      console.log("error", formik.errors);
+      console.log("mutate", mutation);
+
+      return (
+        mutation.isSuccess &&
+        setTimeout(() => {
+          return router.push("http://localhost:5005/login/signin");
+        }, 2500)
+      );
+    } catch (error: any) {
+      throw new Error(error);
+    }
   }
 
   return (
@@ -59,74 +84,66 @@ export const ChangePasswordPage = () => {
         <title>Login</title>
       </Head>
       <section className="mx-auto flex w-3/4 flex-col gap-1">
-        <div className="title">
-          <h1 className="font-body py-4 text-4xl text-gray-800">
-            Fitness Tracker App!
-          </h1>
-          <p className="mx-auto w-3/4 text-gray-400">
-            Manage your mean plans, plan your workouts and conquer your
-            objectives!
-          </p>
-        </div>
+        <FormHeader
+          title="Fitness Tracker App!"
+          subtitle="Change Password"
+          description="Manage your mean plans, plan your workouts and conquer your
+            objectives!"
+        />
 
-        <form className="flex flex-col gap-5" onSubmit={formik.handleSubmit}>
-          <div
-            className={`${styles.input_group} ${
-              formik.errors?.email && formik.touched?.email
-                ? "border-rose-600"
-                : ""
-            }`}
-          >
-            <input
-              className={styles.input_text}
-              type="email"
-              placeholder="Email"
-              {...formik.getFieldProps("email")}
-            />
-            <span className="icon flex items-center px-4">
-              <HiAtSymbol size={25} />
-            </span>
-          </div>
-          {formik.errors?.email && formik.touched?.email ? (
-            <span className="text-rose-400">{formik.errors.email}</span>
-          ) : (
-            <></>
-          )}
-          <div
-            className={`${styles.input_group} ${
-              formik.errors?.password && formik.touched?.password
-                ? "border-rose-600"
-                : ""
-            }`}
-          >
-            <input
-              className={styles.input_text}
-              type={show ? "text" : "password"}
-              placeholder="Password"
-              {...formik.getFieldProps("password")}
-            />
-            <span
-              onClick={onPasswordIconClick}
-              className="icon flex items-center px-4"
-            >
-              <HiFingerPrint size={25} />
-            </span>
-          </div>
-          {formik.errors?.password && formik.touched?.password ? (
-            <span className="text-rose-400">{formik.errors.password}</span>
-          ) : (
-            <></>
-          )}
+        <FormContainer onSubmit={formik.handleSubmit}>
+          <CustomInput
+            customStyle={styles.input_group}
+            inputLabel="Enter email"
+            inputType={"email"}
+            inputPlaceholder="Insert email"
+            getFieldProps={formik.getFieldProps("email")}
+            required
+            hasError={formik.errors?.email && formik.touched?.email}
+            errorMessage={formik.errors.email}
+            hasLeftIcon
+            LeftIcon={<HiAtSymbol size={25} />}
+          />
+
+          <CustomInput
+            customStyle={styles.input_group}
+            inputLabel="Enter password"
+            inputType={show.password ? "text" : "password"}
+            inputPlaceholder="Insert a secure password"
+            getFieldProps={formik.getFieldProps("password")}
+            required
+            hasError={formik.errors?.password && formik.touched?.password}
+            errorMessage={formik.errors.password}
+            hasLeftIcon
+            LeftIcon={<HiFingerPrint size={25} />}
+            onPasswordIconClick={onPasswordIconClick}
+          />
           <div className={styles.input_button}>
             <button className={styles.button} type="submit">
-              Login
+              {mutation.isLoading ? "Loading" : "Change Password"}
             </button>
           </div>
-        </form>
+          {mutation.isSuccess ? (
+            <FormSuccessMessage message="Success! Login with your new password" />
+          ) : (
+            <></>
+          )}
+          {mutation.isError ? (
+            <FormErrorMessage message="Error! Try a different email or password" />
+          ) : (
+            <></>
+          )}
+
+          {/* {!mutation.isSuccess && mutation.isIdle ? (
+            <FormWarningMessage message="An error occured. Try a different email or password" />
+          ) : (
+            <></>
+          )} */}
+        </FormContainer>
         <FormFooterProps
           message="Dont have an account yet?"
           link="/login/signup"
-          linkMessage="Sign un!"
+          linkMessage="Sign up!"
         />
       </section>
     </Layout>

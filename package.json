@@ -28,7 +28,6 @@
     "@trpc/server": "^10.0.0",
     "@types/bcryptjs": "^2.4.2",
     "bcryptjs": "^2.4.3",
-    "eslint-plugin-simple-import-sort": "^8.0.0",
     "formik": "^2.2.9",
     "next": "13.0.2",
     "next-auth": "^4.15.1",
@@ -36,7 +35,6 @@
     "react-dom": "18.2.0",
     "react-icons": "^4.7.1",
     "superjson": "1.9.1",
-    "trpc-playground": "^0.4.4",
     "zod": "^3.18.0"
   },
   "devDependencies": {
@@ -51,6 +49,7 @@
     "eslint": "^8.26.0",
     "eslint-config-next": "13.0.2",
     "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-simple-import-sort": "^8.0.0",
     "postcss": "^8.4.14",
     "prettier": "^2.7.1",
     "prettier-plugin-tailwindcss": "^0.1.13",

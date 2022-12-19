@@ -4,9 +4,9 @@ import { useFormik } from "formik";
 import { useRouter } from "next/router";
 
 import CustomInput from "../../components/inputs/input";
-import FormContainer from "../../components/register_form/form-container";
-import FormFooterProps from "../../components/register_form/form-footer";
-import FormHeader from "../../components/register_form/form-header";
+import FormContainer from "../../components/login-form/form-container";
+import FormFooterProps from "../../components/login-form/form-footer";
+import FormHeader from "../../components/login-form/form-header";
 import Layout from "../../layout/layout";
 import registerValidate from "../../lib/register-validate";
 import { trpc } from "../../utils/trpc";

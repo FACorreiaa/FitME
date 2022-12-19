@@ -1,5 +1,5 @@
 import React from "react";
-import { HiOutlineUser } from "react-icons/hi2";
+import Link from "next/link";
 
 type CustomInputProps = {
   customStyle: any;
@@ -15,6 +15,7 @@ type CustomInputProps = {
   LeftIcon?: any;
   RightIcon?: any;
   onPasswordIconClick?: () => void;
+  inputPassword?: boolean;
 };
 function CustomInput({
   customStyle,
@@ -30,6 +31,7 @@ function CustomInput({
   LeftIcon,
   RightIcon,
   onPasswordIconClick,
+  inputPassword,
 }: CustomInputProps) {
   return (
     <div className="mb-4">
@@ -50,9 +52,10 @@ function CustomInput({
           type={inputType}
           placeholder={inputPlaceholder}
           {...getFieldProps}
-          className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-4 pl-10 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+          className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-4 pl-10 text-sm text-gray-900 focus:border-gray-500 focus:ring-gray-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-gray-500 dark:focus:ring-gray-500"
           required={required}
         />
+
         {hasRightIcon && (
           <div
             onClick={onPasswordIconClick}
@@ -62,11 +65,21 @@ function CustomInput({
           </div>
         )}
       </div>
-      {hasError ? (
-        <span className="text-left text-sm text-red-700">{errorMessage}</span>
-      ) : (
-        <></>
-      )}
+      <div className="flex flex-row items-baseline justify-between">
+        {hasError ? (
+          <span className="text-left text-xs text-red-700">{errorMessage}</span>
+        ) : (
+          <></>
+        )}
+        {inputPassword && (
+          <Link
+            className="text-xs text-gray-800 underline"
+            href={"/login/change-password"}
+          >
+            Forgot password?
+          </Link>
+        )}
+      </div>
     </div>
   );
 }

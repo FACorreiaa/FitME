@@ -11,7 +11,7 @@ function Layout({ children }: LayoutProps) {
     <div className="flex h-screen bg-gradient-to-t from-orange-100 to-slate-700">
       <div className="m-auto	 grid h-3/4 w-3/5 overflow-hidden rounded-md bg-slate-50 lg:grid-cols-2">
         <div className={styles.imgStyle}>
-          <div className={styles.cartoon}></div>
+          {/* <div className={styles.cartoon}></div> */}
           <div className={styles.cloud_one}></div>
           <div className={styles.cloud_two}></div>
         </div>
