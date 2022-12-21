@@ -4,8 +4,7 @@
 }
 
 .button {
-  @apply w-full rounded-md bg-gradient-to-r from-sky-300 to-indigo-300;
-  @apply py-3 text-lg text-gray-50;
+  @apply w-full rounded-md bg-slate-500 py-3 px-4 text-lg text-gray-50;
 }
 
 .button:hover {

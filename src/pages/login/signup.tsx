@@ -4,9 +4,11 @@ import { useFormik } from "formik";
 import { useRouter } from "next/router";
 
 import CustomInput from "../../components/inputs/input";
+import ConfirmButton from "../../components/login-form/button/confirm-button";
 import FormContainer from "../../components/login-form/form-container";
 import FormFooterProps from "../../components/login-form/form-footer";
 import FormHeader from "../../components/login-form/form-header";
+import FormErrorMessage from "../../components/login-form/status/form-error-message";
 import Layout from "../../layout/layout";
 import registerValidate from "../../lib/register-validate";
 import { trpc } from "../../utils/trpc";
@@ -29,7 +31,18 @@ function RegisterPage() {
   const router = useRouter();
   async function onSumitRegisterValues(values: RegisterPageProps) {
     const { username, email, password, cpassword } = values;
-    mutation.mutate({ username, email, password, cpassword });
+    mutation.mutate(
+      { username, email, password, cpassword },
+      {
+        onError: (error) => {
+          console.log(error);
+        },
+        onSuccess: (data) => {
+          console.log(data);
+        },
+      }
+    );
+    console.log("isError", mutation.isError);
     mutation.isSuccess && router.push("http://localhost:5005/login/signin");
   }
 
@@ -70,11 +83,7 @@ function RegisterPage() {
   return (
     <Layout>
       <section className="mx-auto flex w-3/4 flex-col gap-1 ">
-        <FormHeader
-          title="Register"
-          description="Manage your mean plans, plan your workouts and conquer your
-            objectives!"
-        />
+        <FormHeader title="Register" />
 
         <FormContainer onSubmit={formik.handleSubmit}>
           <CustomInput
@@ -130,13 +139,13 @@ function RegisterPage() {
             LeftIcon={<HiFingerPrint size={25} />}
             onPasswordIconClick={onConfirmPasswordIconClick}
           />
-
-          <div className={styles.input_button}>
-            <button className={styles.button} type="submit">
-              Register
-            </button>
-          </div>
+          {mutation.isError ? (
+            <FormErrorMessage message="Error! Try a different email or password" />
+          ) : (
+            <></>
+          )}
         </FormContainer>
+        <ConfirmButton label="Register" />
 
         <FormFooterProps
           message="Dont have an account yet?"

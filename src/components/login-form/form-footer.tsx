@@ -8,7 +8,7 @@ type FormFooterProps = {
 };
 function FormFooter({ message, link, linkMessage }: FormFooterProps) {
   return (
-    <p className="text-center text-sm text-gray-400">
+    <p className="text-center text-xs text-gray-400">
       {message}{" "}
       <Link className="text-blue-700" href={link}>
         {linkMessage}

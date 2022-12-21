@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 
 import CustomInput from "../../components/inputs/input";
+import ConfirmButton from "../../components/login-form/button/confirm-button";
 import FormContainer from "../../components/login-form/form-container";
 import FormFooterProps from "../../components/login-form/form-footer";
 import FormHeader from "../../components/login-form/form-header";
@@ -84,12 +85,7 @@ export const ChangePasswordPage = () => {
         <title>Login</title>
       </Head>
       <section className="mx-auto flex w-3/4 flex-col gap-1">
-        <FormHeader
-          title="Fitness Tracker App!"
-          subtitle="Change Password"
-          description="Manage your mean plans, plan your workouts and conquer your
-            objectives!"
-        />
+        <FormHeader title="Change Password" />
 
         <FormContainer onSubmit={formik.handleSubmit}>
           <CustomInput
@@ -118,11 +114,9 @@ export const ChangePasswordPage = () => {
             LeftIcon={<HiFingerPrint size={25} />}
             onPasswordIconClick={onPasswordIconClick}
           />
-          <div className={styles.input_button}>
-            <button className={styles.button} type="submit">
-              {mutation.isLoading ? "Loading" : "Change Password"}
-            </button>
-          </div>
+          <ConfirmButton
+            label={mutation.isLoading ? "Loading" : "Change Password"}
+          />
           {mutation.isSuccess ? (
             <FormSuccessMessage message="Success! Login with your new password" />
           ) : (

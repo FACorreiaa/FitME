@@ -6,10 +6,7 @@ type FormContainerProps = {
 };
 function FormContainer({ onSubmit, children }: FormContainerProps) {
   return (
-    <form
-      className="mb-4 gap-5 rounded px-8 pt-6 pb-8 shadow-md"
-      onSubmit={onSubmit}
-    >
+    <form className="mb-4 gap-5 rounded px-4 pt-6 pb-8" onSubmit={onSubmit}>
       {children}
     </form>
   );

@@ -45,7 +45,9 @@ export const authRouter = router({
         });
 
         if (checkingUsers) {
-          return { message: "User already exists..." };
+          throw new TRPCError({
+            code: "INTERNAL_SERVER_ERROR",
+          });
         }
 
         //hash password
@@ -78,7 +80,9 @@ export const authRouter = router({
         });
 
         if (!checkingUsers) {
-          return { message: "Email not found" };
+          throw new TRPCError({
+            code: "INTERNAL_SERVER_ERROR",
+          });
         }
 
         return await ctx.prisma.user.update({

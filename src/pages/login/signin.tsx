@@ -34,11 +34,7 @@ export const LoginPage = () => {
         <title>Login</title>
       </Head>
       <section className="mx-auto flex w-3/4 flex-col gap-5">
-        <FormHeader
-          title="Fitness Tracker App!"
-          description="Manage your mean plans, plan your workouts and conquer your
-            objectives!"
-        />
+        <FormHeader subtitle="Login method" />
         <div className="flex flex-col gap-5">
           <button className={styles.input_button}>
             <Link href={"/phone"} className={styles.button_custom}>
@@ -131,53 +127,6 @@ export const LoginPage = () => {
               </SocialMediaButton>
             </div>
           </div>
-
-          {/*<div className={styles.input_button}>
-            <button
-              onClick={handleGithubSignin}
-              className={styles.button_custom}
-              type="button"
-            >
-              Sign in with Github{" "}
-              <Image
-                alt="github"
-                src={"/assets/github.svg"}
-                width="20"
-                height="20"
-              />
-            </button>
-          </div>
-
-           <div className={styles.input_button}>
-            <button
-              onClick={handleGithubSignin}
-              className={styles.button_custom}
-              type="button"
-            >
-              Sign in with Twitter{" "}
-              <Image
-                alt="github"
-                src={"/assets/twitter.svg"}
-                width="20"
-                height="20"
-              />
-            </button>
-          </div>
-          <div className={styles.input_button}>
-            <button
-              onClick={handleGithubSignin}
-              className={styles.button_custom}
-              type="button"
-            >
-              Sign in with Discord{" "}
-              <Image
-                alt="github"
-                src={"/assets/discord.svg"}
-                width="20"
-                height="20"
-              />
-            </button>
-          </div> */}
         </div>
 
         <FormFooterProps

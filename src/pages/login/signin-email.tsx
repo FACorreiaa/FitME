@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import { signIn } from "next-auth/react";
 
 import CustomInput from "../../components/inputs/input";
+import ConfirmButton from "../../components/login-form/button/confirm-button";
 import FormContainer from "../../components/login-form/form-container";
 import FormFooterProps from "../../components/login-form/form-footer";
 import FormHeader from "../../components/login-form/form-header";
@@ -58,12 +59,7 @@ export const EmailLoginPage = () => {
         <title>Login</title>
       </Head>
       <section className="mx-auto flex w-3/4 flex-col gap-1">
-        <FormHeader
-          title="Fitness Tracker App!"
-          subtitle="Login"
-          description="Manage your mean plans, plan your workouts and conquer your
-            objectives!"
-        />
+        <FormHeader title="Login" />
 
         <FormContainer onSubmit={formik.handleSubmit}>
           <CustomInput
@@ -94,11 +90,7 @@ export const EmailLoginPage = () => {
             inputPassword
           />
 
-          <div className={styles.input_button}>
-            <button className={styles.button} type="submit">
-              Login
-            </button>
-          </div>
+          <ConfirmButton label="Login" />
         </FormContainer>
         <FormFooterProps
           message="Dont have an account yet?"
