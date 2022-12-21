@@ -1,11 +1,13 @@
+import { useState } from "react";
 import type { GetServerSidePropsContext } from "next";
 import { type NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import { type Session } from "next-auth";
-import { getSession, signOut, useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 
 import HeaderComponent from "../components/common/header";
+import HeaderModal from "../components/common/header-modal";
 import { getServerAuthSession } from "../server/common/get-server-auth-session";
 
 import styles from "../styles/Index.module.css";
@@ -58,9 +60,11 @@ const AuthorizedUser = ({ session }: AuthorizedUserProps) => {
   };
   console.log("sesson", session);
 
+  const [showMenu, setShowMenu] = useState(false);
   return (
     <div>
-      <HeaderComponent />
+      <HeaderComponent onMenuButtonClick={() => setShowMenu(!showMenu)} />
+      {showMenu && <HeaderModal />}
 
       <main className="container mx-auto py-20 text-center">
         <h3 className="text-4xl font-bold">User Home Page</h3>

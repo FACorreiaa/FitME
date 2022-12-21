@@ -1,52 +1,19 @@
 import React from "react";
+import { VscMenu } from "react-icons/vsc";
 
-function HeaderComponent() {
+type HeaderComponentProps = {
+  onMenuButtonClick: () => void;
+};
+function HeaderComponent({ onMenuButtonClick }: HeaderComponentProps) {
   return (
-    <nav className="flex flex-wrap items-center justify-between bg-slate-300 p-6">
-      {/* <header className="flex h-screen flex-col justify-center text-left">
-        <h1 className="text-4xl font-bold text-white">My Site</h1>
-        <nav>
-          <ul className="list-reset flex flex-col text-left">
-            <li className="mb-2">
-              <a
-                href="#"
-                className="text-xl font-semibold text-white hover:text-gray-300"
-              >
-                Home
-              </a>
-            </li>
-            <li className="mb-2">
-              <a
-                href="#"
-                className="text-xl font-semibold text-white hover:text-gray-300"
-              >
-                About
-              </a>
-            </li>
-            <li className="mb-2">
-              <a
-                href="#"
-                className="text-xl font-semibold text-white hover:text-gray-300"
-              >
-                Contact
-              </a>
-            </li>
-          </ul>
-        </nav>
-      </header> */}
-
+    <nav className="relative flex flex-wrap items-center justify-between bg-slate-300 p-4">
       <div className="flex-no-shrink mr-6 flex items-center text-white">
-        <svg
-          className="mr-2 h-8 w-8"
-          width="54"
-          height="54"
-          viewBox="0 0 54 54"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path d="M13.5 22.1c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05zM0 38.3c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05z" />
-        </svg>
-        <span className="text-xl font-semibold tracking-tight">
-          Tailwind CSS
+        <button type="button" onClick={onMenuButtonClick}>
+          <VscMenu size={30} />
+        </button>
+
+        <span className="pl-4 text-xl font-semibold tracking-tight">
+          Fitness Tracker
         </span>
       </div>
       <div className="block lg:hidden">
