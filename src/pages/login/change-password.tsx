@@ -51,14 +51,13 @@ export const ChangePasswordPage = () => {
   };
 
   async function onSubmitChangePassword(values: ChangePasswordProps) {
-    debugger;
     const { email, password } = values;
     try {
       mutation.mutate(
         { email, password },
         {
-          onError: (error) => {
-            console.log(error);
+          onError: (error: any) => {
+            throw new Error(error);
           },
           onSuccess: (data) => {
             console.log(data);

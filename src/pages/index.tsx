@@ -3,7 +3,7 @@ import { type NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import { type Session } from "next-auth";
-import { signOut, useSession } from "next-auth/react";
+import { getSession, signOut, useSession } from "next-auth/react";
 
 import HeaderComponent from "../components/common/header";
 import { getServerAuthSession } from "../server/common/get-server-auth-session";
@@ -56,6 +56,7 @@ const AuthorizedUser = ({ session }: AuthorizedUserProps) => {
   const handleSignOut = () => {
     signOut();
   };
+  console.log("sesson", session);
 
   return (
     <div>

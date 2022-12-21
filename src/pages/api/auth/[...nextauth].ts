@@ -61,7 +61,6 @@ export const authOptions: NextAuthOptions = {
         if (!user) {
           throw new Error("No user found");
         }
-        console.log("user credentials", user);
         const checkPassword = await compare(
           credentials.password,
           user?.password
@@ -87,6 +86,15 @@ export const authOptions: NextAuthOptions = {
   //     return params.token;
   //   },
   // },
+  // callbacks: {
+  //   async session({ session, token, user }) {
+  //     // Send properties to the client, like an access_token and user id from a provider.
+  //     session.accessToken = token.accessToken
+  //     session.user.id = token.id
+
+  //     return session
+  //   }
+  // }
   pages: {
     signIn: "/signin",
     newUser: "/",

@@ -2,7 +2,7 @@ import React from "react";
 
 function HeaderComponent() {
   return (
-    <nav className="flex flex-wrap items-center justify-between bg-red-400 p-6">
+    <nav className="flex flex-wrap items-center justify-between bg-slate-300 p-6">
       {/* <header className="flex h-screen flex-col justify-center text-left">
         <h1 className="text-4xl font-bold text-white">My Site</h1>
         <nav>
@@ -83,12 +83,20 @@ function HeaderComponent() {
           </a>
         </div>
         <div>
-          <a
-            href="#"
-            className="hover:text-teal mt-4 inline-block rounded border border-white px-4 py-2 text-sm leading-none text-white hover:border-transparent hover:bg-white lg:mt-0"
-          >
-            Download
-          </a>
+          <div className="relative h-10 w-10 overflow-hidden rounded-full bg-gray-100 dark:bg-gray-600">
+            <svg
+              className="absolute -left-1 h-12 w-12 text-gray-400"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+          </div>
         </div>
       </div>
     </nav>

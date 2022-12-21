@@ -53,6 +53,7 @@ export const EmailLoginPage = () => {
     return result;
   }
 
+  console.log("formik.errors", formik.errors);
   return (
     <Layout>
       <Head>
