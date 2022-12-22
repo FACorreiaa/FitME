@@ -1,20 +1,18 @@
 import React from "react";
 import { VscMenu } from "react-icons/vsc";
 import Image from "next/image";
+import Link from "next/link";
 type HeaderComponentProps = {
   onMenuButtonClick: () => void;
 };
 function HeaderComponent({ onMenuButtonClick }: HeaderComponentProps) {
   return (
-    <nav className="fixed top-0 left-0 z-20 w-full border-b border-gray-200 bg-white  py-3 dark:border-gray-400 dark:bg-gray-500 sm:px-4">
+    <nav className="fixed top-0 left-0 z-20 w-full border-b border-gray-200 bg-white py-3  shadow-xl dark:border-gray-400 dark:bg-gray-500 sm:px-4">
       <div className=" mx-auto flex flex-wrap items-center justify-between">
         <button type="button" onClick={onMenuButtonClick}>
           <VscMenu size={30} />
         </button>
-        <a
-          href="https://flowbite.com/"
-          className="flex items-center dark:text-white"
-        >
+        <Link href="/" className="flex items-center dark:text-white">
           <Image
             width={30}
             height={30}
@@ -25,7 +23,7 @@ function HeaderComponent({ onMenuButtonClick }: HeaderComponentProps) {
           <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
             Fitness Tracker
           </span>
-        </a>
+        </Link>
         <div className="flex md:order-2">
           <div className="relative h-10 w-10 overflow-hidden rounded-full bg-gray-100 dark:bg-gray-600">
             <svg

@@ -3,8 +3,6 @@ import Image from "next/image";
 
 import FormHeader from "../components/login-form/form-header";
 
-import styles from "../styles/Layout.module.css";
-
 type LayoutProps = {
   children: JSX.Element | JSX.Element[];
 };
