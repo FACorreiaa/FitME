@@ -6,7 +6,7 @@ type HeaderComponentProps = {
 };
 function HeaderComponent({ onMenuButtonClick }: HeaderComponentProps) {
   return (
-    <nav className="fixed top-0 left-0 z-20 w-full border-b border-gray-200 bg-white  py-2.5 dark:border-gray-400 dark:bg-slate-500 sm:px-4">
+    <nav className="fixed top-0 left-0 z-20 w-full border-b border-gray-200 bg-white  py-3 dark:border-gray-400 dark:bg-gray-500 sm:px-4">
       <div className=" mx-auto flex flex-wrap items-center justify-between">
         <button type="button" onClick={onMenuButtonClick}>
           <VscMenu size={30} />

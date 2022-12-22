@@ -4,7 +4,7 @@ function HeaderModal() {
   return (
     <div
       id="dropdownInformation"
-      className="absolute z-10 w-44 divide-y divide-gray-100 rounded bg-white shadow dark:divide-gray-600 dark:bg-gray-500"
+      className="z-21 absolute top-16 z-10 w-44 divide-y divide-gray-100 rounded bg-white shadow dark:divide-gray-600 dark:bg-gray-500"
     >
       <div className="py-3 px-4 text-sm text-gray-900 dark:text-white">
         <div>Bonnie Green</div>
