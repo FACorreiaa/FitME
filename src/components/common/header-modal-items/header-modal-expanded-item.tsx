@@ -40,10 +40,6 @@ function HeaderModalExpandedItem({
           >
             <HeaderModalGeneralItem Icon={Icon} label={label} href="#" />
             <HeaderModalGeneralItem Icon={Icon} label={label} href="#" />
-            <HeaderModalGeneralItem Icon={Icon} label={label} href="#" />
-            <HeaderModalGeneralItem Icon={Icon} label={label} href="#" />
-            <HeaderModalGeneralItem Icon={Icon} label={label} href="#" />
-            <HeaderModalGeneralItem Icon={Icon} label={label} href="#" />
           </ul>
         </div>
       </div>

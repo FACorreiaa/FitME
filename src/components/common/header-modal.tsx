@@ -1,5 +1,13 @@
 import React, { useRef, useState } from "react";
-import { HiOutlineHome } from "react-icons/hi2";
+import { HiOutlineCalculator, HiOutlineHome } from "react-icons/hi2";
+import { RiUserLine } from "react-icons/ri";
+import {
+  TfiBarChartAlt,
+  TfiGallery,
+  TfiSettings,
+  TfiVideoCamera,
+} from "react-icons/tfi";
+import { VscSignOut } from "react-icons/vsc";
 
 import HeaderModalAuthItem from "./header-modal-items/header-modal-auth-item";
 import HeaderModalSubItem from "./header-modal-items/header-modal-expanded-item";
@@ -28,7 +36,7 @@ function HeaderModal() {
         <HeaderModalGeneralItem
           href="/user/profile"
           label="Profile"
-          Icon={<HiOutlineHome size={20} />}
+          Icon={<RiUserLine size={20} />}
         />
         {showTestOptions && (
           <HeaderModalSubItem
@@ -40,11 +48,11 @@ function HeaderModal() {
 
         <HeaderModalMultiItem
           ref={modalRef}
-          label="Workout Videos"
+          label="Samples"
           onClick={() => setShowTestOptions(!showTestOptions)}
           onMouseOver={() => setShowTestOptions(true)}
           onMouseLeave={() => setShowTestOptions(false)}
-          Icon={<HiOutlineHome size={20} />}
+          Icon={<TfiVideoCamera size={20} />}
         />
 
         <HeaderModalGeneralItem
@@ -60,17 +68,17 @@ function HeaderModal() {
         <HeaderModalGeneralItem
           href="#"
           label="Macro Calculator"
-          Icon={<HiOutlineHome size={20} />}
+          Icon={<HiOutlineCalculator size={20} />}
         />
         <HeaderModalGeneralItem
           href="#"
           label="Statistics"
-          Icon={<HiOutlineHome size={20} />}
+          Icon={<TfiBarChartAlt size={20} />}
         />
         <HeaderModalGeneralItem
           href="#"
           label="Settings"
-          Icon={<HiOutlineHome size={20} />}
+          Icon={<TfiSettings size={20} />}
         />
       </ul>
       {/* <div>
@@ -81,7 +89,7 @@ function HeaderModal() {
           <HeaderModalGeneralItem
             href="#"
             label="Sign out"
-            Icon={<HiOutlineHome size={20} />}
+            Icon={<VscSignOut size={20} />}
           />
         </ul>
       </div>
