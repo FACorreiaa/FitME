@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { HiAtSymbol, HiFingerPrint } from "react-icons/hi2";
-import { useFormik } from "formik";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { signIn } from "next-auth/react";
@@ -10,8 +9,9 @@ import ConfirmButton from "../../components/login-form/button/confirm-button";
 import FormContainer from "../../components/login-form/form-container";
 import FormFooterProps from "../../components/login-form/form-footer";
 import FormHeader from "../../components/login-form/form-header";
+import useZodForm from "../../hooks/useZodForm";
 import Layout from "../../layout/layout";
-import loginValidate from "../../lib/login-validate";
+import { loginUserSchema } from "../../server/schema/user.schema";
 
 import styles from "../../styles/Form.module.css";
 
@@ -27,22 +27,22 @@ export const EmailLoginPage = () => {
   // if (isLoading) return null;
 
   // if (data !== "ADMIN") return null;
-  const [show, setShow] = useState({ password: false });
-  const router = useRouter();
-  const formik = useFormik({
-    initialValues: {
+  const methods = useZodForm({
+    schema: loginUserSchema,
+    defaultValues: {
       email: "",
       password: "",
     },
-    validate: loginValidate,
-    onSubmit: onSubmitLoginValues,
   });
+
+  const [show, setShow] = useState({ password: false });
+  const router = useRouter();
 
   const onPasswordIconClick = () => {
     setShow({ password: !show.password });
   };
 
-  async function onSubmitLoginValues(values: LoginValuesProps): Promise<any> {
+  async function onSubmitLoginValues(values: LoginValuesProps) {
     const result = await signIn("credentials", {
       email: values?.email,
       password: values?.password,
@@ -50,10 +50,9 @@ export const EmailLoginPage = () => {
       callbackUrl: "/login",
     });
     if (result?.ok) router.push("/");
-    return result;
+    return await result;
   }
 
-  console.log("formik.errors", formik.errors);
   return (
     <Layout>
       <Head>
@@ -62,16 +61,15 @@ export const EmailLoginPage = () => {
       <section className="mx-auto flex w-3/4 flex-col gap-1">
         <FormHeader title="Login" />
 
-        <FormContainer onSubmit={formik.handleSubmit}>
+        <FormContainer onSubmit={methods.handleSubmit(onSubmitLoginValues)}>
           <CustomInput
             customStyle={styles.input_group}
             inputLabel="Enter email"
             inputType={"email"}
             inputPlaceholder="Insert email"
-            getFieldProps={formik.getFieldProps("email")}
             required
-            hasError={formik.errors?.email && formik.touched?.email}
-            errorMessage={formik.errors.email}
+            methods={methods.register("email")}
+            errorMessage={methods.formState.errors.email?.message}
             hasLeftIcon
             LeftIcon={<HiAtSymbol size={25} />}
           />
@@ -81,10 +79,9 @@ export const EmailLoginPage = () => {
             inputLabel="Enter password"
             inputType={show.password ? "text" : "password"}
             inputPlaceholder="Insert a secure password"
-            getFieldProps={formik.getFieldProps("password")}
             required
-            hasError={formik.errors?.password && formik.touched?.password}
-            errorMessage={formik.errors.password}
+            methods={methods.register("password")}
+            errorMessage={methods.formState.errors.email?.message}
             hasLeftIcon
             LeftIcon={<HiFingerPrint size={25} />}
             onPasswordIconClick={onPasswordIconClick}

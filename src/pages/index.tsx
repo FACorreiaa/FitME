@@ -66,7 +66,7 @@ const AuthorizedUser = ({ session }: AuthorizedUserProps) => {
       <HeaderComponent onMenuButtonClick={() => setShowMenu(!showMenu)} />
       {showMenu && <HeaderModal />}
 
-      <main className="container mx-auto py-20 text-center">
+      <main className=" container mx-auto w-full py-20 text-center">
         <h3 className="text-4xl font-bold">User Home Page</h3>
 
         <div className="details">

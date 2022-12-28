@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { HiAtSymbol, HiFingerPrint, HiOutlineUser } from "react-icons/hi2";
-import { useFormik } from "formik";
 import { useRouter } from "next/router";
 
 import CustomInput from "../../components/inputs/input";
@@ -9,8 +8,9 @@ import FormContainer from "../../components/login-form/form-container";
 import FormFooterProps from "../../components/login-form/form-footer";
 import FormHeader from "../../components/login-form/form-header";
 import FormErrorMessage from "../../components/login-form/status/form-error-message";
+import useZodForm from "../../hooks/useZodForm";
 import Layout from "../../layout/layout";
-import registerValidate from "../../lib/register-validate";
+import { createUserSchema } from "../../server/schema/user.schema";
 import { trpc } from "../../utils/trpc";
 
 import styles from "../../styles/Form.module.css";
@@ -21,43 +21,34 @@ type RegisterPageProps = {
   password: string;
   cpassword: string;
 };
-function RegisterPage() {
+const RegisterPage = () => {
   const mutation = trpc.auth.signUp.useMutation();
+  const methods = useZodForm({
+    schema: createUserSchema,
+    defaultValues: {
+      username: "",
+      email: "",
+      password: "",
+      cpassword: "",
+    },
+  });
   //console.log("data", data);
 
   //if (isLoading) return null;
 
   const [show, setShow] = useState({ password: false, cpassword: false });
   const router = useRouter();
+
   async function onSumitRegisterValues(values: RegisterPageProps) {
-    const { username, email, password, cpassword } = values;
-    mutation.mutate(
-      { username, email, password, cpassword },
-      {
-        onError: (error) => {
-          console.log(error);
-        },
-        onSuccess: (data) => {
-          console.log(data);
-        },
-      }
-    );
-    console.log("isError", mutation.isError);
-    mutation.isSuccess && router.push("http://localhost:5005/login/signin");
+    try {
+      mutation.mutateAsync(values);
+      console.log("mutate", mutation);
+      mutation.isSuccess && router.push("http://localhost:5005/login/signin");
+    } catch (error: any) {
+      throw new Error(error);
+    }
   }
 
-  const formik = useFormik({
-    initialValues: {
-      username: "",
-      email: "",
-      password: "",
-      cpassword: "",
-    },
-    //validateOnChange: false,
-    //validateOnBlur: false,
-    validate: registerValidate,
-    onSubmit: onSumitRegisterValues,
-  });
   const onPasswordIconClick = () => {
     setShow({ ...show, password: !show.password });
   };
@@ -85,16 +76,15 @@ function RegisterPage() {
       <section className="mx-auto flex w-3/4 flex-col gap-1 ">
         <FormHeader title="Register" />
 
-        <FormContainer onSubmit={formik.handleSubmit}>
+        <FormContainer onSubmit={methods.handleSubmit(onSumitRegisterValues)}>
           <CustomInput
             customStyle={styles.input_group}
             inputLabel="Enter username"
             inputType="username"
             inputPlaceholder="Username"
-            getFieldProps={formik.getFieldProps("username")}
             required
-            hasError={formik.errors?.username && formik.touched?.username}
-            errorMessage={formik.errors.username}
+            methods={methods.register("username")}
+            errorMessage={methods.formState.errors.username?.message}
             hasLeftIcon
             LeftIcon={<HiOutlineUser size={25} />}
           />
@@ -104,10 +94,9 @@ function RegisterPage() {
             inputLabel="Enter email"
             inputType="email"
             inputPlaceholder="email@email.com"
-            getFieldProps={formik.getFieldProps("email")}
             required
-            hasError={formik.errors?.email && formik.touched?.email}
-            errorMessage={formik.errors.email}
+            methods={methods.register("email")}
+            errorMessage={methods.formState.errors.email?.message}
             hasLeftIcon
             LeftIcon={<HiAtSymbol size={25} />}
           />
@@ -117,10 +106,9 @@ function RegisterPage() {
             inputLabel="Enter password"
             inputType={show.password ? "text" : "password"}
             inputPlaceholder="Insert a secure password"
-            getFieldProps={formik.getFieldProps("password")}
             required
-            hasError={formik.errors?.password && formik.touched?.password}
-            errorMessage={formik.errors.password}
+            methods={methods.register("password")}
+            errorMessage={methods.formState.errors.password?.message}
             hasLeftIcon
             LeftIcon={<HiFingerPrint size={25} />}
             onPasswordIconClick={onPasswordIconClick}
@@ -131,10 +119,9 @@ function RegisterPage() {
             inputLabel="Confirm password"
             inputType={show.cpassword ? "text" : "password"}
             inputPlaceholder="Confirm your password"
-            getFieldProps={formik.getFieldProps("cpassword")}
             required
-            hasError={formik.errors?.cpassword && formik.touched?.cpassword}
-            errorMessage={formik.errors.cpassword}
+            methods={methods.register("cpassword")}
+            errorMessage={methods.formState.errors.cpassword?.message}
             hasLeftIcon
             LeftIcon={<HiFingerPrint size={25} />}
             onPasswordIconClick={onConfirmPasswordIconClick}
@@ -155,6 +142,6 @@ function RegisterPage() {
       </section>
     </Layout>
   );
-}
+};
 
 export default RegisterPage;

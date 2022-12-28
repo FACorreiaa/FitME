@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { HiAtSymbol, HiFingerPrint } from "react-icons/hi2";
-import { useFormik } from "formik";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
@@ -12,8 +11,9 @@ import FormFooterProps from "../../components/login-form/form-footer";
 import FormHeader from "../../components/login-form/form-header";
 import FormErrorMessage from "../../components/login-form/status/form-error-message";
 import FormSuccessMessage from "../../components/login-form/status/form-success-message";
+import useZodForm from "../../hooks/useZodForm";
 import Layout from "../../layout/layout";
-import loginValidate from "../../lib/login-validate";
+import { loginUserSchema } from "../../server/schema/user.schema";
 import { trpc } from "../../utils/trpc";
 
 import styles from "../../styles/Form.module.css";
@@ -24,8 +24,16 @@ type ChangePasswordProps = {
 };
 
 export const ChangePasswordPage = () => {
-  const mutation = trpc.auth.changePassword.useMutation();
+  const methods = useZodForm({
+    schema: loginUserSchema,
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
 
+  const mutation = trpc.auth.changePassword.useMutation();
+  //const utils = trpc.useContext().auth;
   // const { data, isLoading } = trpc.userLogin.me.useQuery();
   // console.log("data", data);
   //
@@ -36,34 +44,22 @@ export const ChangePasswordPage = () => {
   console.log("session", session);
   const [show, setShow] = useState({ password: false });
   const router = useRouter();
-  const formik = useFormik({
-    initialValues: {
-      email: "",
-      password: "",
-    },
-    validate: loginValidate,
-    onSubmit: onSubmitChangePassword,
-  });
+  // const formik = useFormik({
+  //   initialValues: {
+  //     email: "",
+  //     password: "",
+  //   },
+  //   validate: loginValidate,
+  //   onSubmit: onSubmitChangePassword,
+  // });
 
   const onPasswordIconClick = () => {
     setShow({ password: !show.password });
   };
 
   async function onSubmitChangePassword(values: ChangePasswordProps) {
-    const { email, password } = values;
     try {
-      mutation.mutate(
-        { email, password },
-        {
-          onError: (error: any) => {
-            throw new Error(error);
-          },
-          onSuccess: (data) => {
-            console.log(data);
-          },
-        }
-      );
-      console.log("error", formik.errors);
+      mutation.mutateAsync(values);
       console.log("mutate", mutation);
 
       return (
@@ -85,16 +81,15 @@ export const ChangePasswordPage = () => {
       <section className="mx-auto flex w-3/4 flex-col gap-1">
         <FormHeader title="Change Password" />
 
-        <FormContainer onSubmit={formik.handleSubmit}>
+        <FormContainer onSubmit={methods.handleSubmit(onSubmitChangePassword)}>
           <CustomInput
             customStyle={styles.input_group}
             inputLabel="Enter email"
             inputType={"email"}
             inputPlaceholder="Insert email"
-            getFieldProps={formik.getFieldProps("email")}
             required
-            hasError={formik.errors?.email && formik.touched?.email}
-            errorMessage={formik.errors.email}
+            methods={methods.register("email")}
+            errorMessage={methods.formState.errors.email?.message}
             hasLeftIcon
             LeftIcon={<HiAtSymbol size={25} />}
           />
@@ -104,10 +99,9 @@ export const ChangePasswordPage = () => {
             inputLabel="Enter password"
             inputType={show.password ? "text" : "password"}
             inputPlaceholder="Insert a secure password"
-            getFieldProps={formik.getFieldProps("password")}
+            methods={methods.register("password")}
             required
-            hasError={formik.errors?.password && formik.touched?.password}
-            errorMessage={formik.errors.password}
+            errorMessage={methods.formState.errors.email?.message}
             hasLeftIcon
             LeftIcon={<HiFingerPrint size={25} />}
             onPasswordIconClick={onPasswordIconClick}
@@ -125,12 +119,6 @@ export const ChangePasswordPage = () => {
           ) : (
             <></>
           )}
-
-          {/* {!mutation.isSuccess && mutation.isIdle ? (
-            <FormWarningMessage message="An error occured. Try a different email or password" />
-          ) : (
-            <></>
-          )} */}
         </FormContainer>
         <FormFooterProps
           message="Dont have an account yet?"

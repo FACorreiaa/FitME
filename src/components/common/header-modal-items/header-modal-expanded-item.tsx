@@ -16,9 +16,7 @@ function HeaderModalExpandedItem({
       <div>
         <div className="dropend relative ">
           <ul
-            className="
-          dropdown-menu
-    absolute
+            className="dropdown-menu absolute
     left-20
     z-50
     float-left
@@ -26,6 +24,8 @@ function HeaderModalExpandedItem({
     mt-1
     min-w-max
     list-none
+    divide-y
+    divide-gray-500
     rounded-lg
     border-none
     bg-white
@@ -33,8 +33,7 @@ function HeaderModalExpandedItem({
     py-2
     text-left
     text-base
-    shadow-lg
-    dark:bg-gray-600
+    shadow-lg dark:bg-slate-600
   "
             aria-labelledby="dropdownMenuButton1e"
           >
