@@ -27,6 +27,7 @@ export const EmailLoginPage = () => {
   // if (isLoading) return null;
 
   // if (data !== "ADMIN") return null;
+
   const methods = useZodForm({
     schema: loginUserSchema,
     defaultValues: {
@@ -36,6 +37,7 @@ export const EmailLoginPage = () => {
   });
 
   const [show, setShow] = useState({ password: false });
+  const [error, setError] = useState("");
   const router = useRouter();
 
   const onPasswordIconClick = () => {
@@ -44,13 +46,13 @@ export const EmailLoginPage = () => {
 
   async function onSubmitLoginValues(values: LoginValuesProps) {
     const result = await signIn("credentials", {
-      email: values?.email,
-      password: values?.password,
+      ...values,
       redirect: false,
       callbackUrl: "/login",
     });
+
     if (result?.ok) router.push("/");
-    return await result;
+    if (result?.error) setError(result?.error);
   }
 
   return (
@@ -69,7 +71,7 @@ export const EmailLoginPage = () => {
             inputPlaceholder="Insert email"
             required
             methods={methods.register("email")}
-            errorMessage={methods.formState.errors.email?.message}
+            errorMessage={error}
             hasLeftIcon
             LeftIcon={<HiAtSymbol size={25} />}
           />
@@ -81,7 +83,7 @@ export const EmailLoginPage = () => {
             inputPlaceholder="Insert a secure password"
             required
             methods={methods.register("password")}
-            errorMessage={methods.formState.errors.email?.message}
+            errorMessage={methods.formState.errors.password?.message}
             hasLeftIcon
             LeftIcon={<HiFingerPrint size={25} />}
             onPasswordIconClick={onPasswordIconClick}
