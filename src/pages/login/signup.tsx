@@ -32,20 +32,20 @@ const RegisterPage = () => {
       cpassword: "",
     },
   });
-  //console.log("data", data);
-
-  //if (isLoading) return null;
 
   const [show, setShow] = useState({ password: false, cpassword: false });
   const router = useRouter();
 
   async function onSumitRegisterValues(values: RegisterPageProps) {
+    const route = router.push("http://localhost:5005/login/signin");
+    console.log("values", values);
     try {
-      mutation.mutateAsync(values);
-      console.log("mutate", mutation);
-      mutation.isSuccess && router.push("http://localhost:5005/login/signin");
+      const result = await mutation.mutateAsync(values);
+      return result;
     } catch (error: any) {
       throw new Error(error);
+    } finally {
+      return mutation.isSuccess && route;
     }
   }
 
@@ -56,21 +56,10 @@ const RegisterPage = () => {
   const onConfirmPasswordIconClick = () => {
     setShow({ ...show, cpassword: !show.cpassword });
   };
-  {
-    /* <div>
-            <div className="relative">
-              <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                <HiOutlineUser size={25} />
-              </div>
-              <input
-                type="username"
-                placeholder="Username"
-                {...formik.getFieldProps("username")}
-                className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-4 pl-10 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
-                required
-              />
-            </div> */
-  }
+  console.log(
+    "methods.formState.errors",
+    methods.formState.errors.username?.message
+  );
   return (
     <Layout>
       <section className="mx-auto flex w-3/4 flex-col gap-1 ">
@@ -131,8 +120,8 @@ const RegisterPage = () => {
           ) : (
             <></>
           )}
+          <ConfirmButton label="Register" />
         </FormContainer>
-        <ConfirmButton label="Register" />
 
         <FormFooterProps
           message="Dont have an account yet?"

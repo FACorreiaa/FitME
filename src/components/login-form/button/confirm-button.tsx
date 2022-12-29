@@ -7,7 +7,7 @@ type ConfirmButtonProps = {
 };
 function ConfirmButton({ label }: ConfirmButtonProps) {
   return (
-    <div className={"px-4"}>
+    <div className={"px-0"}>
       <button className={styles.button} type="submit">
         {label}
       </button>
