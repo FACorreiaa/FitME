@@ -2,7 +2,6 @@ import { useState } from "react";
 import { HiAtSymbol, HiFingerPrint } from "react-icons/hi2";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { useSession } from "next-auth/react";
 
 import CustomInput from "../../components/inputs/input";
 import ConfirmButton from "../../components/login-form/button/confirm-button";
@@ -33,43 +32,26 @@ export const ChangePasswordPage = () => {
   });
 
   const mutation = trpc.auth.changePassword.useMutation();
-  //const utils = trpc.useContext().auth;
-  // const { data, isLoading } = trpc.userLogin.me.useQuery();
-  // console.log("data", data);
-  //
-  // if (isLoading) return null;
 
-  // if (data !== "ADMIN") return null;
-  const { data: session } = useSession();
-  console.log("session", session);
   const [show, setShow] = useState({ password: false });
   const router = useRouter();
-  // const formik = useFormik({
-  //   initialValues: {
-  //     email: "",
-  //     password: "",
-  //   },
-  //   validate: loginValidate,
-  //   onSubmit: onSubmitChangePassword,
-  // });
 
   const onPasswordIconClick = () => {
     setShow({ password: !show.password });
   };
 
   async function onSubmitChangePassword(values: ChangePasswordProps) {
+    const timer = setTimeout(() => {
+      return router.push("http://localhost:5005/login/signin");
+    }, 2500);
     try {
-      mutation.mutateAsync(values);
-      console.log("mutate", mutation);
-
-      return (
-        mutation.isSuccess &&
-        setTimeout(() => {
-          return router.push("http://localhost:5005/login/signin");
-        }, 2500)
-      );
+      const result = await mutation.mutateAsync(values);
+      console.log("result", result);
+      return result;
     } catch (error: any) {
       throw new Error(error);
+    } finally {
+      return mutation.isSuccess && timer;
     }
   }
 
@@ -101,7 +83,7 @@ export const ChangePasswordPage = () => {
             inputPlaceholder="Insert a secure password"
             methods={methods.register("password")}
             required
-            errorMessage={methods.formState.errors.email?.message}
+            errorMessage={methods.formState.errors.password?.message}
             hasLeftIcon
             LeftIcon={<HiFingerPrint size={25} />}
             onPasswordIconClick={onPasswordIconClick}
