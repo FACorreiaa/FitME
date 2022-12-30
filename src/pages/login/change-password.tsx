@@ -41,18 +41,15 @@ export const ChangePasswordPage = () => {
   };
 
   async function onSubmitChangePassword(values: ChangePasswordProps) {
-    const timer = setTimeout(() => {
-      return router.push("http://localhost:5005/login/signin");
-    }, 2500);
-    try {
-      const result = await mutation.mutateAsync(values);
-      console.log("result", result);
-      return result;
-    } catch (error: any) {
-      throw new Error(error);
-    } finally {
-      return mutation.isSuccess && timer;
-    }
+    return await mutation.mutate(values, {
+      onSuccess: async () =>
+        setTimeout(() => {
+          return router.push("http://localhost:5005/login/signin");
+        }, 1500),
+      onError: async (error) => {
+        console.log(error);
+      },
+    });
   }
 
   return (

@@ -37,16 +37,12 @@ const RegisterPage = () => {
   const router = useRouter();
 
   async function onSumitRegisterValues(values: RegisterPageProps) {
-    const route = router.push("http://localhost:5005/login/signin");
-    console.log("values", values);
-    try {
-      const result = await mutation.mutateAsync(values);
-      return result;
-    } catch (error: any) {
-      throw new Error(error);
-    } finally {
-      return mutation.isSuccess && route;
-    }
+    return await mutation.mutate(values, {
+      onSuccess: async () => router.push("http://localhost:5005/login/signin"),
+      onError: async (error) => {
+        console.log(error);
+      },
+    });
   }
 
   const onPasswordIconClick = () => {
@@ -60,6 +56,7 @@ const RegisterPage = () => {
     "methods.formState.errors",
     methods.formState.errors.username?.message
   );
+  console.log("mutation", mutation);
   return (
     <Layout>
       <section className="mx-auto flex w-3/4 flex-col gap-1 ">
