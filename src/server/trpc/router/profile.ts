@@ -1,8 +1,6 @@
 import { TRPCError } from "@trpc/server";
-import { hash } from "bcryptjs";
 
-import { getUserDataSchema } from "../../schema/profile.schema";
-import { createUserSchema, loginUserSchema } from "../../schema/user.schema";
+import { createProfileSchema, params } from "../../schema/profile.schema";
 import { protectedProcedure, publicProcedure, router } from "../trpc";
 
 export const profileRouter = router({
@@ -33,32 +31,20 @@ export const profileRouter = router({
   //     }
   //   }),
 
-  createUserProfile: publicProcedure
-    .input(createUserSchema)
+  createProfileSchema: protectedProcedure
+    .input(createProfileSchema)
     .mutation(async ({ ctx, input }) => {
       try {
-        const { username, email, password } = input;
-
-        //check duplicate users
-        const checkingUsers = await ctx.prisma.user.findFirst({
-          where: {
-            email,
-          },
-        });
-
-        if (checkingUsers) {
-          throw new TRPCError({
-            code: "INTERNAL_SERVER_ERROR",
-          });
-        }
-
-        //hash password
-        return await ctx.prisma.user.create({
+        const { bio, profession, image, first_name, last_name, gender } = input;
+        return await ctx.prisma.profile.create({
           data: {
-            username,
-            email,
-            password: await hash(password, 12),
-            createdAt: new Date(),
+            bio,
+            profession,
+            image,
+            first_name,
+            last_name,
+            gender,
+            user: { connect: { email: ctx.session?.user?.email as any } },
           },
         });
       } catch (error) {
@@ -68,8 +54,8 @@ export const profileRouter = router({
         });
       }
     }),
-  getUserData: publicProcedure
-    .input(getUserDataSchema)
+  getProfileData: publicProcedure
+    .input(params)
     .query(async ({ ctx, input }) => {
       try {
         const { id } = input;
@@ -77,6 +63,9 @@ export const profileRouter = router({
           where: {
             id,
           },
+          include: {
+            profile: true,
+          },
         });
       } catch (error) {
         throw new TRPCError({
@@ -85,4 +74,23 @@ export const profileRouter = router({
         });
       }
     }),
+  getUserData: publicProcedure.input(params).query(async ({ ctx, input }) => {
+    try {
+      const { id } = input;
+      return await ctx.prisma.user.findUnique({
+        where: {
+          id,
+        },
+        select: {
+          username: true,
+          email: true,
+        },
+      });
+    } catch (error) {
+      throw new TRPCError({
+        code: "INTERNAL_SERVER_ERROR",
+        cause: error,
+      });
+    }
+  }),
 });
