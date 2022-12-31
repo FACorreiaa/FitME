@@ -10,11 +10,12 @@ import HeaderComponent from "../components/common/header";
 import HeaderModal from "../components/common/header-modal";
 import { getServerAuthSession } from "../server/common/get-server-auth-session";
 
+import Guest from "./guest";
+
 import styles from "../styles/Index.module.css";
 
-const Home: NextPage = () => {
+function Home() {
   //const hello = trpc.example.hello.useQuery({ text: "from tRPC" });
-
   const { data: session } = useSession();
 
   return (
@@ -23,38 +24,27 @@ const Home: NextPage = () => {
         <title>Home Page</title>
       </Head>
 
-      {session ? <AuthorizedUser session={session} /> : <Guest />}
+      {session ? (
+        <AuthorizedUser session={session}>
+          <div className="text-center">oi</div>
+        </AuthorizedUser>
+      ) : (
+        <Guest />
+      )}
     </div>
   );
-};
+}
 
 export default Home;
-
-//Guest
-const Guest = () => {
-  return (
-    <main className="container mx-auto py-20 text-center">
-      <h3 className="text-4xl font-bold">Guest Home Page</h3>
-
-      <div className="flex justify-center">
-        <Link
-          href={"/signin"}
-          className="text-gray mt-5 rounded-sm bg-indigo-500 px-10 py-1"
-        >
-          Sign In!
-        </Link>
-      </div>
-    </main>
-  );
-};
 
 //Auth User
 
 type AuthorizedUserProps = {
   session: Session;
+  children: React.ReactNode;
 };
 
-const AuthorizedUser = ({ session }: AuthorizedUserProps) => {
+const AuthorizedUser = ({ session, children }: AuthorizedUserProps) => {
   const handleSignOut = () => {
     signOut();
   };
@@ -63,34 +53,13 @@ const AuthorizedUser = ({ session }: AuthorizedUserProps) => {
   const [showMenu, setShowMenu] = useState(false);
   return (
     <div>
-      <HeaderComponent onMenuButtonClick={() => setShowMenu(!showMenu)} />
-      {showMenu && <HeaderModal />}
+      <HeaderComponent
+        loggedUser={session.user?.email as string}
+        onMenuButtonClick={() => setShowMenu(!showMenu)}
+      />
+      {showMenu && <HeaderModal onClick={handleSignOut} />}
 
-      <main className=" container mx-auto w-full py-20 text-center">
-        <h3 className="text-4xl font-bold">User Home Page</h3>
-
-        <div className="details">
-          <h5>{session.user?.name}</h5>
-          <h5>{session.user?.email}</h5>
-        </div>
-
-        <div className="flex justify-center">
-          <button
-            onClick={handleSignOut}
-            className="mt-5 rounded-sm bg-indigo-200 px-10 py-1"
-          >
-            Sign out
-          </button>
-        </div>
-        <div className="flex justify-center">
-          <Link
-            href={"/profile"}
-            className="text-gray mt-5 rounded-sm bg-indigo-500 px-10 py-1"
-          >
-            Profile
-          </Link>
-        </div>
-      </main>
+      <main className="container my-10 w-full py-20">{children}</main>
     </div>
   );
 };

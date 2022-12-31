@@ -14,7 +14,10 @@ import HeaderModalSubItem from "./header-modal-items/header-modal-expanded-item"
 import HeaderModalGeneralItem from "./header-modal-items/header-modal-general-item";
 import HeaderModalMultiItem from "./header-modal-items/header-modal-multi-item";
 
-function HeaderModal() {
+type HeaderModalProps = {
+  onClick: () => void;
+};
+function HeaderModal({ onClick }: HeaderModalProps) {
   const [showTestOptions, setShowTestOptions] = useState(false);
   const modalRef = useRef(null);
   console.log("modalRef", modalRef);
@@ -87,11 +90,14 @@ function HeaderModal() {
       </div> */}
       <div className="block  text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-600 dark:hover:text-white">
         <ul>
-          <HeaderModalGeneralItem
-            href="#"
-            label="Sign out"
-            Icon={<VscSignOut size={20} />}
-          />
+          <li>
+            <button
+              onClick={onClick}
+              className="dropdown-toggle flex w-full items-center justify-start py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+            >
+              <VscSignOut size={20} /> <span className="pl-2">Sign out</span>
+            </button>
+          </li>
         </ul>
       </div>
     </div>

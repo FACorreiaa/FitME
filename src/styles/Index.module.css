@@ -1,5 +1,5 @@
 .container {
-  @apply h-full dark:bg-slate-200;
+  @apply h-full dark:bg-dracula-darker-400;
 }
 
 .main {

@@ -4,10 +4,14 @@ import Image from "next/image";
 import Link from "next/link";
 type HeaderComponentProps = {
   onMenuButtonClick: () => void;
+  loggedUser: string;
 };
-function HeaderComponent({ onMenuButtonClick }: HeaderComponentProps) {
+function HeaderComponent({
+  onMenuButtonClick,
+  loggedUser,
+}: HeaderComponentProps) {
   return (
-    <nav className="fixed top-0 left-0 z-20 w-full border-b border-gray-200 bg-white py-3  shadow-xl dark:border-gray-400 dark:bg-dracula-darker-700 dark:text-dracula-light-50 sm:px-4">
+    <nav className="fixed top-0 left-0 z-20 w-full  bg-white py-3  shadow-xl dark:border-gray-400 dark:bg-dracula-darker-700 dark:text-dracula-light-50 sm:px-4">
       <div className="mx-auto flex flex-wrap items-center justify-between">
         <button type="button" onClick={onMenuButtonClick}>
           <VscMenu size={30} />
@@ -24,7 +28,9 @@ function HeaderComponent({ onMenuButtonClick }: HeaderComponentProps) {
             Fitness Tracker
           </span>
         </Link>
-        <div className="flex md:order-2">
+        <div className="flex items-center md:order-2">
+          <span className="mr-5 font-bold">{loggedUser}</span>
+
           <div className="relative h-10 w-10 overflow-hidden rounded-full bg-gray-100 dark:bg-gray-600">
             <svg
               className="absolute -left-1 h-12 w-12 text-gray-400"
