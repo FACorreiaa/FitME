@@ -33,7 +33,7 @@ function HeaderModalExpandedItem({
     py-2
     text-left
     text-base
-    shadow-lg dark:bg-slate-600
+    shadow-lg dark:bg-dracula-darker-700 dark:text-dracula-light-50
   "
             aria-labelledby="dropdownMenuButton1e"
           >

@@ -52,7 +52,7 @@ function CustomInput({
         <input
           type={inputType}
           placeholder={inputPlaceholder}
-          className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-4 pl-10 text-sm text-gray-900 focus:border-gray-500 focus:ring-gray-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-gray-500 dark:focus:ring-gray-500"
+          className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-4 pl-10 text-sm text-gray-900 focus:border-gray-500 focus:ring-gray-500 dark:border-gray-600 dark:bg-dracula-darker-100 dark:text-gray-800 dark:placeholder-gray-800 dark:focus:border-gray-800 dark:focus:ring-gray-500"
           required={required}
           {...methods}
         />

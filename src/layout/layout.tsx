@@ -9,7 +9,7 @@ type LayoutProps = {
 
 function Layout({ children }: LayoutProps) {
   return (
-    <div className="flex h-screen bg-gradient-to-t from-slate-300 to-slate-800">
+    <div className=" flex h-screen dark:bg-dracula-darker-600">
       <div className="m-auto grid	 h-3/4 w-3/5  overflow-hidden rounded-md bg-slate-50 lg:grid-cols-2">
         <div className="mx-auto flex  flex-col justify-evenly gap-5 bg-gradient-to-t from-gray-800 to-slate-500 py-2 text-center">
           <div className="p-6">
@@ -25,7 +25,7 @@ function Layout({ children }: LayoutProps) {
             <FormHeader description="Manage your mean plans, plan your workouts, schedule your activities and conquer your objectives!" />
           </div>
         </div>
-        <div className="flex flex-col justify-evenly">
+        <div className="flex flex-col  justify-evenly">
           <div className="py-10 text-center">{children}</div>
         </div>
       </div>

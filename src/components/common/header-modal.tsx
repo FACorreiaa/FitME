@@ -21,7 +21,8 @@ function HeaderModal() {
   return (
     <div
       id="dropdownInformation"
-      className="z-21 absolute top-16 z-10 w-44 divide-y divide-gray-100 rounded bg-white shadow dark:divide-gray-600 dark:bg-slate-800"
+      className="z-21 absolute top-16 z-10 w-44 divide-y     divide-gray-200
+            rounded bg-white shadow dark:divide-gray-600 dark:bg-dracula-darker-700 dark:text-dracula-light-50"
     >
       <HeaderModalAuthItem username={"username"} email={"email"} />
       <ul
