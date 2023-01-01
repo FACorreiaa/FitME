@@ -15,8 +15,7 @@ export const params = z.object({
 });
 
 export const createProfileSchema = z.object({
-  bio: z.string().max(120, "Only 120 caharcters allowed"),
-  profession: z.string(),
+  about: z.string().max(120, "Only 120 caharcters allowed"),
   image: z
     .any()
     .refine((file) => file?.size <= MAX_FILE_SIZE, `Max image size is 5MB.`)
@@ -24,9 +23,10 @@ export const createProfileSchema = z.object({
       (file) => ACCEPTED_IMAGE_TYPES.includes(file?.type),
       "Only .jpg, .jpeg, .png and .webp formats are supported."
     ),
-  first_name: z.string(),
-  last_name: z.string(),
   gender: z.enum(GENDER),
+  firstname: z.string(),
+  lastname: z.string(),
+  address: z.string(),
 });
 
 export type GetProfileSchema = TypeOf<typeof createProfileSchema>;

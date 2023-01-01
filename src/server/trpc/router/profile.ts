@@ -31,18 +31,18 @@ export const profileRouter = router({
   //     }
   //   }),
 
-  createProfileSchema: protectedProcedure
+  updateProfileSchema: protectedProcedure
     .input(createProfileSchema)
     .mutation(async ({ ctx, input }) => {
       try {
-        const { bio, profession, image, first_name, last_name, gender } = input;
+        const { about, firstname, image, gender, lastname, address } = input;
         return await ctx.prisma.profile.create({
           data: {
-            bio,
-            profession,
+            about,
+            firstname,
+            lastname,
+            address,
             image,
-            first_name,
-            last_name,
             gender,
             user: { connect: { email: ctx.session?.user?.email as string } },
           },
@@ -74,23 +74,25 @@ export const profileRouter = router({
         });
       }
     }),
-  getUserData: publicProcedure.input(params).query(async ({ ctx, input }) => {
-    try {
-      const { id } = input;
-      return await ctx.prisma.user.findUnique({
-        where: {
-          id,
-        },
-        select: {
-          username: true,
-          email: true,
-        },
-      });
-    } catch (error) {
-      throw new TRPCError({
-        code: "INTERNAL_SERVER_ERROR",
-        cause: error,
-      });
-    }
-  }),
+  getUserData: protectedProcedure
+    .input(params)
+    .query(async ({ ctx, input }) => {
+      try {
+        const { id } = input;
+        return await ctx.prisma.user.findUnique({
+          where: {
+            id,
+          },
+          select: {
+            name: true,
+            email: true,
+          },
+        });
+      } catch (error) {
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          cause: error,
+        });
+      }
+    }),
 });

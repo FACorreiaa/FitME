@@ -1,20 +1,20 @@
 import * as z from "zod"
 import * as imports from "../null"
 import { Gender } from "@prisma/client"
-import { CompleteUser, RelatedUserModel } from "./index"
+import { CompleteImage, RelatedImageModel, CompleteUser, RelatedUserModel } from "./index"
 
 export const ProfileModel = z.object({
   id: z.string(),
-  bio: z.string().nullish(),
-  profession: z.string().nullish(),
-  image: z.string().nullish(),
+  firstname: z.string().nullish(),
+  lastname: z.string().nullish(),
+  gender: z.nativeEnum(Gender).nullish(),
+  about: z.string().nullish(),
+  address: z.string().nullish(),
   userId: z.string(),
-  first_name: z.string().nullish(),
-  last_name: z.string().nullish(),
-  gender: z.nativeEnum(Gender),
 })
 
 export interface CompleteProfile extends z.infer<typeof ProfileModel> {
+  image?: CompleteImage | null
   user: CompleteUser
 }
 
@@ -24,5 +24,6 @@ export interface CompleteProfile extends z.infer<typeof ProfileModel> {
  * NOTE: Lazy required in case of potential circular dependencies within schema
  */
 export const RelatedProfileModel: z.ZodSchema<CompleteProfile> = z.lazy(() => ProfileModel.extend({
+  image: RelatedImageModel.nullish(),
   user: RelatedUserModel,
 }))

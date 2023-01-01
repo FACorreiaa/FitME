@@ -16,7 +16,7 @@ import { trpc } from "../../utils/trpc";
 import styles from "../../styles/Form.module.css";
 
 type RegisterPageProps = {
-  username: string;
+  name: string;
   email: string;
   password: string;
   cpassword: string;
@@ -26,7 +26,7 @@ const RegisterPage = () => {
   const methods = useZodForm({
     schema: createUserSchema,
     defaultValues: {
-      username: "",
+      name: "",
       email: "",
       password: "",
       cpassword: "",
@@ -54,7 +54,7 @@ const RegisterPage = () => {
   };
   console.log(
     "methods.formState.errors",
-    methods.formState.errors.username?.message
+    methods.formState.errors.name?.message
   );
   console.log("mutation", mutation);
   return (
@@ -69,8 +69,8 @@ const RegisterPage = () => {
             inputType="username"
             inputPlaceholder="Username"
             required
-            methods={methods.register("username")}
-            errorMessage={methods.formState.errors.username?.message}
+            methods={methods.register("name")}
+            errorMessage={methods.formState.errors.name?.message}
             hasLeftIcon
             LeftIcon={<HiOutlineUser size={25} />}
           />

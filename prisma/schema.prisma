@@ -47,10 +47,9 @@ enum Gender {
 model User {
   id                String              @id @default(cuid())
   email             String              @unique
-  username          String              @unique
+  name              String              @unique
   password          String
   emailVerified     DateTime?
-  profile           Profile?
   mealplan          Mealplan[]
   exercise_plan     ExercisePlan[]
   userBioData       UserBioData?
@@ -61,6 +60,29 @@ model User {
   updatedAt         DateTime            @default(now())
   deletedAt         DateTime            @default(now())
   role              Role                @default(USER)
+  profile           Profile?
+}
+
+model Profile {
+  id        String  @id @default(cuid())
+  firstname String?
+  lastname  String?
+  gender    Gender?
+  about     String?
+  address   String?
+  image     Image?
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String @unique
+}
+
+model Image {
+  id        String  @id @default(cuid())
+  publicId  String  @unique
+  format    String
+  version   String
+  profile   Profile @relation(fields: [profileId], references: [id])
+  profileId String  @unique
 }
 
 // Necessary for Next auth
@@ -106,18 +128,6 @@ model UserSuggestedPlan {
   mealplanId     String
   exercisePlan   ExercisePlan @relation(fields: [exercisePlanId], references: [id])
   exercisePlanId String
-}
-
-model Profile {
-  id         String  @id @default(cuid())
-  bio        String?
-  profession String?
-  image      String?
-  user       User    @relation(fields: [userId], references: [id])
-  userId     String  @unique
-  first_name String?
-  last_name  String?
-  gender     Gender
 }
 
 model UserBioData {

@@ -7,6 +7,7 @@ import { signOut, useSession } from "next-auth/react";
 import HeaderComponent from "../components/common/header";
 import HeaderModal from "../components/common/header-modal";
 import { getServerAuthSession } from "../server/common/get-server-auth-session";
+import { trpc } from "../utils/trpc";
 
 import Guest from "./guest";
 
@@ -47,7 +48,6 @@ const AuthorizedUser = ({ session, children }: AuthorizedUserProps) => {
     signOut();
   };
   console.log("sesson", session);
-
   const [showMenu, setShowMenu] = useState(false);
   return (
     <div>

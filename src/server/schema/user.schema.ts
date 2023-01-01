@@ -3,7 +3,7 @@ import { string, z } from "zod";
 
 export const createUserSchema = z
   .object({
-    username: string({ required_error: "Name is required" }).min(
+    name: string({ required_error: "Name is required" }).min(
       5,
       "Username must be more than 5 characters"
     ),

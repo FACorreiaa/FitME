@@ -35,7 +35,7 @@ export const authRouter = router({
     .input(createUserSchema)
     .mutation(async ({ ctx, input }) => {
       try {
-        const { username, email, password } = input;
+        const { name, email, password } = input;
 
         //check duplicate users
         const checkingUsers = await ctx.prisma.user.findFirst({
@@ -53,7 +53,7 @@ export const authRouter = router({
         //hash password
         return await ctx.prisma.user.create({
           data: {
-            username,
+            name,
             email,
             password: await hash(password, 12),
             createdAt: new Date(),
