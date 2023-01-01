@@ -3,7 +3,7 @@ import type { UseFormRegisterReturn } from "react-hook-form";
 import Link from "next/link";
 
 type CustomInputProps = {
-  customStyle: any;
+  customStyle: string | undefined;
   inputLabel: string;
   inputType: string;
   inputPlaceholder: string;
@@ -11,11 +11,11 @@ type CustomInputProps = {
   errorMessage: string | undefined;
   hasLeftIcon?: boolean;
   hasRightIcon?: boolean;
-  LeftIcon?: any;
-  RightIcon?: any;
+  LeftIcon?: React.ReactNode;
+  RightIcon?: React.ReactNode;
   onPasswordIconClick?: () => void;
   inputPassword?: boolean;
-  methods: UseFormRegisterReturn<any>;
+  methods: UseFormRegisterReturn<string>;
 };
 function CustomInput({
   customStyle,
@@ -37,7 +37,6 @@ function CustomInput({
       <label className="block text-left text-sm font-bold text-gray-700">
         {inputLabel}
       </label>
-
       <div
         className={`${customStyle} ${!!errorMessage ? "text-rose-700" : ""}`}
       >

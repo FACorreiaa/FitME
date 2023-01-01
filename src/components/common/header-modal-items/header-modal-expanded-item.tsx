@@ -2,17 +2,15 @@ import React from "react";
 
 import HeaderModalGeneralItem from "./header-modal-general-item";
 type HeaderModalExpandedItemProps = {
-  ref: any;
-  Icon: any;
+  Icon: React.ReactNode;
   label: string;
 };
 function HeaderModalExpandedItem({
-  ref,
   Icon,
   label,
 }: HeaderModalExpandedItemProps) {
   return (
-    <div className="flex justify-center" ref={ref}>
+    <div className="flex justify-center">
       <div>
         <div className="dropend relative ">
           <ul

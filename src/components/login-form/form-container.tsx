@@ -2,7 +2,7 @@ import React from "react";
 
 type FormContainerProps = {
   onSubmit: () => void;
-  children: JSX.Element | JSX.Element[];
+  children: React.ReactNode;
 };
 function FormContainer({ onSubmit, children }: FormContainerProps) {
   return (

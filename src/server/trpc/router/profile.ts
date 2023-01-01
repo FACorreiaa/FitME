@@ -44,7 +44,7 @@ export const profileRouter = router({
             first_name,
             last_name,
             gender,
-            user: { connect: { email: ctx.session?.user?.email as any } },
+            user: { connect: { email: ctx.session?.user?.email as string } },
           },
         });
       } catch (error) {

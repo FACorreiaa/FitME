@@ -1,12 +1,7 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { HiOutlineCalculator, HiOutlineHome } from "react-icons/hi2";
 import { RiUserLine } from "react-icons/ri";
-import {
-  TfiBarChartAlt,
-  TfiGallery,
-  TfiSettings,
-  TfiVideoCamera,
-} from "react-icons/tfi";
+import { TfiBarChartAlt, TfiSettings, TfiVideoCamera } from "react-icons/tfi";
 import { VscSignOut } from "react-icons/vsc";
 
 import HeaderModalAuthItem from "./header-modal-items/header-modal-auth-item";
@@ -19,8 +14,6 @@ type HeaderModalProps = {
 };
 function HeaderModal({ onClick }: HeaderModalProps) {
   const [showTestOptions, setShowTestOptions] = useState(false);
-  const modalRef = useRef(null);
-  console.log("modalRef", modalRef);
   return (
     <div
       id="dropdownInformation"
@@ -43,15 +36,10 @@ function HeaderModal({ onClick }: HeaderModalProps) {
           Icon={<RiUserLine size={20} />}
         />
         {showTestOptions && (
-          <HeaderModalSubItem
-            Icon={<HiOutlineHome size={20} />}
-            label="Test"
-            ref={modalRef}
-          />
+          <HeaderModalSubItem Icon={<HiOutlineHome size={20} />} label="Test" />
         )}
 
         <HeaderModalMultiItem
-          ref={modalRef}
           label="Samples"
           onClick={() => setShowTestOptions(!showTestOptions)}
           onMouseOver={() => setShowTestOptions(true)}

@@ -4,7 +4,7 @@ import Image from "next/image";
 import FormHeader from "../components/login-form/form-header";
 
 type LayoutProps = {
-  children: JSX.Element | JSX.Element[];
+  children: React.ReactNode;
 };
 
 function Layout({ children }: LayoutProps) {

@@ -3,4 +3,5 @@
 }
 
 .main {
+  @apply container my-10 w-full py-20;
 }

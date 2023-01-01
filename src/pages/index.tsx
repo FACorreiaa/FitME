@@ -1,8 +1,6 @@
 import { useState } from "react";
 import type { GetServerSidePropsContext } from "next";
-import { type NextPage } from "next";
 import Head from "next/head";
-import Link from "next/link";
 import { type Session } from "next-auth";
 import { signOut, useSession } from "next-auth/react";
 
@@ -59,7 +57,7 @@ const AuthorizedUser = ({ session, children }: AuthorizedUserProps) => {
       />
       {showMenu && <HeaderModal onClick={handleSignOut} />}
 
-      <main className="container my-10 w-full py-20">{children}</main>
+      <main className={styles.main}>{children}</main>
     </div>
   );
 };

@@ -1,24 +1,21 @@
 import React from "react";
 import { TbChevronRight } from "react-icons/tb";
 type HeaderModalMultiItem = {
-  Icon: any;
+  Icon: React.ReactNode;
   label: string;
   onClick: () => void;
   onMouseOver: () => void;
   onMouseLeave: () => void;
-  ref: any;
 };
 function HeaderModalMultiItem({
   onClick,
   onMouseOver,
   onMouseLeave,
-  ref,
   Icon,
   label,
 }: HeaderModalMultiItem) {
   return (
     <button
-      ref={ref}
       onMouseOver={onMouseOver}
       onMouseLeave={onMouseLeave}
       onClick={onClick}
