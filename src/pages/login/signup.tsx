@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { HiAtSymbol, HiFingerPrint, HiOutlineUser } from "react-icons/hi2";
+import Head from "next/head";
 import { useRouter } from "next/router";
 
 import CustomInput from "../../components/inputs/input";
@@ -52,14 +53,12 @@ const RegisterPage = () => {
   const onConfirmPasswordIconClick = () => {
     setShow({ ...show, cpassword: !show.cpassword });
   };
-  console.log(
-    "methods.formState.errors",
-    methods.formState.errors.name?.message
-  );
-  console.log("mutation", mutation);
   return (
     <Layout>
       <section className="mx-auto flex w-3/4 flex-col gap-1 ">
+        <Head>
+          <title>Sign up</title>
+        </Head>
         <FormHeader title="Register" />
 
         <FormContainer onSubmit={methods.handleSubmit(onSumitRegisterValues)}>

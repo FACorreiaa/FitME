@@ -11,8 +11,10 @@ import HeaderModalMultiItem from "./header-modal-items/header-modal-multi-item";
 
 type HeaderModalProps = {
   onClick: () => void;
+  name: string;
+  email: string;
 };
-function HeaderModal({ onClick }: HeaderModalProps) {
+function HeaderModal({ onClick, name, email }: HeaderModalProps) {
   const [showTestOptions, setShowTestOptions] = useState(false);
   return (
     <div
@@ -20,7 +22,7 @@ function HeaderModal({ onClick }: HeaderModalProps) {
       className="z-21 absolute top-16 z-10 w-44 divide-y     divide-gray-200
             rounded bg-white shadow dark:divide-gray-600 dark:bg-dracula-darker-700 dark:text-dracula-light-50"
     >
-      <HeaderModalAuthItem name={"name"} email={"email"} />
+      <HeaderModalAuthItem name={name} email={email} />
       <ul
         className="py-1 text-sm text-gray-700 dark:text-gray-200"
         aria-labelledby="dropdownInformationButton"

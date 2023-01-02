@@ -58,7 +58,7 @@ export const EmailLoginPage = () => {
   return (
     <Layout>
       <Head>
-        <title>Login</title>
+        <title>Sign in</title>
       </Head>
       <section className="mx-auto flex w-3/4 flex-col gap-1">
         <FormHeader title="Login" />

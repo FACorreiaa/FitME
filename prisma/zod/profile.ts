@@ -10,6 +10,10 @@ export const ProfileModel = z.object({
   gender: z.nativeEnum(Gender).nullish(),
   about: z.string().nullish(),
   address: z.string().nullish(),
+  contact: z.string().nullish(),
+  birthday: z.string().nullish(),
+  age: z.number().int().nullish(),
+  country: z.string().nullish(),
   userId: z.string(),
 })
 

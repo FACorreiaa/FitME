@@ -7,7 +7,6 @@ import { signOut, useSession } from "next-auth/react";
 import HeaderComponent from "../components/common/header";
 import HeaderModal from "../components/common/header-modal";
 import { getServerAuthSession } from "../server/common/get-server-auth-session";
-import { trpc } from "../utils/trpc";
 
 import Guest from "./guest";
 
@@ -43,7 +42,7 @@ type AuthorizedUserProps = {
   children: React.ReactNode;
 };
 
-const AuthorizedUser = ({ session, children }: AuthorizedUserProps) => {
+export const AuthorizedUser = ({ session, children }: AuthorizedUserProps) => {
   const handleSignOut = () => {
     signOut();
   };
@@ -52,10 +51,16 @@ const AuthorizedUser = ({ session, children }: AuthorizedUserProps) => {
   return (
     <div>
       <HeaderComponent
-        loggedUser={session.user?.email as string}
+        loggedUser={session.user?.name as string}
         onMenuButtonClick={() => setShowMenu(!showMenu)}
       />
-      {showMenu && <HeaderModal onClick={handleSignOut} />}
+      {showMenu && (
+        <HeaderModal
+          name={session?.user?.name as string}
+          email={session?.user?.email as string}
+          onClick={handleSignOut}
+        />
+      )}
 
       <main className={styles.main}>{children}</main>
     </div>

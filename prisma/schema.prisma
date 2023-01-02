@@ -71,9 +71,12 @@ model Profile {
   about     String?
   address   String?
   image     Image?
-
-  user   User   @relation(fields: [userId], references: [id])
-  userId String @unique
+  contact   String?
+  birthday  String?
+  age       Int?
+  country   String?
+  user      User    @relation(fields: [userId], references: [id])
+  userId    String  @unique
 }
 
 model Image {

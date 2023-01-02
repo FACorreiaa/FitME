@@ -35,7 +35,18 @@ export const profileRouter = router({
     .input(createProfileSchema)
     .mutation(async ({ ctx, input }) => {
       try {
-        const { about, firstname, image, gender, lastname, address } = input;
+        const {
+          about,
+          firstname,
+          image,
+          gender,
+          lastname,
+          address,
+          contact,
+          birthday,
+          age,
+          country,
+        } = input;
         return await ctx.prisma.profile.create({
           data: {
             about,
@@ -44,7 +55,11 @@ export const profileRouter = router({
             address,
             image,
             gender,
-            user: { connect: { email: ctx.session?.user?.email as string } },
+            contact,
+            birthday,
+            age,
+            country,
+            user: { connect: { name: ctx.session?.user?.name as string } },
           },
         });
       } catch (error) {
@@ -54,45 +69,21 @@ export const profileRouter = router({
         });
       }
     }),
-  getProfileData: protectedProcedure
-    .input(params)
-    .query(async ({ ctx, input }) => {
-      try {
-        const { id } = input;
-        return await ctx.prisma.user.findUnique({
-          where: {
-            id,
-          },
-          include: {
-            profile: true,
-          },
-        });
-      } catch (error) {
-        throw new TRPCError({
-          code: "INTERNAL_SERVER_ERROR",
-          cause: error,
-        });
-      }
-    }),
-  getUserData: protectedProcedure
-    .input(params)
-    .query(async ({ ctx, input }) => {
-      try {
-        const { id } = input;
-        return await ctx.prisma.user.findUnique({
-          where: {
-            id,
-          },
-          select: {
-            name: true,
-            email: true,
-          },
-        });
-      } catch (error) {
-        throw new TRPCError({
-          code: "INTERNAL_SERVER_ERROR",
-          cause: error,
-        });
-      }
-    }),
+  getProfileData: protectedProcedure.query(async ({ ctx }) => {
+    try {
+      return await ctx.prisma.user.findUnique({
+        where: {
+          name: ctx.session?.user.name as string,
+        },
+        include: {
+          profile: true,
+        },
+      });
+    } catch (error) {
+      throw new TRPCError({
+        code: "INTERNAL_SERVER_ERROR",
+        cause: error,
+      });
+    }
+  }),
 });

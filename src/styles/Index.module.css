@@ -3,5 +3,5 @@
 }
 
 .main {
-  @apply container my-10 w-full py-20;
+  @apply relative my-10 w-full py-20 px-10 md:container md:mx-auto;
 }

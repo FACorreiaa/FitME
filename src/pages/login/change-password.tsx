@@ -55,7 +55,7 @@ export const ChangePasswordPage = () => {
   return (
     <Layout>
       <Head>
-        <title>Login</title>
+        <title>Change Password</title>
       </Head>
       <section className="mx-auto flex w-3/4 flex-col gap-1">
         <FormHeader title="Change Password" />

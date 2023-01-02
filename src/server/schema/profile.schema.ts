@@ -27,18 +27,10 @@ export const createProfileSchema = z.object({
   firstname: z.string(),
   lastname: z.string(),
   address: z.string(),
+  contact: z.string(),
+  birthday: z.string(),
+  age: z.number().min(0),
+  country: z.string(),
 });
 
 export type GetProfileSchema = TypeOf<typeof createProfileSchema>;
-
-// model Profile {
-//   id         String  @id @default(cuid())
-//   bio        String?
-//   profession String?
-//   image      String?
-//   user       User    @relation(fields: [userId], references: [id])
-//   userId     String  @unique
-//   first_name String?
-//   last_name  String?
-//   gender     Gender
-// }
