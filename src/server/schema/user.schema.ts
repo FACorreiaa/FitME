@@ -5,7 +5,7 @@ export const createUserSchema = z
   .object({
     name: string({ required_error: "Name is required" }).min(
       5,
-      "Username must be more than 5 characters"
+      "Name must be more than 5 characters"
     ),
     email: string({ required_error: "Email is required" }).email(
       "Invalid email"

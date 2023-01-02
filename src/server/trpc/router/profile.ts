@@ -54,7 +54,7 @@ export const profileRouter = router({
         });
       }
     }),
-  getProfileData: publicProcedure
+  getProfileData: protectedProcedure
     .input(params)
     .query(async ({ ctx, input }) => {
       try {

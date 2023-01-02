@@ -65,9 +65,9 @@ const RegisterPage = () => {
         <FormContainer onSubmit={methods.handleSubmit(onSumitRegisterValues)}>
           <CustomInput
             customStyle={styles.input_group}
-            inputLabel="Enter username"
+            inputLabel="Enter user name"
             inputType="username"
-            inputPlaceholder="Username"
+            inputPlaceholder="User name"
             required
             methods={methods.register("name")}
             errorMessage={methods.formState.errors.name?.message}

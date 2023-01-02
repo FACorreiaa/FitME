@@ -20,7 +20,7 @@ function HeaderModal({ onClick }: HeaderModalProps) {
       className="z-21 absolute top-16 z-10 w-44 divide-y     divide-gray-200
             rounded bg-white shadow dark:divide-gray-600 dark:bg-dracula-darker-700 dark:text-dracula-light-50"
     >
-      <HeaderModalAuthItem username={"username"} email={"email"} />
+      <HeaderModalAuthItem name={"name"} email={"email"} />
       <ul
         className="py-1 text-sm text-gray-700 dark:text-gray-200"
         aria-labelledby="dropdownInformationButton"
