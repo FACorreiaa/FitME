@@ -5,15 +5,18 @@ import { CompleteImage, RelatedImageModel, CompleteUser, RelatedUserModel } from
 
 export const ProfileModel = z.object({
   id: z.string(),
+  profession: z.string().nullish(),
+  hobbies: z.string().nullish(),
   firstname: z.string().nullish(),
   lastname: z.string().nullish(),
   gender: z.nativeEnum(Gender).nullish(),
   about: z.string().nullish(),
   address: z.string().nullish(),
   contact: z.string().nullish(),
-  birthday: z.string().nullish(),
+  birthday: z.date().nullish(),
   age: z.number().int().nullish(),
   country: z.string().nullish(),
+  website: z.string().nullish(),
   userId: z.string(),
 })
 

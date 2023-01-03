@@ -24,7 +24,7 @@ function Home() {
 
       {session ? (
         <AuthorizedUser session={session}>
-          <div className="text-center">oi</div>
+          <div className="text-center">MAIN PAGE TO DO LATER</div>
         </AuthorizedUser>
       ) : (
         <Guest />
@@ -46,7 +46,6 @@ export const AuthorizedUser = ({ session, children }: AuthorizedUserProps) => {
   const handleSignOut = () => {
     signOut();
   };
-  console.log("sesson", session);
   const [showMenu, setShowMenu] = useState(false);
   return (
     <div>

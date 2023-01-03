@@ -21,13 +21,6 @@ type LoginValuesProps = {
 };
 
 export const EmailLoginPage = () => {
-  // const { data, isLoading } = trpc.userLogin.me.useQuery();
-  // console.log("data", data);
-  //
-  // if (isLoading) return null;
-
-  // if (data !== "ADMIN") return null;
-
   const methods = useZodForm({
     schema: loginUserSchema,
     defaultValues: {

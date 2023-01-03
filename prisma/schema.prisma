@@ -64,19 +64,22 @@ model User {
 }
 
 model Profile {
-  id        String  @id @default(cuid())
-  firstname String?
-  lastname  String?
-  gender    Gender?
-  about     String?
-  address   String?
-  image     Image?
-  contact   String?
-  birthday  String?
-  age       Int?
-  country   String?
-  user      User    @relation(fields: [userId], references: [id])
-  userId    String  @unique
+  id         String    @id @default(cuid())
+  profession String?
+  hobbies    String?
+  firstname  String?
+  lastname   String?
+  gender     Gender?
+  about      String?
+  address    String?
+  image      Image?
+  contact    String?
+  birthday   DateTime?
+  age        Int?
+  country    String?
+  website    String?
+  user       User      @relation(fields: [userId], references: [id])
+  userId     String    @unique
 }
 
 model Image {

@@ -11,26 +11,6 @@ export const authRouter = router({
   getSecretMessage: protectedProcedure.query(() => {
     return "you can now see this secret message!";
   }),
-  // signIn: publicProcedure
-  //   .input(UserModel)
-  //   .query(async ({ ctx, input }: { ctx: Context; input: LoginUserInput }) => {
-  //     try {
-  //       const { email, password } = input;
-  //       const user = await ctx.prisma.user.findFirst({
-  //         where: {
-  //           email,
-  //           password,
-  //         },
-  //       });
-  //       console.log("user", user);
-  //       return user;
-  //     } catch (error) {
-  //       throw new TRPCError({
-  //         code: "INTERNAL_SERVER_ERROR",
-  //         cause: error,
-  //       });
-  //     }
-  //   }),
   signUp: publicProcedure
     .input(createUserSchema)
     .mutation(async ({ ctx, input }) => {

@@ -1,6 +1,6 @@
 import { TRPCError } from "@trpc/server";
 
-import { createProfileSchema, params } from "../../schema/profile.schema";
+import { createProfileSchema } from "../../schema/profile.schema";
 import { protectedProcedure, publicProcedure, router } from "../trpc";
 
 export const profileRouter = router({
@@ -10,27 +10,6 @@ export const profileRouter = router({
   getSecretMessage: protectedProcedure.query(() => {
     return "you can now see this secret message!";
   }),
-  // signIn: publicProcedure
-  //   .input(UserModel)
-  //   .query(async ({ ctx, input }: { ctx: Context; input: LoginUserInput }) => {
-  //     try {
-  //       const { email, password } = input;
-  //       const user = await ctx.prisma.user.findFirst({
-  //         where: {
-  //           email,
-  //           password,
-  //         },
-  //       });
-  //       console.log("user", user);
-  //       return user;
-  //     } catch (error) {
-  //       throw new TRPCError({
-  //         code: "INTERNAL_SERVER_ERROR",
-  //         cause: error,
-  //       });
-  //     }
-  //   }),
-
   updateProfileSchema: protectedProcedure
     .input(createProfileSchema)
     .mutation(async ({ ctx, input }) => {
@@ -46,6 +25,9 @@ export const profileRouter = router({
           birthday,
           age,
           country,
+          profession,
+          hobbies,
+          website,
         } = input;
         return await ctx.prisma.profile.create({
           data: {
@@ -59,6 +41,9 @@ export const profileRouter = router({
             birthday,
             age,
             country,
+            profession,
+            hobbies,
+            website,
             user: { connect: { name: ctx.session?.user?.name as string } },
           },
         });

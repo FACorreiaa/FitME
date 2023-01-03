@@ -9,14 +9,8 @@ import SocialMediaButton from "../../components/login-form/social-media-button";
 import Layout from "../../layout/layout";
 
 import styles from "../../styles/Form.module.css";
+
 export const LoginPage = () => {
-  // const { data, isLoading } = trpc.userLogin.me.useQuery();
-  // console.log("data", data);
-  //
-  // if (isLoading) return null;
-
-  // if (data !== "ADMIN") return null;
-
   async function handleGoogleSignin() {
     signIn("google", {
       callbackUrl: process.env.NEXTAUTH_URL,
