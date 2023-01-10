@@ -1,7 +1,7 @@
 import Head from "next/head";
-import Image from "next/image";
 import { useSession } from "next-auth/react";
 
+import ProfileCard from "../../components/profile/display-profile/left-column/profile-card";
 import { trpc } from "../../utils/trpc";
 import Guest from "../guest";
 import { AuthorizedUser } from "..";
@@ -10,8 +10,9 @@ import styles from "../../styles/Index.module.css";
 
 const Profile = () => {
   const { data: session } = useSession();
-  const { data } = trpc.profile.getProfileData.useQuery();
-  console.log("data", data);
+  const { data: userData } = trpc.profile.getProfileData.useQuery();
+  const { name, createdAt, profile } = userData || {};
+  console.log("userData", userData);
   console.log("session", session);
   return (
     <div className={styles.container}>
@@ -26,42 +27,13 @@ const Profile = () => {
               {/* <!-- Left Side --> */}
               <div className="w-full md:mx-2 md:w-3/12">
                 {/* <!-- Profile Card --> */}
-                <div className="border-t-4 border-green-400 bg-white p-3">
-                  <div className="image overflow-hidden">
-                    <Image
-                      width={100}
-                      height={100}
-                      src="/assets/draw2.webp"
-                      className="mx-auto h-auto w-full"
-                      alt="Fittracker Logo Logo"
-                    />
-                  </div>
-                  <h1 className="my-1 text-xl font-bold leading-8 text-gray-900">
-                    Jane Doe
-                  </h1>
-                  <h3 className="font-lg text-semibold leading-6 text-gray-600">
-                    Owner at Her Company Inc.
-                  </h3>
-                  <p className="text-sm leading-6 text-gray-500 hover:text-gray-600">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Reprehenderit, eligendi dolorum sequi illum qui unde
-                    aspernatur non deserunt
-                  </p>
-                  <ul className="mt-3 divide-y rounded bg-gray-100 py-2 px-3 text-gray-600 shadow-sm hover:text-gray-700 hover:shadow">
-                    <li className="flex items-center py-3">
-                      <span>Status</span>
-                      <span className="ml-auto">
-                        <span className="rounded bg-green-500 py-1 px-2 text-sm text-white">
-                          Active
-                        </span>
-                      </span>
-                    </li>
-                    <li className="flex items-center py-3">
-                      <span>Member since</span>
-                      <span className="ml-auto">Nov 07, 2016</span>
-                    </li>
-                  </ul>
-                </div>
+                <ProfileCard
+                  name={name as string}
+                  createdAt={createdAt?.toLocaleDateString() as string}
+                  profession={profile?.profession as string}
+                  bio={profile?.about as string}
+                  status={!!session}
+                />
                 {/* <!-- End of profile card --> */}
                 <div className="my-4"></div>
                 {/* <!-- Friends card --> */}
