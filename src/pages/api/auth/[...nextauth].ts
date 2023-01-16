@@ -12,11 +12,6 @@ import TwitterProvider from "next-auth/providers/twitter";
 import { env } from "../../../env/server.mjs";
 import { prisma } from "../../../server/db/client";
 
-type CredentialsType = {
-  email: string;
-  password: string;
-};
-
 const JWT = "jwt";
 export const authOptions: NextAuthOptions = {
   //Configure one or more authentication providers
@@ -55,11 +50,13 @@ export const authOptions: NextAuthOptions = {
           type: "password",
         },
       },
-      async authorize(credentials: any) {
+      async authorize(
+        credentials: Record<"email" | "password", string> | undefined
+      ) {
         //check user
         const user = await prisma.user.findUnique({
           where: {
-            email: credentials.email,
+            email: credentials?.email,
           },
         });
 
@@ -67,11 +64,11 @@ export const authOptions: NextAuthOptions = {
           throw new Error("No user found");
         }
         const checkPassword = await compare(
-          credentials.password,
+          credentials?.password as string,
           user?.password
         );
 
-        if (!checkPassword || user.email !== credentials.email) {
+        if (!checkPassword || user.email !== credentials?.email) {
           throw new Error("Password or Email dont match");
         }
 
