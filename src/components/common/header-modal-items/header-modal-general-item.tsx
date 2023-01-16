@@ -4,7 +4,7 @@ import Link from "next/link";
 type HeaderModalGeneralItemProps = {
   href: string;
   //label: string;
-  Icon: any;
+  Icon: React.ReactNode;
   label: string;
   children?: JSX.Element | JSX.Element[];
 };

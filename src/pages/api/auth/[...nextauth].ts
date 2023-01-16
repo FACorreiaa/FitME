@@ -12,6 +12,11 @@ import TwitterProvider from "next-auth/providers/twitter";
 import { env } from "../../../env/server.mjs";
 import { prisma } from "../../../server/db/client";
 
+type CredentialsType = {
+  email: string;
+  password: string;
+};
+
 const JWT = "jwt";
 export const authOptions: NextAuthOptions = {
   //Configure one or more authentication providers
