@@ -1,6 +1,9 @@
+import { FaDumbbell } from "react-icons/fa";
+import { GiMeal } from "react-icons/gi";
 import Head from "next/head";
 import { useSession } from "next-auth/react";
 
+import ActivePlan from "../../components/profile/display-profile/left-column/active-plans";
 import ProfileCard from "../../components/profile/display-profile/left-column/profile-card";
 import { trpc } from "../../utils/trpc";
 import Guest from "../guest";
@@ -37,69 +40,18 @@ const Profile = () => {
                 {/* <!-- End of profile card --> */}
                 <div className="my-4"></div>
                 {/* <!-- Friends card --> */}
-                <div className="bg-white p-3 hover:shadow">
-                  <div className="flex items-center space-x-3 text-xl font-semibold leading-8 text-gray-900">
-                    <span className="text-green-500">
-                      <svg
-                        className="h-5 fill-current"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
-                        />
-                      </svg>
-                    </span>
-                    <span>Similar Profiles</span>
-                  </div>
-                  <div className="grid grid-cols-3">
-                    <div className="my-2 text-center">
-                      {/* <img className="h-16 w-16 rounded-full mx-auto"
-                                src="https://cdn.australianageingagenda.com.au/wp-content/uploads/2015/06/28085920/Phil-Beckett-2-e1435107243361.jpg"
-                                alt="" /> */}
-                      <a href="#" className="text-main-color">
-                        Kojstantin
-                      </a>
-                    </div>
-                  </div>
-                </div>
+
                 <div className="my-4"></div>
-                <div className="bg-white p-3 hover:shadow">
-                  <div className="flex items-center space-x-3 text-xl font-semibold leading-8 text-gray-900">
-                    <span className="text-green-500">
-                      <svg
-                        className="h-5 fill-current"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
-                        />
-                      </svg>
-                    </span>
-                    <span>Similar Profiles</span>
-                  </div>
-                  <div className="grid grid-cols-3">
-                    <div className="my-2 text-center">
-                      {/* <img className="h-16 w-16 rounded-full mx-auto"
-                                src="https://cdn.australianageingagenda.com.au/wp-content/uploads/2015/06/28085920/Phil-Beckett-2-e1435107243361.jpg"
-                                alt="" /> */}
-                      <a href="#" className="text-main-color">
-                        Kojstantin
-                      </a>
-                    </div>
-                  </div>
-                </div>
+                <ActivePlan
+                  Icon={<FaDumbbell size={20} />}
+                  title="Workout Placeholder"
+                  description="TO DO GET ACTIVE WORKOUT"
+                />
+                <ActivePlan
+                  Icon={<GiMeal size={20} />}
+                  title="Mealplan Placeholder"
+                  description="TO DO GET ACTIVE MEAL PLAN"
+                />
                 {/* <!-- End of friends card --> */}
               </div>
               {/* <!-- Right Side --> */}
@@ -108,7 +60,7 @@ const Profile = () => {
                 {/* <!-- About Section --> */}
                 <div className="rounded-sm bg-white p-3 shadow-sm">
                   <div className="flex items-center space-x-2 font-semibold leading-8 text-gray-900">
-                    <span className="text-green-500">
+                    <span className="text-dracula-500">
                       <svg
                         className="h-5"
                         xmlns="http://www.w3.org/2000/svg"
@@ -194,7 +146,7 @@ const Profile = () => {
                   <div className="grid grid-cols-2">
                     <div>
                       <div className="mb-3 flex items-center space-x-2 font-semibold leading-8 text-gray-900">
-                        <span className="text-green-500">
+                        <span className="text-dracula-500">
                           <svg
                             className="h-5"
                             xmlns="http://www.w3.org/2000/svg"
@@ -249,7 +201,7 @@ const Profile = () => {
                     </div>
                     <div>
                       <div className="mb-3 flex items-center space-x-2 font-semibold leading-8 text-gray-900">
-                        <span className="text-green-500">
+                        <span className="text-dracula-500">
                           <svg
                             className="h-5"
                             xmlns="http://www.w3.org/2000/svg"
@@ -283,7 +235,7 @@ const Profile = () => {
                         </li>
                         <li>
                           <div className="text-teal-600">
-                            Bachelors Degreen in LPU
+                            Bachelors Dedracula in LPU
                           </div>
                           <div className="text-xs text-gray-500">
                             March 2020 - Now

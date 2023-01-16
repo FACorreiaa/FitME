@@ -16,7 +16,7 @@ function ProfileCard({
   createdAt,
 }: ProfileCardProps) {
   return (
-    <div className="border-t-4 border-green-400 bg-white p-3">
+    <div className="border-t-4 border-dracula-400 bg-white p-3">
       <div className="image overflow-hidden rounded-full">
         <Image
           width={100}
@@ -37,7 +37,7 @@ function ProfileCard({
         <li className="flex items-center py-3">
           <span>Status</span>
           <span className="ml-auto">
-            <span className="rounded bg-green-500 py-1 px-2 text-sm text-white">
+            <span className="rounded bg-dracula-500 py-1 px-2 text-sm text-white">
               {status ? "Online" : "Offline"}
             </span>
           </span>
