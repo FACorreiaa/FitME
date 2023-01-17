@@ -10,10 +10,15 @@ enum Variant {
 type ButtonProps = {
   variant: "confirm" | "discard" | "border" | "noborder";
   label: string;
+  onClick: () => void;
 };
-function Button({ variant, label }: ButtonProps) {
+function Button({ variant, label, onClick }: ButtonProps) {
   const className = Variant[variant];
-  return <div className={className}>{label}</div>;
+  return (
+    <div onClick={onClick} className={className}>
+      {label}
+    </div>
+  );
 }
 
 export default Button;

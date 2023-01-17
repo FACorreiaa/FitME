@@ -1,7 +1,6 @@
 import React from "react";
 import Image from "next/image";
-
-import Button from "../../../common/buttons/button";
+import Link from "next/link";
 
 type ProfileCardProps = {
   name: string;
@@ -33,7 +32,12 @@ function ProfileCard({
         <h1 className="my-1 text-xl font-bold leading-8 text-gray-900">
           {name}
         </h1>
-        <Button label="Edit" variant="noborder" />
+        <Link
+          className="bg-transparent text-right font-bold text-dracula-900  hover:text-dracula-300 "
+          href={"/user/edit-profile"}
+        >
+          Edit
+        </Link>
       </div>
       <h3 className="font-lg text-semibold leading-6 text-gray-600">
         {profession}
