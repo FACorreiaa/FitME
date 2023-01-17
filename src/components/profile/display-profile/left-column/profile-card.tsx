@@ -1,6 +1,8 @@
 import React from "react";
 import Image from "next/image";
 
+import Button from "../../../common/buttons/button";
+
 type ProfileCardProps = {
   name: string;
   profession: string;
@@ -26,7 +28,13 @@ function ProfileCard({
           alt="Fittracker Logo Logo"
         />
       </div>
-      <h1 className="my-1 text-xl font-bold leading-8 text-gray-900">{name}</h1>
+
+      <div className="grid grid-cols-2 items-center justify-between">
+        <h1 className="my-1 text-xl font-bold leading-8 text-gray-900">
+          {name}
+        </h1>
+        <Button label="Edit" variant="noborder" />
+      </div>
       <h3 className="font-lg text-semibold leading-6 text-gray-600">
         {profession}
       </h3>

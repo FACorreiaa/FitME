@@ -56,51 +56,51 @@ function AboutSection({
       <div className="text-gray-700">
         <div className="grid text-sm md:grid-cols-2">
           <div className="grid grid-cols-2">
-            <div className="px-4 py-2 font-semibold">First Name</div>
-            <div className="px-4 py-2">{firstname}</div>
+            <div className="px-2 py-2 font-semibold">First Name</div>
+            <div className=" py-2">{firstname}</div>
           </div>
           <div className="grid grid-cols-2">
-            <div className="px-4 py-2 font-semibold">Last Name</div>
-            <div className="px-4 py-2">{lastname}</div>
+            <div className="px-2 py-2 font-semibold">Last Name</div>
+            <div className=" py-2">{lastname}</div>
           </div>
           <div className="grid grid-cols-2">
-            <div className="px-4 py-2 font-semibold">Age</div>
-            <div className="px-4 py-2">{age}</div>
+            <div className="px-2 py-2 font-semibold">Age</div>
+            <div className=" py-2">{age}</div>
           </div>
           <div className="grid grid-cols-2">
-            <div className="px-4 py-2 font-semibold">Gender</div>
-            <div className="px-4 py-2">{gender}</div>
+            <div className="px-2 py-2 font-semibold">Gender</div>
+            <div className=" py-2">{gender}</div>
           </div>
           <div className="grid grid-cols-2">
-            <div className="px-4 py-2 font-semibold">Email.</div>
-            <div className="px-4 py-2">{email}</div>
+            <div className="px-2 py-2 font-semibold">Email.</div>
+            <div className="py-2">{email}</div>
           </div>
           <div className="grid grid-cols-2">
-            <div className="px-4 py-2 font-semibold">Contact</div>
-            <div className="px-4 py-2">{contact}</div>
+            <div className="px-2 py-2 font-semibold">Contact</div>
+            <div className=" py-2">{contact}</div>
           </div>
           <div className="grid grid-cols-2">
-            <div className="px-4 py-2 font-semibold">Country</div>
-            <div className="px-4 py-2">{country}</div>
+            <div className="px-2 py-2 font-semibold">Country</div>
+            <div className=" py-2">{country}</div>
           </div>
           <div className="grid grid-cols-2">
-            <div className="px-4 py-2 font-semibold">Address</div>
-            <div className="px-4 py-2">{address}</div>
+            <div className="px-2 py-2 font-semibold">Address</div>
+            <div className=" py-2">{address}</div>
           </div>
 
           <div className="grid grid-cols-2">
-            <div className="px-4 py-2 font-semibold">Birthday</div>
-            <div className="px-4 py-2">{birthday}</div>
+            <div className="px-2 py-2 font-semibold">Birthday</div>
+            <div className=" py-2">{birthday}</div>
           </div>
           <div className="grid grid-cols-2">
-            <div className="px-4 py-2 font-semibold">Website</div>
-            <div className="px-4 py-2">{website}</div>
+            <div className="px-2 py-2 font-semibold">Website</div>
+            <div className="py-2">{website}</div>
           </div>
         </div>
       </div>
       <button
         onClick={onShowInformationClick}
-        className="focus:shadow-outline hover:shadow-xs my-4 block w-full rounded-lg p-3 text-sm font-semibold text-dracula-900 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none"
+        className="focus:shadow-outline hover:shadow-xs my-4 block w-full rounded-lg p-3 text-sm font-semibold text-dracula-900 hover:bg-gray-100 hover:text-dracula-300 focus:bg-gray-100 focus:outline-none"
       >
         {showInformationLabel}
       </button>
