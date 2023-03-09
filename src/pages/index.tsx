@@ -66,6 +66,7 @@ export const AuthorizedUser = ({ session, children }: AuthorizedUserProps) => {
   );
 };
 
+//delete later
 // const AuthShowcase: React.FC = () => {
 //   const { data: sessionData } = useSession();
 
