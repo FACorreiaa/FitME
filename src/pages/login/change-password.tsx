@@ -23,6 +23,10 @@ type ChangePasswordProps = {
 };
 
 export const ChangePasswordPage = () => {
+  const mutation = trpc.auth.changePassword.useMutation();
+  const router = useRouter();
+  const [show, setShow] = useState({ password: false });
+
   const methods = useZodForm({
     schema: loginUserSchema,
     defaultValues: {
@@ -30,11 +34,6 @@ export const ChangePasswordPage = () => {
       password: "",
     },
   });
-
-  const mutation = trpc.auth.changePassword.useMutation();
-
-  const [show, setShow] = useState({ password: false });
-  const router = useRouter();
 
   const onPasswordIconClick = () => {
     setShow({ password: !show.password });

@@ -24,6 +24,9 @@ type RegisterPageProps = {
 };
 const RegisterPage = () => {
   const mutation = trpc.auth.signUp.useMutation();
+  const [show, setShow] = useState({ password: false, cpassword: false });
+  const router = useRouter();
+
   const methods = useZodForm({
     schema: createUserSchema,
     defaultValues: {
@@ -33,9 +36,6 @@ const RegisterPage = () => {
       cpassword: "",
     },
   });
-
-  const [show, setShow] = useState({ password: false, cpassword: false });
-  const router = useRouter();
 
   async function onSumitRegisterValues(values: RegisterPageProps) {
     return await mutation.mutate(values, {

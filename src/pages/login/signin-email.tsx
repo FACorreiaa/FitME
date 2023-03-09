@@ -21,6 +21,10 @@ type LoginValuesProps = {
 };
 
 export const EmailLoginPage = () => {
+  const router = useRouter();
+  const [show, setShow] = useState({ password: false });
+  const [error, setError] = useState("");
+
   const methods = useZodForm({
     schema: loginUserSchema,
     defaultValues: {
@@ -28,10 +32,6 @@ export const EmailLoginPage = () => {
       password: "",
     },
   });
-
-  const [show, setShow] = useState({ password: false });
-  const [error, setError] = useState("");
-  const router = useRouter();
 
   const onPasswordIconClick = () => {
     setShow({ password: !show.password });
