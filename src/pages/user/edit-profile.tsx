@@ -5,11 +5,8 @@ import { useSession } from "next-auth/react";
 import Guest from "../guest";
 import { AuthorizedUser } from "..";
 
-import styles from "../../styles/Index.module.css";
-
 function EditProfile() {
   const { data: session } = useSession();
-  //className={styles.container}
   return (
     <div>
       <Head>
